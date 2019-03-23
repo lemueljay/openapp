@@ -306,7 +306,7 @@ a.article:hover {
   background: #ebebeb none repeat scroll 0 0;
   border-radius: 3px;
   color: #646464;
-  font-size: 14px;
+  /*font-size: 14px;*/
   margin: 0;
   padding: 5px 10px 5px 12px;
   width: 100%;
@@ -325,7 +325,7 @@ a.article:hover {
  .sent_msg p {
   background: #05728f none repeat scroll 0 0;
   border-radius: 3px;
-  font-size: 14px;
+  /*font-size: 14px;*/
   margin: 0; color:#fff;
   padding: 5px 10px 5px 12px;
   width:100%;

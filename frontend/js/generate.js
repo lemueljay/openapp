@@ -18,8 +18,12 @@ $(document).ready(function () {
         $('#generateTitle').hide();
         $('#generateText').hide();
 
-        // Do query, show loading screen
-
+        /**
+         * [GET] /generate-code/
+         * @return rc Return code status
+         * @return errormessage The message error
+         * @return code The generated code
+         */
 
         // Update elements
         $('#generateTitle').text('5AH6E209Z').show();
