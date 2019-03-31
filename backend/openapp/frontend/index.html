@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome-free-5.8.1-web/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+
+    <meta charset="UTF-8">
+    <title>OpenApp</title>
+</head>
+<body>
+    <script src="{% static 'bootstrap-4.3.1-dist/js/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/sidebar.js' %}"></script>
+
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+
+            <div class="sidebar-header text-center">
+                <h3><b>OPEN APP</b></h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <div class="text-center">
+                    <img src="{% static 'img/008.png' %}" class="rounded" alt="...">
+                </div>
+
+                <p class="text-center">{{ request.user.username }}</p>
+                <li class="active">
+                    <a href="/openapp">
+                        <i class="fas fa-user"></i>
+                        Counselors
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="/openapp/logout">
+                        <i class="fas fa-power-off"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+
+                <i class="fas fa-align-justify icon-color-white"></i>
+
+                <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">
+                    <div>
+                        <i class="fas fa-bell icon-color-white"></i>
+                    </div>
+                    <div class="propro">
+                        <!--<img src="img/008.png" class="runded" alt="...">-->
+                        <i class="fas fa-user icon-color-white"></i>
+                        <span class="icon-color-white">{{ request.user.username }}</span>
+                    </div>
+                </div>
+
+
+            </div>
+        </nav>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">Good Evening, {{ request.user.username }}!</div>
+                    <div class="col-sm-12">
+                        <div class="row" id="collegegroup">
+                            <a class="collegebox text-center col-md-2 offset-md-2" href="/openapp/profile/SCS">
+                                <div class="guidancebox">
+                                    <img src="{% static 'img/001.png' %}" class="rounded" alt="...">
+                                    <div class="guidancename">SCS</div>
+                                </div>
+                            </a>
+                            <a class="collegebox text-center col-md-2" href="/openapp/profile/COET">
+                                <div class="guidancebox">
+                                    <img src="{% static 'img/002.png' %}" class="rounded">
+                                    <div class="guidancename">COET</div>
+                                </div>
+                            </a>
+                            <a class="collegebox text-center col-md-2" href="/openapp/profile/CSM">
+                                <div class="guidancebox">
+                                    <img src="{% static 'img/003.png' %}" class="rounded">
+                                    <div class="guidancename">CSM</div>
+                                </div>
+                            </a>
+                            <a class="collegebox text-center col-md-2" href="/openapp/profile/CED">
+                                <div class="guidancebox">
+                                    <img src="{% static 'img/004.png' %}" class="rounded">
+                                    <div class="guidancename">CED</div>
+                                </div>
+                            </a>
+
+                            <a class="collegebox text-center col-md-2 offset-md-3" href="/openapp/profile/CASS">
+                                <div class="guidancebox">
+                                    <img src="{% static 'img/005.png' %}" class="rounded">
+                                    <div class="guidancename">CASS</div>
+                                </div>
+
+                            </a>
+                            <a class="collegebox text-center col-md-2" href="/openapp/profile/CBAA">
+                                <div class="guidancebox">
+                                    <img src="{% static 'img/006.png' %}" class="rounded">
+                                    <div class="guidancename">CBAA</div>
+                                </div>
+                            </a>
+                            <a class="collegebox text-center col-md-2" href="/openapp/profile/CON">
+                                <div class="guidancebox">
+                                    <img src="{% static 'img/007.png' %}" class="rounded">
+                                    <div class="guidancename">CON</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+
+</body>
+</html>

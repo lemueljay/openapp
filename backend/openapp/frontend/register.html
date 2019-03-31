@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome-free-5.8.1-web/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+
+    <meta charset="UTF-8">
+    <title>OpenApp</title>
+</head>
+<body>
+
+    <script type="text/javascript" src="{% static 'bootstrap-4.3.1-dist/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/register.js' %}"></script>
+
+    <nav class="navbar">
+        <span class="navbar-brand">
+            <h3><strong>OPEN APP</strong></h3>
+        </span>
+    </nav>
+
+    <div class="container generate-card">
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <div class="card text-center">
+                    <div class="card-header">Fill up the form provided.</div>
+                        <form class="card-body" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input name="refcode" type="text" class="form-control" placeholder="Reference code">
+                        </div>
+                        <div class="form-group">
+                            <input name="username" type="text" class="form-control" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input name="password" type="password" class="form-control" placeholder="Password">
+                        </div>
+                        <button id="registerButton" type="button" class="btn btn-primary form-control">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
