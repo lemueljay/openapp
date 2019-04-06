@@ -28,7 +28,7 @@
                     <img src="{% static 'img/008.png' %}" class="rounded" alt="...">
                 </div>
 
-                <p class="text-center">PSEUDO NAME</p>
+                <p class="text-center">{{ request.user.username }}</p>
                 <li class="active">
                     <a href="/openapp">
                         <i class="fas fa-user"></i>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="propro">
                             <i class="fas fa-user icon-color-white"></i>
-                            <span class="icon-color-white">Pseudo Name</span>
+                            <span class="icon-color-white">{{ request.user.username }}</span>
                         </div>
                     </div>
                 </div>
