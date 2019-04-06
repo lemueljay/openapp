@@ -13,6 +13,19 @@ function outgoingMessageContstructor(message) {
 
 $(document).ready(function() {
 
+    var chatSocket = new WebSocket('ws://' + window.location.host + '/ws/openapp/chat/lobby/');
+
+    chatSocket.onopen = function(e) {
+        console.log('Connected to server!');
+        chatSocket.send(JSON.stringify({
+            'message': 'I AM A CLIENT MESSAGE'
+        }));
+    };
+
+    chatSocket.onmessage = function (event) {
+        console.log(event.data);
+    };
+
     $('#sendButton').on('click', function() {
 
         var message = $('input[name=chatmessage]').val();
