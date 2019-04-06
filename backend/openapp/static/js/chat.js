@@ -1,44 +1,79 @@
-function outgoingMessageContstructor(message) {
+function outgoingMessageContstructor(message, timestamp) {
 
     var elem =
         '<div class="outgoing_msg">' +
             '<div class="sent_msg">' +
                 '<p>' + message + '</p>' +
-                '<span class="time_date"> 11:01 AM    |    June 9</span>' +
+                '<span class="time_date">' + timestamp + '</span>' +
             '</div>' +
         '</div>'
 
     return elem;
 }
 
+function incomingMessageContstructor(message, timestamp) {
+    var elem =
+        '<div class="incoming_msg">' +
+            '<div class="received_msg">' +
+                '<div class="received_withd_msg">' +
+                    '<p>' + message + '</p>' +
+                    '<span class="time_date">' + timestamp + '</span>' +
+                '</div>' +
+            '</div>' +
+        '</div>'
+
+    return elem;
+}
+
+
 $(document).ready(function() {
+
+
 
     var chatSocket = new WebSocket('ws://' + window.location.host + '/ws/openapp/chat/lobby/');
 
     chatSocket.onopen = function(e) {
-        console.log('Connected to server!');
-        chatSocket.send(JSON.stringify({
-            'message': 'I AM A CLIENT MESSAGE'
-        }));
+        // console.log('Connected to server!');
+        // chatSocket.send(JSON.stringify({
+        //     'message': 'I AM A CLIENT MESSAGE'
+        // }));
     };
 
     chatSocket.onmessage = function (event) {
+
+        var sender = $('input[name=senderinput]').val();
+        var receiver = $('input[name=receiverinput]').val();
+
+        var datum = JSON.parse(event.data);
+
+        if(sender === datum.sender && receiver === datum.receiver) {
+            console.log('OUTGOING: ' + datum.message)
+            $('.msghistory').append(outgoingMessageContstructor(datum.message, datum.timestamp));
+        } else if(sender === datum.receiver && receiver === datum.sender) {
+            console.log('INCOMING: ' + datum.message)
+            $('.msghistory').append(incomingMessageContstructor(datum.message, datum.timestamp));
+        }
+
+        // $('.msghistory').animate({scrollTop: $(document).height()}, 1000);
+        $('.msghistory').scrollTop($('.msghistory')[0].scrollHeight);
+
         console.log(event.data);
     };
 
     $('#sendButton').on('click', function() {
 
         var message = $('input[name=chatmessage]').val();
+        var sender = $('input[name=senderinput]').val();
+        var receiver = $('input[name=receiverinput]').val();
 
-         if (message === '') {
 
-        } else {
-            $('.msghistory').append(outgoingMessageContstructor(message));
+         if (message !== '') {
+             chatSocket.send(JSON.stringify({
+                 'sender': sender,
+                 'receiver': receiver,
+                 'message': message
+             }));
 
-             $('.msghistory').animate({
-                         scrollTop: $(document).height()
-                     },
-                     1000);
             $('input[name=chatmessage]').val('');
         }
 
@@ -49,27 +84,21 @@ $(document).ready(function() {
         if(keycode == '13'){
 
             var message = $('input[name=chatmessage]').val();
+            var sender = $('input[name=senderinput]').val();
+            var receiver = $('input[name=receiverinput]').val();
 
-             if (!(message === '')) {
-                var postdata = {
-                     'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
-                     'message': message,
-                     'college': $('input[name=destination]').val()
-                }
+            if (message !== '') {
+                chatSocket.send(JSON.stringify({
+                    'sender': sender,
+                    'receiver': receiver,
+                    'message': message
+                }));
 
-                $.post('http://localhost:8000/openapp/chat', postdata, function(data) {
-
-                         $('.msghistory').append(outgoingMessageContstructor(message));
-
-                         $('.msghistory').animate({
-                                     scrollTop: $(document).height()
-                                 },
-                                 1000);
-                        $('input[name=chatmessage]').val('');
-
-                 });
-             }
+                $('input[name=chatmessage]').val('');
+            }
         }
     });
 
+    // $('.msghistory').animate({scrollTop: $('.msghistory div:last').offset().top}, 1000);
+    $('.msghistory').scrollTop($('.msghistory')[0].scrollHeight);
 });

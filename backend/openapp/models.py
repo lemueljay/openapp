@@ -23,9 +23,9 @@ class UserAttrib(models.Model):
 
 class Message(models.Model):
     date_created = models.DateTimeField(default=now())
-    fromUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='source')
-    toUser = models.ForeignKey(User, on_delete=models.CASCADE,related_name='destination')
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='source')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE,related_name='destination')
     message = models.CharField(max_length=1000)
 
     def __str__(self):
-        return self.fromUser.username
+        return self.sender.username

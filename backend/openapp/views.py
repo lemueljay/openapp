@@ -1,6 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
 
 import json
 
@@ -174,11 +175,11 @@ def chat(request):
         return HttpResponse('GET')
 
     elif request.method == 'POST':
-        fromUser = request.user
-        toUser = User.objects.get(username=request.POST.get('college', ''))
+        sender = request.user
+        receiver = User.objects.get(username=request.POST.get('college', ''))
         message = request.POST.get('message', '')
 
-        message = Message(fromUser=fromUser, toUser=toUser, message=message)
+        message = Message(sender=sender, receiver=receiver, message=message)
         message.save()
 
         return JsonResponse(context)
@@ -192,11 +193,10 @@ def collegechat(request, college):
     context['imgpath'] = userAttrib.imgpath
     context['college'] = college
 
-    outgoingmessages = Message.objects.filter(fromUser=request.user, toUser=user)
-    ingoingmessages = Message.objects.filter(fromUser=user, toUser=request.user)
+    combined_queryset = Message.objects.filter(sender=request.user, receiver=user) | Message.objects.filter(sender=user, receiver=request.user)
+    messages =  combined_queryset.order_by('date_created')
 
-    context['outgoingmessages'] = outgoingmessages
-    context['ingoingmessages'] = ingoingmessages
+    context['messages'] = messages
 
     return render(request, 'chat.html', context)
 
