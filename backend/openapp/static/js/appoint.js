@@ -1,3 +1,26 @@
+function cancelAppointment(id) {
+
+    var data = {
+        'id': id
+    }
+
+    $.get("http://localhost:8000/openapp/cancelAppointment", data, function(data) {
+        $('#modalBbutton').click();
+    });
+}
+
+function setAppointment(id) {
+
+    var data = {
+        'id': id,
+        'assignee': $('input[name=assignee]').val()
+    }
+
+    $.get("http://localhost:8000/openapp/setAppointmentSchedule", data, function(data) {
+        $('#modalBbutton').click();
+    });
+}
+
 function generateNoScheduleError(errormessage) {
     var elem =
         '<div class="col-sm-12 text-center">' +
@@ -10,12 +33,13 @@ function generateNoScheduleError(errormessage) {
 }
 
 function generateAvailableSlot(sched) {
+
     var elem =
         '<div class="col-sm-6">' +
             '<p>' + sched.time + '</p>' +
         '</div>' +
         '<div class="col-sm-6">' +
-            '<div class="alert alert-success" role="alert">' +
+            '<div onclick="setAppointment(' + sched.id+ ')" class="alert alert-success alert-available" role="alert">' +
                 '<b>SET APPOINTMENT</b>' +
             '</div>' +
         '</div>';
@@ -24,8 +48,22 @@ function generateAvailableSlot(sched) {
     return elem;
 }
 
-function generateNotAvailableSlot() {
-    var elem =
+function generateNotAvailableSlot(sched) {
+
+    var assignee = $('input[name=assignee]').val();
+
+    if(assignee === sched.assignee) {
+        var elem =
+        '<div class="col-sm-6">' +
+            '<p>' + sched.time + '</p>' +
+        '</div>' +
+        '<div class="col-sm-6">' +
+            '<div onclick="cancelAppointment(' + sched.id + ')" class="alert alert-dark alert-cancel" role="alert">' +
+                '<b>CANCEL SLOT</b>' +
+            '</div>' +
+        '</div>';
+    } else {
+        var elem =
         '<div class="col-sm-6">' +
             '<p>' + sched.time + '</p>' +
         '</div>' +
@@ -34,6 +72,8 @@ function generateNotAvailableSlot() {
                 '<b>NOT AVAILABLE</b>' +
             '</div>' +
         '</div>';
+    }
+
 
 
     return elem;
@@ -60,7 +100,7 @@ function getSchedules(day) {
                 if(sched.assignee === '') {
                     $('#slotter').append(generateAvailableSlot(sched));
                 } else {
-                    $('#slotter').append(generateNotAvailableSlot(sched));
+                        $('#slotter').append(generateNotAvailableSlot(sched));
                 }
             }
 

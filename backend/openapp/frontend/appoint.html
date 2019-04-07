@@ -419,7 +419,8 @@
             <div class="row" id="slotter"></div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <input name="assignee" value="{{ request.user.username }}" hidden>
+            <button id="modalBbutton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <!--<button type="button" class="btn btn-primary">Schedule Appointment</button>-->
           </div>
         </div>

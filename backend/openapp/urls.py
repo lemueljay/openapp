@@ -16,6 +16,8 @@ urlpatterns = [
 
     path('appoint/<slug:college>', views.appoint, name='appoint'),
     path('getAppointmentSchedules/<slug:college>', views.getAppointmentSchedules, name='getAppointmentSchedules'),
+    path('setAppointmentSchedule', views.setAppointmentSchedule, name='setAppointmentSchedule'),
+    path('cancelAppointment', views.cancelAppointment, name='cancelAppointment'),
 
     # path('hasCode', views.hasCode, name='hasCode'),
     path('getCodeStatus', views.getCodeStatus, name='getCodeStatus'),

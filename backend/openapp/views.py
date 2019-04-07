@@ -274,6 +274,30 @@ def getAppointmentSchedules(request, college):
 
     return JsonResponse(context)
 
+
+def setAppointmentSchedule(request):
+    context = {}
+
+    id = request.GET['id']
+    assignee = request.GET['assignee']
+
+    schedule = Schedule.objects.get(id=id)
+    schedule.assignee = assignee
+    schedule.save()
+
+    return JsonResponse(context)
+
+def cancelAppointment(request):
+    context = {}
+
+    id = request.GET['id']
+
+    schedule = Schedule.objects.get(id=id)
+    schedule.assignee = ''
+    schedule.save()
+
+    return JsonResponse(context)
+
 """
 API for checking if code exists.
 """

@@ -374,3 +374,15 @@ a.article:hover {
 #datebox:hover {
     cursor: pointer;
 }
+
+.alert-available:hover {
+    cursor: pointer;
+    background-color: #1c7430;
+    color: white;
+}
+
+.alert-cancel:hover {
+    cursor: pointer;
+    background-color: #000;
+    color: white;
+}
