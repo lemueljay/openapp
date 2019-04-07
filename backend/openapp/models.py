@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from django.utils.timezone import now
-
+import datetime
 
 class Code(models.Model):
     date_created = models.DateTimeField(default=now())
@@ -29,3 +29,12 @@ class Message(models.Model):
 
     def __str__(self):
         return self.sender.username
+
+class Schedule(models.Model):
+    counselor = models.ForeignKey(User, on_delete=models.CASCADE)
+    assignee = models.CharField(max_length=1000, blank=True, default=None)
+    date = models.DateField(default=datetime.date.today)
+    time = models.CharField(max_length=1000,default=None)
+
+    def __str__(self):
+        return str(self.date) + ' ' + str(self.time)

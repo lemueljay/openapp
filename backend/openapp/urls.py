@@ -14,6 +14,9 @@ urlpatterns = [
 
     path('chat', views.chat, name='chat'),
 
+    path('appoint/<slug:college>', views.appoint, name='appoint'),
+    path('getAppointmentSchedules/<slug:college>', views.getAppointmentSchedules, name='getAppointmentSchedules'),
+
     # path('hasCode', views.hasCode, name='hasCode'),
     path('getCodeStatus', views.getCodeStatus, name='getCodeStatus'),
     # path('setCodeAsUsed', views.setCodeAsUsed, name='setCodeAsUsed'),

@@ -1,12 +1,11 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Q
 
-import json
+import json, datetime, calendar
 
 from django.contrib.auth.models import User
-from .models import Code, UserAttrib, Message
+from .models import Code, UserAttrib, Message, Schedule
 
 from .utils import CodeGenerator
 
@@ -200,6 +199,80 @@ def collegechat(request, college):
 
     return render(request, 'chat.html', context)
 
+
+def appoint(request, college):
+    context = {}
+
+    date_today = datetime.date.today()
+    year_today = date_today.year
+    month_today = date_today.month
+
+    num_days = calendar.monthrange(year_today, month_today)[1]
+    days = [datetime.date(year_today, month_today, day) for day in range(1, num_days+1)]
+
+    context['today'] = date_today
+    context['days'] = days
+    context['college'] = college
+
+    w = str(days[0].weekday())
+    v = str(days[-1].weekday())
+
+    if w in '0':
+        context['ran'] = range(1)
+    elif w in '1':
+        context['ran'] = range(2)
+    elif  w in '2':
+        context['ran'] = range(3)
+    elif w in '3':
+        context['ran'] = range(4)
+    elif w in '4':
+        context['ran'] = range(5)
+    elif w in '5':
+        context['ran'] = range(6)
+    elif w in '6':
+        context['ran'] = range(0)
+
+    if v in '0':
+        context['end'] = range(5)
+    elif v in '1':
+        context['end'] = range(4)
+    elif  v in '2':
+        context['end'] = range(3)
+    elif v in '3':
+        context['end'] = range(2)
+    elif v in '4':
+        context['end'] = range(1)
+    elif v in '5':
+        context['end'] = range(0)
+    elif v in '6':
+        context['end'] = range(6)
+
+    return render(request, 'appoint.html', context)
+
+def getAppointmentSchedules(request, college):
+
+    date_str = request.GET['day']
+    sched = datetime.datetime.strptime(date_str, '%B %d, %Y').date()
+
+
+    context = {}
+    context['rc'] = 'OK'
+
+    try:
+        counselor = User.objects.get(username__icontains=college)
+        schedules = list(Schedule.objects.filter(counselor=counselor).filter(date=sched).order_by('time').values())
+
+        if len(schedules) > 0:
+            context['schedules'] = schedules
+        else:
+            context['rc'] = 'NOT OK'
+            context['message'] = 'No schedule available.'
+
+    except:
+        context['rc'] = 'NOT OK'
+
+
+    return JsonResponse(context)
 
 """
 API for checking if code exists.
