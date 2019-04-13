@@ -24,9 +24,9 @@
 
             <ul class="list-unstyled components">
                 <div class="text-center">
-                    <img src="{% static 'img/008.png' %}" class="rounded" alt="...">
+                    <img src="{% static request.user.imgpath %}">
                 </div>
-
+                <!--<div  class="ratio img-responsive img-circle" style="background-image: url({% static 'img/#firstEver.jpg' %});"></div>-->
                 <p class="text-center">{{ request.user.username }}</p>
                 <li class="active">
                     <a href="/openapp">

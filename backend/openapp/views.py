@@ -18,6 +18,9 @@ Default index handler.
 def index(request):
 
     if request.user.is_authenticated:
+
+        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+
         context = {}
         context['username'] = request.user.username
 
@@ -44,6 +47,8 @@ def index(request):
 
             return render(request, 'gcc.html', context)
         else:
+            userattrib = UserAttrib.objects.get(user=request.user)
+
             return render(request, 'index.html', context)
     else:
         return redirect('/openapp/login')
@@ -112,11 +117,11 @@ def register(request):
                 user.set_password(password)
                 user.is_staff = False
                 user.active = True
-
-                attrib = UserAttrib(user=user, imgpath='img/008.png')
-
                 user.save()
-
+                print('Creating UserAttrib')
+                attrib = UserAttrib(user=user, imgpath='img/001.png')
+                attrib.save()
+                print('Successful UserAttrib')
                 # Invalidate code
                 setCodeStatus(refcode)
 
@@ -171,6 +176,8 @@ def collegeprofile(request, college):
 
     context = {}
     context['college'] = college
+
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
     if request.user.is_authenticated:
         # Get councilor for college
@@ -241,6 +248,8 @@ def getMessages(request):
 def collegechat(request, college):
     context = {}
 
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+
     user = User.objects.get(username__icontains=college)
     userAttrib = UserAttrib.objects.get(user=user)
     context['imgpath'] = userAttrib.imgpath
@@ -257,6 +266,8 @@ def collegechat(request, college):
 
 def appoint(request, college):
     context = {}
+
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
     date_today = datetime.date.today()
     year_today = date_today.year
@@ -307,6 +318,8 @@ def appoint(request, college):
 
 def appointments(request):
     context = {}
+
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
     date_today = datetime.date.today()
     year_today = date_today.year
