@@ -1,8 +1,11 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.core import serializers
 
-import json, datetime, calendar
+import json, calendar
+
+import datetime
 
 from django.contrib.auth.models import User
 from .models import Code, UserAttrib, Message, Schedule
@@ -17,7 +20,31 @@ def index(request):
     if request.user.is_authenticated:
         context = {}
         context['username'] = request.user.username
-        return render(request, 'index.html', context)
+
+        if request.user.is_staff:
+            context = {}
+
+            combined_queryset = Message.objects.filter(receiver=request.user)
+            messages = combined_queryset.values('sender').distinct()
+
+            chat_list = []
+
+            for message in messages:
+                user = User.objects.get(id=message['sender'])
+                try:
+                    attrib = UserAttrib.objects.get(user=user)
+                    user.imgpath = attrib.imgpath
+                except:
+                    user.imgpath = 'img/001.png'
+                print(user)
+                chat_list.append(user)
+
+
+            context['chat_list'] = chat_list
+
+            return render(request, 'gcc.html', context)
+        else:
+            return render(request, 'index.html', context)
     else:
         return redirect('/openapp/login')
 
@@ -85,6 +112,9 @@ def register(request):
                 user.set_password(password)
                 user.is_staff = False
                 user.active = True
+
+                attrib = UserAttrib(user=user, imgpath='img/008.png')
+
                 user.save()
 
                 # Invalidate code
@@ -184,6 +214,30 @@ def chat(request):
         return JsonResponse(context)
 
 
+def getMessages(request):
+    context = {}
+
+    receiver = request.GET['receiver']
+    user = User.objects.get(username=receiver)
+    combined_queryset = Message.objects.filter(sender=request.user, receiver=user) | Message.objects.filter(sender=user, receiver=request.user)
+    print(combined_queryset)
+    messages = combined_queryset.order_by('date_created')
+
+    res = list(messages.values('message', 'sender', 'receiver', 'date_created'))
+
+    context['messages'] = []
+
+    for message in res:
+        u = User.objects.get(id=message['sender'])
+        message['sender'] = u.username
+
+        u = User.objects.get(id=message['receiver'])
+        message['receiver'] = u.username
+
+        context['messages'].append(message)
+
+    return JsonResponse(context)
+
 def collegechat(request, college):
     context = {}
 
@@ -192,9 +246,10 @@ def collegechat(request, college):
     context['imgpath'] = userAttrib.imgpath
     context['college'] = college
 
-    combined_queryset = Message.objects.filter(sender=request.user, receiver=user) | Message.objects.filter(sender=user, receiver=request.user)
+    combined_queryset = Message.objects.filter(sender=user, receiver=request.user) | Message.objects.filter(sender=request.user, receiver=user)
+    print(combined_queryset)
     messages =  combined_queryset.order_by('date_created')
-
+    print(messages)
     context['messages'] = messages
 
     return render(request, 'chat.html', context)
@@ -248,6 +303,78 @@ def appoint(request, college):
         context['end'] = range(6)
 
     return render(request, 'appoint.html', context)
+
+
+def appointments(request):
+    context = {}
+
+    date_today = datetime.date.today()
+    year_today = date_today.year
+    month_today = date_today.month
+
+    num_days = calendar.monthrange(year_today, month_today)[1]
+    days = [datetime.date(year_today, month_today, day) for day in range(1, num_days + 1)]
+
+    context['today'] = date_today
+    context['days'] = days
+
+    w = str(days[0].weekday())
+    v = str(days[-1].weekday())
+
+    if w in '0':
+        context['ran'] = range(1)
+    elif w in '1':
+        context['ran'] = range(2)
+    elif w in '2':
+        context['ran'] = range(3)
+    elif w in '3':
+        context['ran'] = range(4)
+    elif w in '4':
+        context['ran'] = range(5)
+    elif w in '5':
+        context['ran'] = range(6)
+    elif w in '6':
+        context['ran'] = range(0)
+
+    if v in '0':
+        context['end'] = range(5)
+    elif v in '1':
+        context['end'] = range(4)
+    elif v in '2':
+        context['end'] = range(3)
+    elif v in '3':
+        context['end'] = range(2)
+    elif v in '4':
+        context['end'] = range(1)
+    elif v in '5':
+        context['end'] = range(0)
+    elif v in '6':
+        context['end'] = range(6)
+
+    return render(request, 'appointments.html', context)
+
+
+def createappointments(request):
+
+    context = {}
+
+    schedule = request.GET['schedule']
+    day = request.GET['day']
+
+    sched = Schedule(counselor=request.user, time=schedule, date=datetime.datetime.strptime(day, '%B %d, %Y').date())
+    sched.save()
+
+    context['rc'] = 'OK'
+    return JsonResponse(context)
+
+def deleteappointments(request):
+
+    id = request.GET['id']
+
+    sched = Schedule.objects.get(id=id)
+    sched.delete()
+
+    return JsonResponse({})
 
 def getAppointmentSchedules(request, college):
 

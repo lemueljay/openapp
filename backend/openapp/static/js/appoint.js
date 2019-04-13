@@ -74,8 +74,6 @@ function generateNotAvailableSlot(sched) {
         '</div>';
     }
 
-
-
     return elem;
 }
 

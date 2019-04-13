@@ -19,6 +19,11 @@ urlpatterns = [
     path('setAppointmentSchedule', views.setAppointmentSchedule, name='setAppointmentSchedule'),
     path('cancelAppointment', views.cancelAppointment, name='cancelAppointment'),
 
+    path('getmessages', views.getMessages, name='getMessages'),
+    path('appointments', views.appointments, name='appointments'),
+    path('createappointments', views.createappointments, name='createappointments'),
+    path('deleteappointments', views.deleteappointments, name='deleteappointments'),
+
     # path('hasCode', views.hasCode, name='hasCode'),
     path('getCodeStatus', views.getCodeStatus, name='getCodeStatus'),
     # path('setCodeAsUsed', views.setCodeAsUsed, name='setCodeAsUsed'),

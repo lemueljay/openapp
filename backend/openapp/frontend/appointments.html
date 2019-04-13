@@ -14,7 +14,7 @@
     <script src="{% static 'bootstrap-4.3.1-dist/js/jquery.js' %}"></script>
     <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
-    <script src="{% static 'js/appoint.js' %}"></script>
+    <script src="{% static 'js/appointments.js' %}"></script>
 
     <div class="wrapper">
         <!-- Sidebar -->
@@ -27,10 +27,16 @@
                     <img src="{% static 'img/008.png' %}" class="rounded" alt="...">
                 </div>
                 <p class="text-center">{{ request.user.username }}</p>
-                <li class="active">
+                <li class="">
                     <a href="/openapp/">
-                        <i class="fas fa-user"></i>
-                        Counselors
+                        <i class="fas fa-inbox"></i>
+                        Messages
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="/openapp/appointments">
+                        <i class="far fa-calendar-check"></i>
+                        Set Appointment
                     </a>
                 </li>
                 <li>
@@ -70,7 +76,7 @@
             </header>
         <div class="row border border-right-0 border-bottom-0">
             {% for i in ran %}
-                <input name="college" value="{{ college }}" hidden>
+                <input name="college" value="{{ request.user }}" hidden>
                 <input name="" value="" hidden>
                 <div class="day col-sm p-2 border border-left-0 border-top-0 text-truncate d-none d-sm-inline-block bg-light text-muted">
                     <h5 class="row align-items-center">
@@ -124,7 +130,9 @@
           </div>
           <div class="modal-footer">
               <input name="assignee" value="{{ request.user.username }}" hidden>
-            <button id="modalBbutton" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <input name="createappointments" class="form-control" type="text">
+              <button type="button" class="btn btn-primary" onclick="createappointments()">Create Schedule</button>
+              <button data-dismiss="modal" id="modalBbutton" type="button" class="btn btn-primary" hidden></button>
             <!--<button type="button" class="btn btn-primary">Schedule Appointment</button>-->
           </div>
         </div>
