@@ -16,6 +16,13 @@ p {
     color: #999;
 }
 
+
+.card {
+    margin-top: -30px;
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
 a,
 a:hover,
 a:focus {
@@ -39,6 +46,8 @@ a:focus {
     outline: none !important;
     border: none;
 }
+
+
 
 .line {
     width: 100%;
@@ -450,24 +459,33 @@ img{ max-width:100%;}
     padding-top: 10px;
 }
 
-.img-circle {
-    border-radius: 100%;
-}
+/*.caption div {*/
+    /*box-shadow: 0 0 5px #C8C8C8;*/
+    /*transition: all 0.3s ease 0s;*/
+/*}*/
+/*.img-circle {*/
+    /*border-radius: 50%;*/
+/*}*/
+/*.img-circle {*/
+    /*border-radius: 0;*/
+/*}*/
 
-.ratio {
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
+/*.ratio {*/
+    /*background-position: center center;*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
 
-    height: 0;
-    padding-bottom: 100%;
-    position: relative;
-    width: 100%;
-    transform: scale(0.7);
-}
-
-.img-responsive {
-    display: block;
-    height: auto;
-    max-width: 100%;
-}
+    /*height: 0;*/
+    /*padding-bottom: 100%;*/
+    /*position: relative;*/
+    /*width: 100%;*/
+/*}*/
+/*.img-circle {*/
+    /*border-radius: 50%;*/
+/*}*/
+/*.img-responsive {*/
+    /*display: block;*/
+    /*height: auto;*/
+    /*max-width: 100%;*/
+    /**/
+/*}*/
