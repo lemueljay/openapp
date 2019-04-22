@@ -52,6 +52,10 @@
 
                 <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">
                     <div class="propro">
+                        <!-- dapat naa daw notofication haha kung na accept iyang appointment -->
+                        <i class="fas fa-bell fa-lg"></i>
+
+                        <span><img src="{% static request.user.imgpath %}" height="30px" width="30px"></span>
                         <span class="icon-color-white">{{ request.user.username }}</span>
                     </div>
                 </div>
@@ -62,25 +66,32 @@
 
 
 
-            <div class="container-fluid">
+            <div class="container-fluid"  style="background-image: url('{% static 'img/bg.png' %}');height: 745px; width: 100%; object-fit: cover;">
                 <div class="row">
                     <div class="col-sm-12">
                         {{ college }} Guidance Counselor
                     </div>
-                    <div class="col-md-4 offset-md-4 text-center guidanceprofile">
-                        <img src="{% static imgpath %}">
+                    <div class="col-md-4 offset-md-4 text-center guidanceprofile card">
+                        <center><img src="{% static imgpath %}" height="100px" width="100px" style="margin-top: 30px"></center>
                         <div class="guidancefullname">{{ user.first_name }} {{ user.last_name}}</div>
                         <div class="guidanceinfo">
                             {{ user.username|upper }}
                         </div>
+
+                        <!-- info sa gcc -->
                         <div>
+                            <span><h4>BS in Psychology</h4></span>
+
+                        </div>
+                        <!-- end info -->
+                        <br>
+                        <div style="margin-bottom: 30px">
                             <button type="button" class="btn btn-outline-primary"><a href="/openapp/appoint/{{ user.username|upper }}">Appoint</a></button>
                             <button type="button" class="btn btn-primary"><a href="/openapp/chat/{{ user.username|upper }}">Chat</a></button>
                         </div>
 
                     </div>
                 </div>
-            </div>
     </div>
     </div>
 
