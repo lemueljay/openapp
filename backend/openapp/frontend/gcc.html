@@ -22,10 +22,10 @@
             <div class="sidebar-header text-center">
                 <h3><b>OPEN APP</b></h3>
             </div>
-            <div src="{% static 'img/#firstEver.jpg' %}" class="ratio img-responsive img-circle"
-                style="background-image: url({% static request.user.imgpath %})">
-            </div>
             <ul class="list-unstyled components">
+                <div class="text-center">
+                    <img src="{% static request.user.imgpath %}" class="rounded" alt="...">
+                </div>
                 <p class="text-center">{{ request.user.username }}</p>
                 <li class="active">
                     <a href="/openapp">
