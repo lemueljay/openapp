@@ -75,6 +75,11 @@
                                 <input type="text" class="form-control" name="changePseudoNameInput">
                             </div>
                             <button id="button1" class="btn btn-primary">Update</button>
+                            {% if namemessage %}
+                            <div style="margin-top: 20px;" class="settingalert alert alert-danger">
+                                   {{ namemessage }}
+                            </div>       
+                            {% endif %}
                         </form>
                     </div>
                     <div class="col-sm-6">
@@ -90,6 +95,11 @@
                                 <input type="password" class="form-control" name="retypePasswordInput">
                             </div>
                             <button id="button2" href="/" class="btn btn-primary">Update</button>
+                            {% if passmessage %}
+                                <div style="margin-top: 20px;" class="settingalert alert alert-danger">
+                                    {{ passmessage }}
+                                </div>       
+                            {% endif %}
                         </form>
                     </div>
                 </div>

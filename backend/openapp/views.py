@@ -179,17 +179,51 @@ def settings(request):
 
 def updatepseudoname(request):
     pseudoname = request.GET['changePseudoNameInput']
+
+    if pseudoname is '':
+        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        context = {}
+        context['namemessage'] = 'Invalid username.'
+        context['username'] = request.user.username
+        return render(request, 'settings.html', context)
+
     user = User.objects.get(username=request.user.username)
     user.username = pseudoname
     user.save()
     return redirect('/openapp/settings')
 
 def updatepassword(request):
+    oldpassword = request.GET['oldPasswordInput']
     newpassword = request.GET['newPasswordInput']
+    confirmationpassword = request.GET['retypePasswordInput']
+
+    if oldpassword is '' or newpassword is '' or confirmationpassword is '':
+        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        context = {}
+        context['passmessage'] = 'Please fill out all forms.'
+        context['username'] = request.user.username
+        return render(request, 'settings.html', context)
+
+    if newpassword != confirmationpassword:
+        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        context = {}
+        context['passmessage'] = 'Password did not match.'
+        context['username'] = request.user.username
+        return render(request, 'settings.html', context)
 
     user = User.objects.get(username=request.user.username)
-    user.set_password(newpassword)
-    user.save()
+    user = authenticate(request, username=request.user.username, password=oldpassword)
+
+    if user is not None:
+        user.set_password(newpassword)
+        user.save()
+    else:
+        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        context = {}
+        context['passmessage'] = 'Password mismatch.'
+        context['username'] = request.user.username
+        return render(request, 'settings.html', context)
+
     return redirect('/openapp/login')
 
 
