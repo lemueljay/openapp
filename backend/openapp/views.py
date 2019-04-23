@@ -163,12 +163,33 @@ def loginUser(request):
 
         return JsonResponse(context)
 
-"""
 
-"""
 def logoutUser(request):
 
     logout(request)
+    return redirect('/openapp/login')
+
+
+def settings(request):
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+    context = {}
+    context['username'] = request.user.username
+    return render(request, 'settings.html', context)
+
+
+def updatepseudoname(request):
+    pseudoname = request.GET['changePseudoNameInput']
+    user = User.objects.get(username=request.user.username)
+    user.username = pseudoname
+    user.save()
+    return redirect('/openapp/settings')
+
+def updatepassword(request):
+    newpassword = request.GET['newPasswordInput']
+
+    user = User.objects.get(username=request.user.username)
+    user.set_password(newpassword)
+    user.save()
     return redirect('/openapp/login')
 
 

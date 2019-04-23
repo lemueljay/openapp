@@ -9,6 +9,10 @@ urlpatterns = [
     path('login', views.loginUser, name='loginUser'),
     path('logout', views.logoutUser, name='logoutUser'),
 
+    path('settings', views.settings, name='settings'),
+    path('updatepseudoname', views.updatepseudoname, name='updatepseudoname'),
+    path('updatepassword', views.updatepassword, name='updatepassword'),
+
     path('profile/<slug:college>', views.collegeprofile, name='collegeprofile'),
     path('chat/<slug:college>', views.collegechat, name='collegechat'),
 

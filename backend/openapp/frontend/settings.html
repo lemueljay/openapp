@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome-free-5.8.1-web/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+
+    <meta charset="UTF-8">
+    <title>OpenApp</title>
+</head>
+<body>
+    <script src="{% static 'bootstrap-4.3.1-dist/js/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/sidebar.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar">
+
+            <div class="sidebar-header text-center">
+                <h3><b>OPEN APP</b></h3>
+            </div>
+            <div src="{% static 'img/#firstEver.jpg' %}" class="ratio img-responsive img-circle"
+                style="background-image: url({% static request.user.imgpath %})">
+            </div>
+            <ul class="list-unstyled components">
+                <p class="text-center">{{ request.user.username }}</p>
+                <li>
+                    <a href="/openapp">
+                        <i class="fas fa-user"></i>
+                        Counselors
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="/openapp/settings">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="/openapp/logout">
+                        <i class="fas fa-power-off"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+
+                <i class="fas fa-align-justify icon-color-white"></i>
+
+                <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">
+                    <div class="propro">
+                        <span class="icon-color-white">{{ request.user.username }}</span>
+                    </div>
+                </div>
+
+
+            </div>
+        </nav>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12" style="margin-bottom: 50px">SETTINGS</div>
+                    <div class="col-sm-6">
+                        <form action="/openapp/updatepseudoname" method="GET">
+                            <div class="form-group">
+                                <label><b>Change Pseudo Name</b></label>
+                                <input type="text" class="form-control" name="changePseudoNameInput">
+                            </div>
+                            <button id="button1" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                    <div class="col-sm-6">
+                        <form action="/openapp/updatepassword" method="GET">
+                            <div class="form-group">
+                                <label><b>Change Password</b></label>
+                                <br>
+                                <label>Old Password</label>
+                                <input type="password" class="form-control" name="oldPasswordInput">
+                                <label>New Password</label>
+                                <input type="password" class="form-control" name="newPasswordInput">
+                                <label>Retype New Password</label>
+                                <input type="password" class="form-control" name="retypePasswordInput">
+                            </div>
+                            <button id="button2" href="/" class="btn btn-primary">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+
+</body>
+</html>
