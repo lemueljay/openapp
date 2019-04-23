@@ -16,13 +16,6 @@ p {
     color: #999;
 }
 
-
-.card {
-    margin-top: -30px;
-    background: rgba(0, 0, 0, 0.2);
-    color: white;
-}
-
 a,
 a:hover,
 a:focus {
@@ -46,8 +39,6 @@ a:focus {
     outline: none !important;
     border: none;
 }
-
-
 
 .line {
     width: 100%;
