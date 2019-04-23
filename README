@@ -1,0 +1,7 @@
+#
+# To run the app, 
+# run the following commands insise ./backend
+#
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
