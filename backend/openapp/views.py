@@ -259,6 +259,8 @@ def collegechat(request, college):
     print(combined_queryset)
     messages =  combined_queryset.order_by('date_created')
     print(messages)
+    for message in messages:
+        print(message.date_created)
     context['messages'] = messages
 
     return render(request, 'chat.html', context)

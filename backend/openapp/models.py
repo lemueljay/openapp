@@ -22,7 +22,7 @@ class UserAttrib(models.Model):
 
 
 class Message(models.Model):
-    date_created = models.DateTimeField(default=now())
+    date_created = models.DateTimeField(default=datetime.datetime.now)
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='source')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE,related_name='destination')
     message = models.CharField(max_length=1000)
