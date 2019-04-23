@@ -144,7 +144,7 @@ def loginUser(request):
     context = {}
 
     if request.method == 'GET':
-        return render(request, 'login.html', context)
+        return render(request, 'dash.html', context)
     elif request.method == 'POST':
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
