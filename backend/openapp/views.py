@@ -198,9 +198,17 @@ def updatepseudoname(request):
         context['username'] = request.user.username
         return render(request, 'settings.html', context)
 
-    user = User.objects.get(username=request.user.username)
-    user.username = pseudoname
-    user.save()
+    try:
+        user = User.objects.get(username=request.user.username)
+        user.username = pseudoname
+        user.save()
+    except:
+        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        context = {}
+        context['namemessage'] = 'Invalid username.'
+        context['username'] = request.user.username
+        return render(request, 'settings.html', context)
+        
     return redirect('/openapp/settings')
 
 def updatepassword(request):
