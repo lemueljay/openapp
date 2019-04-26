@@ -80,9 +80,11 @@ $(document).ready(function(global) {
 
             for(var i = 0; i < data.messages.length; i++) {
 
-                if(receiver === data.messages[i].receiver) {
+                if(receiver === data.messages[i].sender) {
+                    console.log("sender: " + data.messages[i].sender +" message: " + data.messages[i].message)
                     $('.msghistory').append(incomingMessageContstructor(data.messages[i].message, ''))
                 } else {
+                    console.log("sender: " + data.messages[i].sender +" message: " + data.messages[i].message)
                     $('.msghistory').append(outgoingMessageContstructor(data.messages[i].message, ''))
                 }
             }
