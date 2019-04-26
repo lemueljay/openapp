@@ -177,6 +177,16 @@ def settings(request):
     return render(request, 'settings.html', context)
 
 
+def information(request):
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+    context = {}
+    context['username'] = request.user.username
+    return render(request, 'information.html', context)
+
+
+def book(request):
+    return HttpResponse('ok')
+
 def updatepseudoname(request):
     pseudoname = request.GET['changePseudoNameInput']
 

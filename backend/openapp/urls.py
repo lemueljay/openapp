@@ -10,6 +10,10 @@ urlpatterns = [
     path('logout', views.logoutUser, name='logoutUser'),
 
     path('settings', views.settings, name='settings'),
+    path('information', views.information, name='information'),
+    path('book', views.book, name='information'),
+
+
     path('updatepseudoname', views.updatepseudoname, name='updatepseudoname'),
     path('updatepassword', views.updatepassword, name='updatepassword'),
 
