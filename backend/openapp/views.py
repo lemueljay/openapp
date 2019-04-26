@@ -113,6 +113,7 @@ def register(request):
         if not codeUsed(refcode):
             # Create user if code is valid
             try:
+                logout(request)
                 user = User.objects.create_user(username=username)
                 user.set_password(password)
                 user.is_staff = False
