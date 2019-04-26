@@ -9,3 +9,11 @@ python manage.py createsuperuser
 
 # Run the project
 python manage.py runserver
+
+# To access the admin
+# Login using the credentials from the superuser
+http://localhost:8000/admin
+
+# To add a guidance account,
+# from the admin dashboard follow the steps:
+Click users > Click Add User > Fill-in details > Save
