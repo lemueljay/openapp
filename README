@@ -1,7 +1,11 @@
-#
-# To run the app, 
-# run the following commands insise ./backend
-#
+# INITIALIZATION
+# Delete the database found at ./backend directory.
+# Run the following commands inside ./backend directory
 python manage.py makemigrations
 python manage.py migrate
+
+# Create a admin account
+python manage.py createsuperuser
+
+# Run the project
 python manage.py runserver
