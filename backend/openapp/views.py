@@ -8,7 +8,7 @@ import json, calendar
 import datetime
 
 from django.contrib.auth.models import User
-from .models import Code, UserAttrib, Message, Schedule
+from .models import *
 
 from .utils import CodeGenerator
 
@@ -178,15 +178,43 @@ def settings(request):
     return render(request, 'settings.html', context)
 
 
-def information(request):
+def information(request, schedule):
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
     context = {}
     context['username'] = request.user.username
+    context['schedule'] = schedule
     return render(request, 'information.html', context)
 
 
 def book(request):
-    return HttpResponse('ok')
+    context = {}
+    context['schedule'] = request.GET['schedule']
+    context['name'] = request.GET['name']
+    context['idno'] = request.GET['id']
+    context['college'] = request.GET['college']
+    context['yrcourse'] = request.GET['yrcourse']
+    context['gender'] = request.GET['inlineRadioOptions']
+    context['location'] = request.GET['location']
+    context['success'] = True
+    try:
+        schedule = Schedule.objects.get(id=context['schedule'])
+        schedule.assignee = request.user.username
+        schedule.save()
+
+        appointment = Appointment(schedule=schedule, info_name=context['name'],
+                                    info_id=context['idno'], info_college=context['college'],
+                                    info_yrcourse=context['yrcourse'], info_gender=context['gender'],
+                                    info_location=context['location'])
+        appointment.save()
+        
+
+    except:
+        return HttpResponse('Bad Request!')
+
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+    context['username'] = request.user.username
+
+    return render(request, 'information.html', context)
 
 def updatepseudoname(request):
     pseudoname = request.GET['changePseudoNameInput']

@@ -35,6 +35,19 @@ class Schedule(models.Model):
     assignee = models.CharField(max_length=1000, blank=True, default='')
     date = models.DateField(default=datetime.date.today)
     time = models.CharField(max_length=1000,default=None)
-
+    
     def __str__(self):
         return str(self.date) + ' ' + str(self.time)
+
+
+class Appointment(models.Model):
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+    info_name = models.CharField(max_length=1000,default=None)
+    info_id = models.CharField(max_length=1000,default=None)
+    info_college = models.CharField(max_length=1000,default=None)
+    info_yrcourse = models.CharField(max_length=1000,default=None)
+    info_gender = models.CharField(max_length=1000,default=None)
+    info_location = models.CharField(max_length=1000,default=None)
+
+    def __str__(self):
+        return str(self.info_name) + ' ' + str(self.schedule.date) + ' ' + str(self.schedule.time)

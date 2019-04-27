@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome-free-5.8.1-web/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
-
     <meta charset="UTF-8">
     <title>OpenApp</title>
 </head>
@@ -13,11 +12,9 @@
     <script src="{% static 'bootstrap-4.3.1-dist/js/jquery.js' %}"></script>
     <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
-
+    <script src="{% static 'js/information.js' %}"></script>
     <div class="wrapper">
-        <!-- Sidebar -->
         <nav id="sidebar">
-
             <div class="sidebar-header text-center">
                 <h3><b>OPEN APP</b></h3>
             </div>
@@ -46,11 +43,9 @@
                 </li>
             </ul>
         </nav>
-
         <div id="content">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
-
                 <i class="fas fa-align-justify icon-color-white"></i>
 
                 <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">
@@ -58,63 +53,81 @@
                         <span class="icon-color-white">{{ request.user.username }}</span>
                     </div>
                 </div>
-
-
             </div>
         </nav>
-
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12">Information Sheet<hr></div>
-                    
-                    <form class="col-sm-6 offset-sm-3" action="/openapp/book" method="GET">
-                        <div class="form-group row">
-                          <label for="name" class="col-sm-2 col-form-label">Name :</label>
-                          <div class="col-sm-10">
-                            <input name="name" type="text" class="form-control">
-                          </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">Information Sheet<hr></div>
+                <form class="col-sm-6 offset-sm-3" action="/openapp/book" method="GET">
+                    <input name="schedule" value="{{ schedule }}" hidden>
+                    <div class="form-group row">
+                      <label for="name" class="col-sm-2 col-form-label">Name :</label>
+                      <div class="col-sm-10">
+                        <input name="name" type="text" class="form-control">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">ID No :</label>
+                        <div class="col-sm-10">
+                          <input name="id" type="text" class="form-control">
                         </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">ID No :</label>
-                            <div class="col-sm-10">
-                              <input name="id" type="text" class="form-control">
+                    </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">College :</label>
+                        <div class="col-sm-10">
+                          <input name="college" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">Yr. & Course :</label>
+                        <div class="col-sm-10">
+                          <input name="yrcourse" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">Gender :</label>
+                        <div class="col-sm-10">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="male">
+                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="female">
+                                <label class="form-check-label" for="inlineRadio2">Female</label>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">College :</label>
-                            <div class="col-sm-10">
-                              <input name="college" type="text" class="form-control">
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">Location :</label>
+                        <div class="col-sm-10">
+                          <input name="location" type="text" class="form-control">
                         </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">Yr. & Course :</label>
-                            <div class="col-sm-10">
-                              <input name="yrcourse" type="text" class="form-control">
-                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-4 offset-sm-4">
+                            <button type="submit" class="btn btn-primary mb-2">Book Appointment</button>
                         </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">Gender :</label>
-                            <div class="col-sm-10">
-                              <input name="gender" type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="name" class="col-sm-2 col-form-label">Location :</label>
-                            <div class="col-sm-10">
-                              <input name="location" type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-4 offset-sm-4">
-                                <button type="submit" class="btn btn-primary mb-2">Book Appointment</button>
-                            </div>
-                        </div>
-                      </form>
+                    </div>
+                  </form>
+            </div>
+        </div>
+        <div class="modal fade approvalnotifmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h6 class="text-center">
+                        Your appointment is pending for approval from the GCC.
+                    </h6>
                 </div>
             </div>
+        </div>
+        </div>
     </div>
     </div>
-
+    {% if success %}
+    <script type="text/javascript">
+        $('.approvalnotifmodal').modal('show');
+    </script>
+    {% endif %}
 </body>
 </html>
-s

@@ -377,7 +377,7 @@ a.article:hover {
 
 .alert-available:hover {
     cursor: pointer;
-    background-color: #1c7430;
+    background-color: #007bff;
     color: white;
 }
 

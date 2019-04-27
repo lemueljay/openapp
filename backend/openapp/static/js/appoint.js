@@ -1,3 +1,11 @@
+var global_sched = null;
+
+function redirectToInformationSheet() {
+    
+    console.log("redirecting....")
+    window.location = '/openapp/information/' + global_sched;
+}
+
 function cancelAppointment(id) {
 
     var data = {
@@ -34,13 +42,16 @@ function generateNoScheduleError(errormessage) {
 
 function generateAvailableSlot(sched) {
 
+    global_sched = sched.id;
+
     var elem =
         '<div class="col-sm-6">' +
             '<p>' + sched.time + '</p>' +
         '</div>' +
         '<div class="col-sm-6">' +
-            '<div onclick="setAppointment(' + sched.id+ ')" class="alert alert-success alert-available" role="alert">' +
-                '<b>SET APPOINTMENT</b>' +
+            // '<div onclick="setAppointment(' + sched.id+ ')" class="alert alert-primary alert-available text-center" role="alert" data-toggle="modal" data-target=".bd-example-modal-sm">' +
+            '<div data-dismiss="modal" class="alert alert-primary alert-available text-center" role="alert" data-toggle="modal" data-target=".bd-example-modal-sm">' +
+                '<b>Book Appointment</b>' +
             '</div>' +
         '</div>';
 
