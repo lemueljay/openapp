@@ -38,7 +38,7 @@ def index(request):
                     attrib = UserAttrib.objects.get(user=user)
                     user.imgpath = attrib.imgpath
                 except:
-                    user.imgpath = 'img/001.png'
+                    user.imgpath = '/media/001.png'
                 print(user)
                 chat_list.append(user)
 
@@ -120,7 +120,7 @@ def register(request):
                 user.active = True
                 user.save()
                 print('Creating UserAttrib')
-                attrib = UserAttrib(user=user, imgpath='img/001.png')
+                attrib = UserAttrib(user=user, imgpath='/media/001.png')
                 attrib.save()
                 print('Successful UserAttrib')
                 # Invalidate code
@@ -685,3 +685,20 @@ def admin(request):
             return HttpResponse('User created successfully!')
         except:
             return HttpResponse('ERROR CREATING USER')
+
+
+from django.core.files.storage import FileSystemStorage
+
+def upload_file(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+
+        attrib = UserAttrib.objects.get(user=request.user)
+        attrib.imgpath = uploaded_file_url
+        attrib.save()
+        request.user.imgpath = uploaded_file_url
+        print('Uploaded to: ' + uploaded_file_url)
+        return redirect('/openapp')

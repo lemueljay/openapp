@@ -10,5 +10,17 @@ $(document).ready(function () {
     //     $('li').removeClass('active');
     //     $(this).addClass('active');
     // });
+    
+    $('#myFile').change(function() {
+        console.log('Upload button triggered')
+        $('#uploadButton').click()
+    })
+
+    $('.containers').on('click', function() {
+        console.log('')
+        $('input[name=myfile]').click()        
+    })
+
+    
 
 });

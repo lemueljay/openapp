@@ -37,4 +37,6 @@ urlpatterns = [
     # path('setCodeAsUsed', views.setCodeAsUsed, name='setCodeAsUsed'),
 
     path('admin', views.admin, name='admin'),
+
+    path('upload_file', views.upload_file, name='upload_file'),
 ]
