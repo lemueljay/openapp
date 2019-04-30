@@ -537,3 +537,13 @@ img{ max-width:100%;}
 #notifbell:hover, .propro:hover {
     background-color: #c22626;
 }
+
+.footer {
+    margin-left: 125px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
+  }
