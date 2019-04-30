@@ -27,7 +27,7 @@
                     <div class="text">Update Photo</div>
                 </div>                               
             </div>
-            <form action="/openapp/upload_file" method="post" enctype="multipart/form-data">
+            <form action="/openapp/upload_file" method="post" enctype="multipart/form-data" hidden>
                 {% csrf_token %}
                 <input id="myFile" type="file" name="myfile" hidden>
                 <button id="uploadButton" type="submit" hidden>Upload</button>
@@ -62,7 +62,11 @@
                 <i class="fas fa-align-justify icon-color-white"></i>
 
                 <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">
-                    <div class="propro">
+                    
+                    <i id="notifbell" style="color: white; font-size: 25px; cursor:pointer" class="far fa-bell padder"></i>
+                                 
+                    <div class="propro padder" style="cursor:pointer">
+                        <img src="{{ request.user.imgpath }}" alt="avatar" class="" style="margin-right: 10px;width:25px; height: auto;">
                         <span class="icon-color-white">{{ request.user.username }}</span>
                     </div>
                 </div>
@@ -71,14 +75,14 @@
             </div>
         </nav>
 
-            <div class="container-fluid">
+            <div id="minime" class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-12">Good Evening, {{ request.user.username }}!</div>
+                    <div class="col-sm-12 heading">Good Evening, {{ request.user.username }}!</div>
                     <div class="col-sm-12">
                         <div class="row" id="collegegroup">
                             <a class="collegebox text-center col-md-2 offset-md-2" href="/openapp/profile/SCS">
                                 <div class="guidancebox">
-                                    <img src="{% static 'img/001.png' %}" class="rounded" alt="...">
+                                    <img src="{% static 'img/008.png' %}" class="rounded" alt="...">
                                     <div class="guidancename">SCS</div>
                                 </div>
                             </a>

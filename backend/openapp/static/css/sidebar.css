@@ -1,8 +1,13 @@
-/*
-    DEMO STYLE
-*/
-
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+html { 
+    background: url('/static/img/bg.jpg') no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
 body {
     font-family: 'Poppins', sans-serif;
     background: #fafafa;
@@ -26,7 +31,7 @@ a:focus {
 
 .navbar {
     /*padding: 15px 10px;*/
-    padding: 23px 10px;
+    /* padding: 23px 10px; */
     background: #d81a1a;
     border: none;
     border-radius: 0;
@@ -180,6 +185,11 @@ a.article:hover {
     }
 }
 
+.heading {
+    color: white;
+    font-size: 20px;
+}
+
 /*GUIDANCE BOX*/
 
 #collegegroup {
@@ -187,7 +197,7 @@ a.article:hover {
 }
 
 .collegebox {
-
+  
 }
 
 .guidancebox {
@@ -197,7 +207,7 @@ a.article:hover {
     border-radius: 5px;
     border-style: solid;
     border-width: 1px;
-    border-color: black;
+    border-color: white;
 }
 
 .guidancebox:hover {
@@ -217,10 +227,6 @@ a.article:hover {
 
 .icon-color-white {
     color: white;
-}
-
-.propro, .propro>span {
-    margin-left: 10px
 }
 
 .guidanceprofile {
@@ -335,6 +341,10 @@ a.article:hover {
 .navbar-brand {
     color: white;
     padding-left: 20px;
+}
+
+#content > nav {
+    padding: 0px;
 }
 
 .generate-card {
@@ -519,3 +529,11 @@ img{ max-width:100%;}
     font-size: 16px;
     padding: 16px 32px;
   }
+
+.padder {
+    padding: 24px 20px;
+}
+
+#notifbell:hover, .propro:hover {
+    background-color: #c22626;
+}

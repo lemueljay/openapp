@@ -21,6 +21,8 @@ $(document).ready(function () {
         $('input[name=myfile]').click()        
     })
 
-    
+    $('#notifbell').on('click', function() {
+        
+    })
 
 });

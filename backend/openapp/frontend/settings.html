@@ -23,9 +23,17 @@
             <div class="sidebar-header text-center">
                 <h3><b>OPEN APP</b></h3>
             </div>
-            <div src="{% static 'img/#firstEver.jpg' %}" class="ratio img-responsive img-circle"
-                style="background-image: url({% static request.user.imgpath %})">
-            </div>
+            <div class="containers">
+                    <img src="{{ request.user.imgpath }}" alt="avatar" class="image" style="width:100%">
+                    <div class="middle">
+                        <div class="text">Update Photo</div>
+                    </div>                               
+                </div>
+                <form action="/openapp/upload_file" method="post" enctype="multipart/form-data" hidden>
+                    {% csrf_token %}
+                    <input id="myFile" type="file" name="myfile" hidden>
+                    <button id="uploadButton" type="submit" hidden>Upload</button>
+                </form>
             <ul class="list-unstyled components">
                 <p class="text-center">{{ request.user.username }}</p>
                 <li>
@@ -56,7 +64,10 @@
                 <i class="fas fa-align-justify icon-color-white"></i>
 
                 <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">
-                    <div class="propro">
+                    <i id="notifbell" style="color: white; font-size: 25px; cursor:pointer" class="far fa-bell padder"></i>
+                                 
+                    <div class="propro padder" style="cursor:pointer">
+                        <img src="{{ request.user.imgpath }}" alt="avatar" class="" style="margin-right: 10px;width:25px; height: auto;">
                         <span class="icon-color-white">{{ request.user.username }}</span>
                     </div>
                 </div>
@@ -67,7 +78,7 @@
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-12" style="margin-bottom: 50px">SETTINGS</div>
+                    <div class="col-sm-12 heading" style="margin-bottom: 50px">Settings</div>
                     <div class="col-sm-6">
                         <form action="/openapp/updatepseudoname" method="GET">
                             <div class="form-group">
