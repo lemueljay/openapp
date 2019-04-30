@@ -664,3 +664,24 @@ def addCode(code):
     return rc
 
 
+def admin(request):
+    if request.method == 'GET':
+        if request.user.is_staff:
+            context = {}
+            return render(request, 'admin.html', context)
+        return HttpResponse('404 ERROR NOT FOUND')
+    elif request.method == 'POST':
+        try:
+            username = request.POST.get('username', '')
+            password = request.POST.get('password', '')
+            user = User.objects.create_user(username=username)
+            user.set_password(password)
+            user.is_staff = True
+            user.save()
+
+            attrib = UserAttrib(user=user, imgpath='img/002.png')
+            attrib.save()
+
+            return HttpResponse('User created successfully!')
+        except:
+            return HttpResponse('ERROR CREATING USER')

@@ -35,4 +35,6 @@ urlpatterns = [
     # path('hasCode', views.hasCode, name='hasCode'),
     path('getCodeStatus', views.getCodeStatus, name='getCodeStatus'),
     # path('setCodeAsUsed', views.setCodeAsUsed, name='setCodeAsUsed'),
+
+    path('admin', views.admin, name='admin'),
 ]
