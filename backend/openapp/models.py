@@ -16,6 +16,9 @@ class UserAttrib(models.Model):
     date_created = models.DateTimeField(default=now())
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     imgpath = models.CharField(max_length=100, default='img/001.png')
+    course = models.CharField(max_length=100, blank=True)
+    birthday = models.CharField(max_length=100, blank=True)
+    location = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.user.username

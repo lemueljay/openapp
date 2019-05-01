@@ -72,19 +72,16 @@
                     </div>
                 </div>
             </nav>
-
-
-
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-12 heading">{{ college }} Guidance Counselor</div>                
                     <div class="col-md-4 offset-md-4 text-center guidanceprofile">                                                
                         <img class="guidanceimg" src="{% static imgpath %}">
                         <div class="guidanceinfo">                            
-                            <div class="guidanceinfoname">Sirikit Padate</div>
-                            <div class="guidanceinfocourse">BS Psychology</div>
-                            <div>June 12, 1990</div>
-                            <div>Tibanga, Iligan City</div>
+                            <div class="guidanceinfoname">{{ guidancefirstname }} {{ guidancelastname }}</div>
+                            <div class="guidanceinfocourse">{{ guidancecourse }}</div>
+                            <div>{{ guidancebirthday }}</div>
+                            <div>{{ guidancelocation }}</div>
                         </div>
                         <div>
                             <button type="button" class="btn btn-outline-primary"><a href="/openapp/appoint/{{ user.username|upper }}">Appoint</a></button>

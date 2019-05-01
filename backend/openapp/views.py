@@ -289,9 +289,12 @@ def collegeprofile(request, college):
 
             if user is not None:
                 context['user'] = user
-                context['firstname'] = user.first_name
-                context['lastname'] = user.last_name
+                context['guidancefirstname'] = user.first_name
+                context['guidancelastname'] = user.last_name
                 context['imgpath'] = userAttrib.imgpath
+                context['guidancecourse'] = userAttrib.course
+                context['guidancebirthday'] = userAttrib.birthday
+                context['guidancelocation'] = userAttrib.location
             else:
                 print('no user')
                 context['errormessage'] = 'BAD OUTPUT'
