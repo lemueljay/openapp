@@ -146,14 +146,115 @@
         <div class="modal-content">
           <div class="modal-body">
               <h5 class="text-center">Time Slot Schedule</h5>
-            <div class="row" id="slotter"></div>
+              <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner text-center">
+                        <div class="carousel-item active">                            
+                            <div class="timebox">
+                                <span>8:00AM - 9:00AM</span>
+                                <span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary active">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> A
+                                    </label>
+                                    <label class="btn btn-outline-primary">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> NA
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="timebox">
+                                <span>9:00AM - 10:00AM</span>
+                                <span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary active">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> A
+                                    </label>
+                                    <label class="btn btn-outline-primary">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> NA
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="timebox">
+                                <span>10:00AM - 11:00AM</span>
+                                <span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary active">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> A
+                                    </label>
+                                    <label class="btn btn-outline-primary">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> NA
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="timebox">
+                                <span>11:00AM - 12:00AM</span>
+                                <span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary active">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> A
+                                    </label>
+                                    <label class="btn btn-outline-primary">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> NA
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                           <div class="timebox">
+                                <span>1:00PM - 2:00PM</span>
+                                <span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary active">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> A
+                                    </label>
+                                    <label class="btn btn-outline-primary">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> NA
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="timebox">
+                                <span>2:00PM - 3:00PM</span>
+                                <span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary active">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> A
+                                    </label>
+                                    <label class="btn btn-outline-primary">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> NA
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="timebox">
+                                <span>3:00PM - 4:00PM</span>
+                                <span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary active">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> A
+                                    </label>
+                                    <label class="btn btn-outline-primary">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> NA
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="timebox">
+                                <span>4:00PM - 5:00PM</span>
+                                <span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary active">
+                                        <input type="radio" name="options" id="option1" autocomplete="off" checked> A
+                                    </label>
+                                    <label class="btn btn-outline-primary">
+                                        <input type="radio" name="options" id="option2" autocomplete="off"> NA
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                                           
+                    </div>                   
+                    <div class="text-center">
+                        <i id="prevslide" class="fas fa-circle"></i>
+                        <i id="nextslide" class="far fa-circle"></i>
+                    </div>
+              </div>
+            <!-- <div class="row" id="slotter"></div> -->
           </div>
-          <div class="modal-footer">
+          <!-- <div class="modal-footer">
               <input name="assignee" value="{{ request.user.username }}" hidden>
               <input name="createappointments" class="form-control" type="text">
               <button type="button" class="btn btn-primary" onclick="createappointments()">Create Schedule</button>
               <button data-dismiss="modal" id="modalBbutton" type="button" class="btn btn-primary" hidden></button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

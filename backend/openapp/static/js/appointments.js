@@ -90,4 +90,15 @@ function createappointments() {
 
 $(document).ready(function() {
 
+    $('#prevslide').on('click', function() {
+        $(this).toggleClass('fas').toggleClass('far')
+        $('#nextslide').toggleClass('fas').toggleClass('far')
+        $('#carouselExampleControls').carousel('prev')
+    })
+
+    $('#nextslide').on('click', function() {
+        $(this).toggleClass('fas').toggleClass('far')
+        $('#prevslide').toggleClass('fas').toggleClass('far')
+        $('#carouselExampleControls').carousel('next')
+    })
 })

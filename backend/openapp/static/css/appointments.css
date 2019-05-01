@@ -1,3 +1,11 @@
 html {
     background: none;
 }
+
+.timebox {
+    margin-bottom: 10px;
+}
+
+.timebutton {
+    margin-left: 40px;
+}
