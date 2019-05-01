@@ -1,3 +1,7 @@
+html {
+    background: none;
+}
+
 .continuebtn:hover {
     cursor: pointer
 }

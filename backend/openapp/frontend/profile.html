@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome-free-5.8.1-web/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
     <meta charset="UTF-8">
     <title>OpenApp</title>
@@ -12,19 +13,29 @@
 <body>
 
     <script src="{% static 'bootstrap-4.3.1-dist/js/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap-4.3.1-dist/js/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
 
     <div class="wrapper">
         <!-- Sidebar -->
         <nav id="sidebar">
-
             <div class="sidebar-header text-center">
                 <h3><b>OPEN APP</b></h3>
             </div>
-            <div src="{% static 'img/#firstEver.jpg' %}" class="ratio img-responsive img-circle"
-                style="background-image: url({% static request.user.imgpath %})">
+            <div class="containers">
+                <input name="imgpath" value="{{ request.user.imgpath }}" hidden>
+                <input name="username" value="{{ request.user.username }}" hidden>
+                <img src="{{ request.user.imgpath }}" alt="avatar" class="image" style="width:100%">
+                <div class="middle">
+                    <div class="text">Update Photo</div>
+                </div>                               
             </div>
+            <form action="/openapp/upload_file" method="post" enctype="multipart/form-data" hidden>
+                {% csrf_token %}
+                <input id="myFile" type="file" name="myfile" hidden>
+                <button id="uploadButton" type="submit" hidden>Upload</button>
+            </form>
             <ul class="list-unstyled components">
                 <p class="text-center">{{ request.user.username }}</p>
                 <li class="active">
@@ -49,33 +60,31 @@
         </nav>
 
         <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container-fluid">
-
-                <i class="fas fa-align-justify icon-color-white"></i>
-
-                <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">
-                    <div class="propro">
-                        <span class="icon-color-white">{{ request.user.username }}</span>
+            <nav id="topnavbar" class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                    <i class="fas fa-align-justify icon-color-white"></i>
+                    <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">                    
+                        <i id="notifbell" style="color: white; font-size: 25px; cursor:pointer" class="far fa-bell padder" data-toggle="popover"><span class="badge badge-light" hidden>2</span></i>
+                        <div id="myprofile" class="propro padder" style="cursor:pointer" data-toggle="popover">
+                            <img src="{{ request.user.imgpath }}" alt="avatar" class="" style="margin-right: 10px;width:25px; height: auto;">
+                            <span class="icon-color-white">{{ request.user.username }}</span>
+                        </div>                    
                     </div>
                 </div>
-
-
-            </div>
-        </nav>
+            </nav>
 
 
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-sm-12">
-                        {{ college }} Guidance Counselor
-                    </div>
-                    <div class="col-md-4 offset-md-4 text-center guidanceprofile">
-                        <img src="{% static imgpath %}">
-                        <div class="guidancefullname">{{ user.first_name }} {{ user.last_name}}</div>
-                        <div class="guidanceinfo">
-                            {{ user.username|upper }}
+                    <div class="col-sm-12 heading">{{ college }} Guidance Counselor</div>                
+                    <div class="col-md-4 offset-md-4 text-center guidanceprofile">                                                
+                        <img class="guidanceimg" src="{% static imgpath %}">
+                        <div class="guidanceinfo">                            
+                            <div class="guidanceinfoname">Sirikit Padate</div>
+                            <div class="guidanceinfocourse">BS Psychology</div>
+                            <div>June 12, 1990</div>
+                            <div>Tibanga, Iligan City</div>
                         </div>
                         <div>
                             <button type="button" class="btn btn-outline-primary"><a href="/openapp/appoint/{{ user.username|upper }}">Appoint</a></button>

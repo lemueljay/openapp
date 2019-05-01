@@ -45,10 +45,9 @@ $(document).ready(function () {
             content:
                 '<div>' + 
                     '<hr>' +
-                    '<div>Appointment approved</div>' +
-                    '<hr>' +
-                    '<div>1 unread message</div>' +
-                    '<hr>' +
+                    // '<div>Appointment approved</div>' +
+                    // '<hr>' +
+                    // '<div>1 unread message</div>' +                    
                 '</div>',
             html: true,
             placement: 'bottom'

@@ -1,0 +1,14 @@
+.guidanceinfo {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 100px 10px 10px 10px;
+    margin-bottom: 20px;
+}
+
+.guidanceinfoname {
+    font-size: 24px;
+}
+
+.guidanceimg {
+    -webkit-transform: translateY(60px);
+}
