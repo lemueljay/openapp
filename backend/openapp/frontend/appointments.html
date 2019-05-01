@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome-free-5.8.1-web/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/appointments.css' %}">
 
     <meta charset="UTF-8">
     <title>OpenApp</title>
@@ -12,33 +13,55 @@
 <body>
 
     <script src="{% static 'bootstrap-4.3.1-dist/js/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap-4.3.1-dist/js/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
     <script src="{% static 'js/appointments.js' %}"></script>
 
     <div class="wrapper">
-        <!-- Sidebar -->
         <nav id="sidebar">
             <div class="sidebar-header text-center">
                 <h3><b>OPEN APP</b></h3>
             </div>
-            <div src="{% static 'img/#firstEver.jpg' %}" class="ratio img-responsive img-circle"
-                style="background-image: url({% static request.user.imgpath %})">
+            <div class="containers">
+                <input name="imgpath" value="{{ request.user.imgpath }}" hidden>
+                <input name="username" value="{{ request.user.first_name }}" hidden>
+                <img src="{{ request.user.imgpath }}" alt="avatar" class="image" style="width:100%">
+                <div class="middle">
+                    <div class="text">Update Photo</div>
+                </div>                               
             </div>
+            <form action="/openapp/upload_file" method="post" enctype="multipart/form-data" hidden>
+                {% csrf_token %}
+                <input id="myFile" type="file" name="myfile" hidden>
+                <button id="uploadButton" type="submit" hidden>Upload</button>
+            </form>
             <ul class="list-unstyled components">
-                <p class="text-center">{{ request.user.username }}</p>
-                <li class="">
-                    <a href="/openapp/">
-                        <i class="fas fa-inbox"></i>
-                        Messages
+                <p class="text-center">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                <li>
+                    <a href="/openapp">
+                        <i class="fas fa-clipboard-list"></i>
+                        Appointment
                     </a>
                 </li>
                 <li class="active">
                     <a href="/openapp/appointments">
-                        <i class="far fa-calendar-check"></i>
-                        Set Appointment
+                        <i class="far fa-calendar-alt"></i>
+                        Schedule
                     </a>
                 </li>
+                <li>
+                    <a href="/openapp">
+                        <i class="fas fa-comment-dots"></i>
+                        Chat
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/openapp/settings">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </li>         
                 <li>
                     <a href="/openapp/logout">
                         <i class="fas fa-power-off"></i>
@@ -49,16 +72,18 @@
         </nav>
 
         <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container-fluid">
-                <i class="fas fa-align-justify icon-color-white"></i>
-                <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">
-                    <div class="propro">
-                        <span class="icon-color-white">{{ request.user.username }}</span>
+            <nav id="topnavbar" class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                    <i class="fas fa-align-justify icon-color-white"></i>
+                    <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">                    
+                        <i id="notifbell" style="color: white; font-size: 25px; cursor:pointer" class="far fa-bell padder" data-toggle="popover"><span class="badge badge-light" hidden>2</span></i>
+                        <div id="myprofile" class="propro padder" style="cursor:pointer" data-toggle="popover">
+                            <img src="{{ request.user.imgpath }}" alt="avatar" class="myprofileimg" style="margin-right: 10px;width:25px; height: auto;">
+                            <span class="icon-color-white">{{ request.user.first_name }}</span>
+                        </div>                    
                     </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
 
         <div class="container" id="calendar">
             <header>
@@ -119,13 +144,8 @@
     <div class="modal fade" id="scheduleModal" tabindex="-1" role="dialog" aria-labelledby="scheduleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Time Slot Available</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
           <div class="modal-body">
+              <h5 class="text-center">Time Slot Schedule</h5>
             <div class="row" id="slotter"></div>
           </div>
           <div class="modal-footer">
@@ -133,7 +153,6 @@
               <input name="createappointments" class="form-control" type="text">
               <button type="button" class="btn btn-primary" onclick="createappointments()">Create Schedule</button>
               <button data-dismiss="modal" id="modalBbutton" type="button" class="btn btn-primary" hidden></button>
-            <!--<button type="button" class="btn btn-primary">Schedule Appointment</button>-->
           </div>
         </div>
       </div>

@@ -45,7 +45,7 @@ def index(request):
 
             context['chat_list'] = chat_list
 
-            return render(request, 'gcc.html', context)
+            return render(request, 'appointment.html', context)
         else:
             userattrib = UserAttrib.objects.get(user=request.user)
             
@@ -188,9 +188,15 @@ def logoutUser(request):
 
 def settings(request):
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+    request.user.attrib = UserAttrib.objects.get(user=request.user)
     context = {}
     context['username'] = request.user.username
-    return render(request, 'settings.html', context)
+    if request.user.is_staff:
+        
+        return render(request, 'settings_gcc.html', context)
+    else:
+        
+        return render(request, 'settings.html', context)
 
 
 def information(request, schedule):
@@ -729,3 +735,20 @@ def upload_file(request):
         request.user.imgpath = uploaded_file_url
         print('Uploaded to: ' + uploaded_file_url)
         return redirect('/openapp')
+
+def updatedata(request):
+
+    context = {}
+    
+    if request.method == 'POST':
+        context['degree'] = request.POST['degree']
+        context['birthdate'] = request.POST['birthdate']
+        context['address'] = request.POST['address']
+
+        attrib = UserAttrib.objects.get(user=request.user)
+        attrib.course = context['degree']
+        attrib.birthday = context['birthdate']
+        attrib.location = context['address']
+        attrib.save()
+
+        return redirect('/openapp/settings')

@@ -10,7 +10,6 @@
     <script src="{% static 'bootstrap-4.3.1-dist/js/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
-    <script src="{% static 'js/message.js' %}"></script>
 
     <meta charset="UTF-8">
     <title>OpenApp</title>
@@ -24,7 +23,7 @@
             </div>
             <div class="containers">
                 <input name="imgpath" value="{{ request.user.imgpath }}" hidden>
-                <input name="username" value="{{ request.user.username }}" hidden>
+                <input name="username" value="{{ request.user.first_name }}" hidden>
                 <img src="{{ request.user.imgpath }}" alt="avatar" class="image" style="width:100%">
                 <div class="middle">
                     <div class="text">Update Photo</div>
@@ -37,27 +36,27 @@
             </form>
             <ul class="list-unstyled components">
                 <p class="text-center">{{ request.user.first_name }} {{ request.user.last_name }}</p>
-                <li class="">
-                    <a href="/openapp/appointments">
-                        <i class="far fa-calendar-check"></i>
+                <li class="active">
+                    <a href="/openapp">
+                        <i class="fas fa-clipboard-list"></i>
                         Appointment
                     </a>
                 </li>
                 <li class="">
                     <a href="/openapp/appointments">
-                        <i class="far fa-calendar-check"></i>
+                        <i class="far fa-calendar-alt"></i>
                         Schedule
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="/openapp">
-                        <i class="fas fa-inbox"></i>
+                        <i class="fas fa-comment-dots"></i>
                         Chat
                     </a>
                 </li>
                 <li class="">
-                    <a href="/openapp/appointments">
-                        <i class="far fa-calendar-check"></i>
+                    <a href="/openapp/settings">
+                        <i class="fas fa-cog"></i>
                         Settings
                     </a>
                 </li>         
@@ -83,63 +82,13 @@
                     </div>
                 </div>
             </nav>
-            <div class="inbox_people">
-              <div class="inbox_chat">
-                  {% for people in chat_list %}
-                  <div class="chat_list">
-                      <input value="{{ people }}" hidden>
-                      <div class="chat_people">
-                          <!--<div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>-->
-                            <div class="chat_ib">
-                                <h5>{{ people }}
-                                     <!--<span class="chat_date">Dec 25</span>-->
-                                </h5>
-                                <p>Test, which is a new approach to have all solutions
-                                    astrology under one roof.</p>
-                            </div>
-                      </div>
-                  </div>
-                  {% endfor %}
-              </div>
-            </div>
-
-
             <div class="container-fluid">
-
-                <div class="msghistory">
-                    {% for message in messages%}
-                        {% if  message.sender == request.user %}
-                            <div class="mssg outgoing_msg">
-                                <div class="sent_msg">
-                                <p>{{ message.message }}</p>
-                                <span class="time_date">{{ message.date_created }}</span> </div>
-                            </div>
-                        {% else %}
-                            <div class="mssg incoming_msg">
-                                <div class="incoming_msg_img"> <img src="{% static imgpath %}" alt="sunil"> </div>
-                                <div class="received_msg">
-                                    <div class="received_withd_msg">
-                                        <p>{{ message.message }}</p>
-                                        <span class="time_date">{{ message.date_created }}</span>
-                                    </div>
-                                  </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-                <nav class="navbar navbar-light bg-light" id="messagebar">
-                <div class="input-group mb-3">
-                    {% csrf_token %}
-                    <input id="chatmessage" name="chatmessage" type="text" class="form-control" placeholder="What's going on?" aria-label="Username" aria-describedby="basic-addon1">
-                    <input name="senderinput" type="text" value="{{ request.user }}" hidden>
-                    <input name="receiverinput" type="text" value="{{ college|lower }}" hidden>
-                     <div class="input-group-prepend">
-                    <i class="input-group-text fas fa-paper-plane sendButton" id="sendButton"></i>
-                  </div>
-                </div>
-            </nav>
+                <div class="row">
+                    <div class="col-sm-6">CONTENT 1</div>
+                    <div class="col-sm-6">CONTENT 2</div>
+                </div>>
             </div>
-        </div>
+        </div>        
     </div>
 </body>
 </html>

@@ -13,9 +13,11 @@ urlpatterns = [
     path('information/<int:schedule>', views.information, name='information'),
     path('book', views.book, name='information'),
 
-
+    # SETTINGS
     path('updatepseudoname', views.updatepseudoname, name='updatepseudoname'),
     path('updatepassword', views.updatepassword, name='updatepassword'),
+
+    path('updatedata', views.updatedata, name='updatedata'),
 
     path('profile/<slug:college>', views.collegeprofile, name='collegeprofile'),
     path('chat/<slug:college>', views.collegechat, name='collegechat'),
