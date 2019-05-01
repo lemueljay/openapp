@@ -99,6 +99,10 @@ function getSchedules(day) {
 
     console.log(JSON.stringify(data))
 
+    var res = day.split(' ')
+    
+    res = res[1].split(',')[0]
+
     // Get the schedules for this college guidance counselor
     $.get("http://localhost:8000/openapp/getAppointmentSchedules/" + counselor, data, function(data) {
 
