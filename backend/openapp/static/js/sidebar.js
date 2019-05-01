@@ -22,7 +22,23 @@ $(document).ready(function () {
     })
 
     $('#notifbell').on('click', function() {
-        
+
+    })
+
+    $(function () {
+        var imgpath = $('input[name=imgpath]').val()
+        var username = $('input[name=username]').val()
+        options = {
+            title: '<img class="poppic" src="' + imgpath + '"><h4 class="text-center">' + username + '</h4>',
+            content:
+                '<div class="popoptions text-center">' + 
+                    '<a href="/openapp/settings" class="popoption">Settings</a>' + 
+                    '<a href="/openapp/logout" class="popoption">Logout</a>' + 
+                '</div>',
+            html: true,
+            placement: 'bottom'
+        }
+        $('[data-toggle="popover"]').popover(options)
     })
 
 });

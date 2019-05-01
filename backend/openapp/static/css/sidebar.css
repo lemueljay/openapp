@@ -547,3 +547,34 @@ img{ max-width:100%;}
     color: white;
     text-align: center;
   }
+
+.bs-popover-bottom {
+    margin-top: 0px !important;
+}
+
+.bs-popover-bottom:first-child {
+    visibility: hidden;
+}
+
+.popoptions {
+    padding: 10px;
+}
+
+.popoption {
+    background-color: #e9e9e9;
+    padding: 7px 20px 7px 20px;
+    border-radius: 2px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+
+.popover-header {
+    background-color:#ffdf41d9;
+}
+.poppic {
+    width: 85px;
+    margin-left: 80px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
