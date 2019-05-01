@@ -38,7 +38,22 @@ $(document).ready(function () {
             html: true,
             placement: 'bottom'
         }
-        $('[data-toggle="popover"]').popover(options)
+        $('#myprofile[data-toggle="popover"]').popover(options);
+
+        notifOptions = {
+            title: '<p class="notifHeader"><b>NOTIFICATIONS</b></p>',
+            content:
+                '<div>' + 
+                    '<hr>' +
+                    '<div>Appointment approved</div>' +
+                    '<hr>' +
+                    '<div>1 unread message</div>' +
+                    '<hr>' +
+                '</div>',
+            html: true,
+            placement: 'bottom'
+        }
+        $('#notifbell[data-toggle="popover"]').popover(notifOptions)
     })
 
 });
