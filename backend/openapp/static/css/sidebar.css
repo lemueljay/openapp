@@ -217,8 +217,10 @@ a.article:hover {
 }
 
 .guidancebox>img {
-    transform: scale(0.7);
-}
+    transform: scale(0.8);
+    width: 100px;
+    border-radius: 100px;
+}   
 
 .guidancename {
     transform: translate(0px, -10px);
@@ -574,9 +576,14 @@ img{ max-width:100%;}
 }
 .poppic {
     width: 85px;
+    border-radius: 100px;
     margin-left: 80px;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.myprofileimg {
+    border-radius: 100px;
 }
 
 .badge {

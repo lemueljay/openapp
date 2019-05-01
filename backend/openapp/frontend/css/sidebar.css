@@ -213,6 +213,8 @@ a.article:hover {
 
 .guidancebox>img {
     transform: scale(0.7);
+    width: 100px;
+    border-radius: 100px;
 }
 
 .guidancename {

@@ -48,6 +48,21 @@ def index(request):
             return render(request, 'gcc.html', context)
         else:
             userattrib = UserAttrib.objects.get(user=request.user)
+            
+            scs = User.objects.get(username='scs')
+            context['scs'] = UserAttrib.objects.get(user=scs)
+            coet = User.objects.get(username='coet')
+            context['coet'] = UserAttrib.objects.get(user=coet)
+            csm = User.objects.get(username='csm')
+            context['csm'] = UserAttrib.objects.get(user=csm)
+            ced = User.objects.get(username='ced')
+            context['ced'] = UserAttrib.objects.get(user=ced)
+            cass = User.objects.get(username='cass')
+            context['cass'] = UserAttrib.objects.get(user=cass)
+            cbaa = User.objects.get(username='cbaa')
+            context['cbaa'] = UserAttrib.objects.get(user=cbaa)
+            con = User.objects.get(username='con')
+            context['con'] = UserAttrib.objects.get(user=con)
 
             return render(request, 'index.html', context)
     else:
@@ -120,7 +135,7 @@ def register(request):
                 user.active = True
                 user.save()
                 print('Creating UserAttrib')
-                attrib = UserAttrib(user=user, imgpath='/media/001.png')
+                attrib = UserAttrib(user=user, imgpath='/media/vector.jpg')
                 attrib.save()
                 print('Successful UserAttrib')
                 # Invalidate code
@@ -199,14 +214,13 @@ def book(request):
     try:
         schedule = Schedule.objects.get(id=context['schedule'])
         schedule.assignee = request.user.username
+        schedule.info_name = context['name']
+        schedule.info_id = context['idno']
+        schedule.info_college = context['college']
+        schedule.info_yrcourse = context['yrcourse']
+        schedule.info_gender = context['gender']
+        schedule.info_location = context['location']
         schedule.save()
-
-        appointment = Appointment(schedule=schedule, info_name=context['name'],
-                                    info_id=context['idno'], info_college=context['college'],
-                                    info_yrcourse=context['yrcourse'], info_gender=context['gender'],
-                                    info_location=context['location'])
-        appointment.save()
-        
 
     except:
         return HttpResponse('Bad Request!')
@@ -677,12 +691,22 @@ def admin(request):
         try:
             username = request.POST.get('username', '')
             password = request.POST.get('password', '')
+            firstname = request.POST.get('firstname', '')
+            lastname = request.POST.get('lastname', '')
+            course = request.POST.get('course', '')
+            birthday = request.POST.get('birthday', '')
+            location = request.POST.get('location', '')
             user = User.objects.create_user(username=username)
             user.set_password(password)
             user.is_staff = True
+            user.first_name = firstname
+            user.last_name = lastname            
             user.save()
 
-            attrib = UserAttrib(user=user, imgpath='img/002.png')
+            attrib = UserAttrib(user=user, imgpath='/media/vector.jpg')
+            attrib.course = course
+            attrib.birthday = birthday
+            attrib.location = location
             attrib.save()
 
             return HttpResponse('User created successfully!')

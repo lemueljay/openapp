@@ -64,7 +64,7 @@
                     <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">                    
                         <i id="notifbell" style="color: white; font-size: 25px; cursor:pointer" class="far fa-bell padder" data-toggle="popover"><span class="badge badge-light" hidden>2</span></i>
                         <div id="myprofile" class="propro padder" style="cursor:pointer" data-toggle="popover">
-                            <img src="{{ request.user.imgpath }}" alt="avatar" class="" style="margin-right: 10px;width:25px; height: auto;">
+                            <img src="{{ request.user.imgpath }}" alt="avatar" class="myprofileimg" style="margin-right: 10px;width:25px; height: auto;">
                             <span class="icon-color-white">{{ request.user.username }}</span>
                         </div>                    
                     </div>
@@ -78,45 +78,45 @@
                         <div class="row" id="collegegroup">
                             <a class="collegebox text-center col-md-2 offset-md-2" href="/openapp/profile/SCS">
                                 <div class="guidancebox">
-                                    <img src="{% static 'img/008.png' %}" class="rounded" alt="...">
+                                    <img src="{{ scs.imgpath }}" alt="...">
                                     <div class="guidancename">SCS</div>
                                 </div>
                             </a>
                             <a class="collegebox text-center col-md-2" href="/openapp/profile/COET">
                                 <div class="guidancebox">
-                                    <img src="{% static 'img/002.png' %}" class="rounded">
+                                    <img src="{{ coet.imgpath }}" alt="...">
                                     <div class="guidancename">COET</div>
                                 </div>
                             </a>
                             <a class="collegebox text-center col-md-2" href="/openapp/profile/CSM">
                                 <div class="guidancebox">
-                                    <img src="{% static 'img/003.png' %}" class="rounded">
+                                    <img src="{{ csm.imgpath }}" alt="...">
                                     <div class="guidancename">CSM</div>
                                 </div>
                             </a>
                             <a class="collegebox text-center col-md-2" href="/openapp/profile/CED">
                                 <div class="guidancebox">
-                                    <img src="{% static 'img/004.png' %}" class="rounded">
+                                    <img src="{{ ced.imgpath }}" alt="...">
                                     <div class="guidancename">CED</div>
                                 </div>
                             </a>
 
                             <a class="collegebox text-center col-md-2 offset-md-3" href="/openapp/profile/CASS">
                                 <div class="guidancebox">
-                                    <img src="{% static 'img/005.png' %}" class="rounded">
+                                    <img src="{{ cass.imgpath }}" alt="...">
                                     <div class="guidancename">CASS</div>
                                 </div>
 
                             </a>
                             <a class="collegebox text-center col-md-2" href="/openapp/profile/CBAA">
                                 <div class="guidancebox">
-                                    <img src="{% static 'img/006.png' %}" class="rounded">
+                                    <img src="{{ cbaa.imgpath }}" alt="...">
                                     <div class="guidancename">CBAA</div>
                                 </div>
                             </a>
                             <a class="collegebox text-center col-md-2" href="/openapp/profile/CON">
                                 <div class="guidancebox">
-                                    <img src="{% static 'img/007.png' %}" class="rounded">
+                                    <img src="{{ con.imgpath }}" alt="...">
                                     <div class="guidancename">CON</div>
                                 </div>
                             </a>

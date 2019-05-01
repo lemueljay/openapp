@@ -10,5 +10,7 @@
 }
 
 .guidanceimg {
+    width: 150px;
+    border-radius: 150px;
     -webkit-transform: translateY(60px);
 }

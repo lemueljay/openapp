@@ -61,8 +61,8 @@ function generateAvailableSlot(sched) {
 
 function generateNotAvailableSlot(sched) {
 
-    var assignee = $('input[name=assignee]').val();
-
+    var assignee = $('input[name=username]').val();
+    
     if(assignee === sched.assignee) {
         var elem =
         '<div class="col-sm-6">' +
