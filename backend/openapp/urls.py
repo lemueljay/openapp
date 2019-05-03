@@ -26,7 +26,9 @@ urlpatterns = [
 
     path('appoint/<slug:college>', views.appoint, name='appoint'),
     path('getAppointmentSchedules/<slug:college>', views.getAppointmentSchedules, name='getAppointmentSchedules'),
+    path('gccAppointmentSchedules/<slug:college>', views.gccAppointmentSchedules, name='gccAppointmentSchedules'),
     path('setAppointmentSchedule', views.setAppointmentSchedule, name='setAppointmentSchedule'),
+    path('setGccAppointmentSchedule', views.setGccAppointmentSchedule, name='setGccAppointmentSchedule'),
     path('cancelAppointment', views.cancelAppointment, name='cancelAppointment'),
 
     path('getmessages', views.getMessages, name='getMessages'),

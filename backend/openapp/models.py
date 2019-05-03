@@ -38,13 +38,14 @@ class Schedule(models.Model):
     assignee = models.CharField(max_length=1000, blank=True, default='')
     date = models.DateField(default=datetime.date.today)
     time = models.CharField(max_length=1000,default=None)
+    status = models.CharField(max_length=1000,default=None)
 
-    info_name = models.CharField(max_length=1000,default=None)
-    info_id = models.CharField(max_length=1000,default=None)
-    info_college = models.CharField(max_length=1000,default=None)
-    info_yrcourse = models.CharField(max_length=1000,default=None)
-    info_gender = models.CharField(max_length=1000,default=None)
-    info_location = models.CharField(max_length=1000,default=None)
+    info_name = models.CharField(max_length=1000,default=None,null=True)
+    info_id = models.CharField(max_length=1000,default=None,null=True)
+    info_college = models.CharField(max_length=1000,default=None,null=True)
+    info_yrcourse = models.CharField(max_length=1000,default=None,null=True)
+    info_gender = models.CharField(max_length=1000,default=None,null=True)
+    info_location = models.CharField(max_length=1000,default=None,null=True)
     
     def __str__(self):
         return str(self.date) + ' ' + str(self.time)

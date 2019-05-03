@@ -110,7 +110,8 @@ function getSchedules(day) {
             $('#slotter').empty();
             for(var i = 0; i < data.schedules.length; i++) {
                 var sched = data.schedules[i];
-                if(sched.assignee === '') {
+                console.log(sched)
+                if(sched.assignee === '' && sched.status === 'AVAILABLE') {
                     $('#slotter').append(generateAvailableSlot(sched));
                 } else {
                         $('#slotter').append(generateNotAvailableSlot(sched));

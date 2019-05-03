@@ -542,6 +542,80 @@ def getAppointmentSchedules(request, college):
     return JsonResponse(context)
 
 
+def gccAppointmentSchedules(request, college):
+
+    context = {}
+    context['guidance'] = college
+
+    date_str = request.GET['day']
+    sched = datetime.datetime.strptime(date_str, '%B %d, %Y').date()
+    context['sched'] = sched
+
+    counselor = User.objects.get(username__icontains=college)
+    scheds = Schedule.objects.filter(counselor=counselor, date=sched)
+
+    context['0'] = False
+    context['1'] = False
+    context['2'] = False
+    context['3'] = False
+    context['4'] = False
+    context['5'] = False
+    context['6'] = False
+    context['7'] = False
+
+    if scheds is None  or len(scheds) == 0:
+        context['scheds'] = 'None'
+        
+    else:
+        context['scheds'] = 'Exists'
+        for sched in scheds:
+            if sched.time == '8:00AM - 9:00AM':
+                context['0'] = True if sched.status == 'AVAILABLE'  else False
+            elif sched.time == '9:00AM - 10:00AM':
+                context['1'] = True if sched.status == 'AVAILABLE'  else False
+            elif sched.time == '10:00AM - 11:00AM':
+                context['2'] = True if sched.status == 'AVAILABLE'  else False
+            elif sched.time == '11:00AM - 12:00AM':
+                context['3'] = True if sched.status == 'AVAILABLE'  else False
+            elif sched.time == '1:00PM - 2:00PM':
+                context['4'] = True if sched.status == 'AVAILABLE'  else False
+            elif sched.time == '2:00PM - 3:00PM':
+                context['5'] = True if sched.status == 'AVAILABLE'  else False
+            elif sched.time == '3:00PM - 4:00PM':
+                context['6'] = True if sched.status == 'AVAILABLE'  else False
+            elif sched.time == '4:00PM - 5:00PM':
+                context['7'] = True if sched.status == 'AVAILABLE'  else False
+            
+        print(scheds)        
+
+    return JsonResponse(context)
+
+
+def setGccAppointmentSchedule(request):
+    
+    context = {}
+
+    date_str = request.GET['day']
+    sched = datetime.datetime.strptime(date_str, '%B %d, %Y').date()
+    context['sched'] = sched
+
+    context['time'] = request.GET['sched']
+
+    schedule = None
+
+    try:
+        schedule = Schedule.objects.get(counselor=request.user, date=context['sched'], time=context['time'])
+    except:
+        schedule = Schedule(counselor=request.user, date=context['sched'], time=context['time'], status='NOT_AVAILABLE')
+        schedule.save()
+
+    context['status'] = request.GET['status']
+    schedule.status = context['status']
+    schedule.save()
+
+    return JsonResponse(context)
+
+
 def setAppointmentSchedule(request):
     context = {}
 
@@ -714,6 +788,9 @@ def admin(request):
             attrib.birthday = birthday
             attrib.location = location
             attrib.save()
+
+            # Generate default schedules
+
 
             return HttpResponse('User created successfully!')
         except:

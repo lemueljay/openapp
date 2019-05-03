@@ -53,17 +53,73 @@ function getSchedules(day) {
     console.log(JSON.stringify(data))
 
     // Get the schedules for this college guidance counselor
-    $.get("http://localhost:8000/openapp/getAppointmentSchedules/" + counselor, data, function(data) {
+    $.get("http://localhost:8000/openapp/gccAppointmentSchedules/" + counselor, data, function(data) {
 
-        if(data.rc === 'OK') {
-            $('#slotter').empty();
-            for(var i = 0; i < data.schedules.length; i++) {
-                var sched = data.schedules[i];
-                $('#slotter').append(generateSlots(sched));
-            }
+        console.log(data)
 
+        // Update data
+        if(data[0]) {
+            $('#0A').addClass('active')
+            $('#0B').removeClass('active')
         } else {
-            $('#slotter').empty().append(generateNoScheduleError(data.message));
+            $('#0A').removeClass('active')
+            $('#0B').addClass('active')
+        }
+
+        if(data[1]) {
+            $('#1A').addClass('active')
+            $('#1B').removeClass('active')
+        } else {
+            $('#1A').removeClass('active')
+            $('#1B').addClass('active')
+        }
+
+        if(data[2]) {
+            $('#2A').addClass('active')
+            $('#2B').removeClass('active')
+        } else {
+            $('#2A').removeClass('active')
+            $('#2B').addClass('active')
+        }
+
+        if(data[3]) {
+            $('#3A').addClass('active')
+            $('#3B').removeClass('active')
+        } else {
+            $('#3A').removeClass('active')
+            $('#3B').addClass('active')
+        }
+
+        if(data[4]) {
+            $('#4A').addClass('active')
+            $('#4B').removeClass('active')
+        } else {
+            $('#4A').removeClass('active')
+            $('#4B').addClass('active')
+        }
+
+        if(data[5]) {
+            $('#5A').addClass('active')
+            $('#5B').removeClass('active')
+        } else {
+            $('#5A').removeClass('active')
+            $('#5B').addClass('active')
+        }
+
+        if(data[6]) {
+            $('#6A').addClass('active')
+            $('#6B').removeClass('active')
+        } else {
+            $('#6A').removeClass('active')
+            $('#6B').addClass('active')
+        }
+
+        if(data[7]) {
+            $('#7A').addClass('active')
+            $('#7B').removeClass('active')
+        } else {
+            $('#7A').removeClass('active')
+            $('#7B').addClass('active')
         }
     });
 
@@ -88,6 +144,33 @@ function createappointments() {
     $('#modalBbutton').click();
 }
 
+function setAvailable(sched) {
+
+    var data = {
+        'status': 'AVAILABLE',
+        'sched': sched,
+        'day': this.day
+    }
+    console.log(JSON.stringify(data))
+
+    $.get('http://localhost:8000/openapp/setGccAppointmentSchedule', data, function(data) {
+        console.log(data)
+    })
+}
+
+function setNotAvailable(sched) {
+
+    var data = {
+        'status': 'NOT_AVAILABLE',
+        'sched': sched,
+        'day': this.day
+    }
+    
+    $.get('http://localhost:8000/openapp/setGccAppointmentSchedule', data, function(data) {
+        console.log(data)
+    })
+}
+
 $(document).ready(function() {
 
     $('#prevslide').on('click', function() {
@@ -101,4 +184,10 @@ $(document).ready(function() {
         $('#prevslide').toggleClass('fas').toggleClass('far')
         $('#carouselExampleControls').carousel('next')
     })
+
+    $('label').on('click', function() {
+        
+    })
+
+    
 })
