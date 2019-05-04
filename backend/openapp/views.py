@@ -527,13 +527,47 @@ def getAppointmentSchedules(request, college):
 
     try:
         counselor = User.objects.get(username__icontains=college)
-        schedules = list(Schedule.objects.filter(counselor=counselor).filter(date=sched).order_by('time').values())
+        scheds = Schedule.objects.filter(counselor=counselor, date=sched)
 
-        if len(schedules) > 0:
-            context['schedules'] = schedules
+        context['0'] = False
+        context['1'] = False
+        context['2'] = False
+        context['3'] = False
+        context['4'] = False
+        context['5'] = False
+        context['6'] = False
+        context['7'] = False
+
+        if scheds is None  or len(scheds) == 0:
+            context['scheds'] = 'None'
+
         else:
-            context['rc'] = 'NOT OK'
-            context['message'] = 'No schedule available.'
+            context['scheds'] = list(scheds.values())
+            for sched in scheds:
+                if sched.time == '8:00AM - 9:00AM':
+                    context['0'] = True if (sched.status == 'AVAILABLE' and sched.assignee == '')  else False
+                    context['id0'] = sched.id                    
+                elif sched.time == '9:00AM - 10:00AM':
+                    context['1'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['id1'] = sched.id
+                elif sched.time == '10:00AM - 11:00AM':
+                    context['2'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['id2'] = sched.id
+                elif sched.time == '11:00AM - 12:00AM':
+                    context['3'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['id3'] = sched.id
+                elif sched.time == '1:00PM - 2:00PM':
+                    context['4'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['id4'] = sched.id
+                elif sched.time == '2:00PM - 3:00PM':
+                    context['5'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['id5'] = sched.id
+                elif sched.time == '3:00PM - 4:00PM':
+                    context['6'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['id6'] = sched.id
+                elif sched.time == '4:00PM - 5:00PM':
+                    context['7'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['id7'] = sched.id
 
     except:
         context['rc'] = 'NOT OK'
@@ -620,7 +654,7 @@ def setAppointmentSchedule(request):
     context = {}
 
     id = request.GET['id']
-    assignee = request.GET['assignee']
+    assignee = request.user.username
 
     schedule = Schedule.objects.get(id=id)
     schedule.assignee = assignee

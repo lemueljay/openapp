@@ -184,10 +184,5 @@ $(document).ready(function() {
         $('#prevslide').toggleClass('fas').toggleClass('far')
         $('#carouselExampleControls').carousel('next')
     })
-
-    $('label').on('click', function() {
-        
-    })
-
     
 })

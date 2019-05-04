@@ -21,7 +21,6 @@ function setAppointment(id) {
 
     var data = {
         'id': id,
-        'assignee': $('input[name=assignee]').val()
     }
 
     $.get("http://localhost:8000/openapp/setAppointmentSchedule", data, function(data) {
@@ -50,7 +49,7 @@ function generateAvailableSlot(sched) {
         '</div>' +
         '<div class="col-sm-6">' +
             // '<div onclick="setAppointment(' + sched.id+ ')" class="alert alert-primary alert-available text-center" role="alert" data-toggle="modal" data-target=".bd-example-modal-sm">' +
-            '<div data-dismiss="modal" class="alert alert-primary alert-available text-center" role="alert" data-toggle="modal" data-target=".bd-example-modal-sm">' +
+            '<div class="alert alert-primary alert-available text-center" role="alert" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">' +
                 '<b>Book Appointment</b>' +
             '</div>' +
         '</div>';
@@ -88,6 +87,10 @@ function generateNotAvailableSlot(sched) {
     return elem;
 }
 
+function bookAppointment(sched) {
+    this.global_sched = sched;
+}
+
 function getSchedules(day) {
 
     var counselor = $('input[name=college]').val();
@@ -105,27 +108,72 @@ function getSchedules(day) {
 
     // Get the schedules for this college guidance counselor
     $.get("http://localhost:8000/openapp/getAppointmentSchedules/" + counselor, data, function(data) {
+        
+        console.log(data)
 
-        if(data.rc === 'OK') {
-            $('#slotter').empty();
-            for(var i = 0; i < data.schedules.length; i++) {
-                var sched = data.schedules[i];
-                console.log(sched)
-                if(sched.assignee === '' && sched.status === 'AVAILABLE') {
-                    $('#slotter').append(generateAvailableSlot(sched));
-                } else {
-                        $('#slotter').append(generateNotAvailableSlot(sched));
-                }
-            }
-
+        if(data[0]) {
+            $('#0box').empty().append('<input onclick=bookAppointment("' + data['id0'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
         } else {
-            $('#slotter').empty().append(generateNoScheduleError(data.message));
+            $('#0box').empty().append('<input type="button" class="form-control btn btn-danger" value="     NOT AVAILABLE     " disabled>')
         }
+
+        if(data[1]) {
+            $('#1box').empty().append('<input onclick=bookAppointment("' + data['id1'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        } else {
+            $('#1box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        }
+
+        if(data[2]) {
+            $('#2box').empty().append('<input onclick=bookAppointment("' + data['id2'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        } else {
+            $('#2box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        }
+
+        if(data[3]) {
+            $('#3box').empty().append('<input onclick=bookAppointment("' + data['id3'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        } else {
+            $('#3box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        }
+
+        if(data[4]) {
+            $('#4box').empty().append('<input onclick=bookAppointment("' + data['id4'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        } else {
+            $('#4box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        }
+
+        if(data[5]) {
+            $('#5box').empty().append('<input onclick=bookAppointment("' + data['id5'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        } else {
+            $('#5box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        }
+
+        if(data[6]) {
+            $('#6box').empty().append('<input onclick=bookAppointment("' + data['id6'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        } else {
+            $('#6box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        }
+
+        if(data[7]) {
+            $('#7box').empty().append('<input onclick=bookAppointment("' + data['id7'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        } else {
+            $('#7box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        }
+
     });
 
 }
 
 $(document).ready(function() {
 
+    $('#prevslide').on('click', function() {
+        $(this).toggleClass('fas').toggleClass('far')
+        $('#nextslide').toggleClass('fas').toggleClass('far')
+        $('#carouselExampleControls').carousel('prev')
+    })
 
+    $('#nextslide').on('click', function() {
+        $(this).toggleClass('fas').toggleClass('far')
+        $('#prevslide').toggleClass('fas').toggleClass('far')
+        $('#carouselExampleControls').carousel('next')
+    })
 });
