@@ -903,8 +903,8 @@ def updatedata(request):
 def notifications(request):
     context = {}
 
-    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD').values())
-
+    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD').order_by('-date_created')[:3].values())
+    print(notifs)
     context['notifs'] = notifs
     context['len'] = len(notifs)
 
@@ -915,7 +915,7 @@ def requests(request):
 
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
-    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').values())
+    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').order_by('-date_created').values())
 
     context['notifs'] = notifs
     context['len'] = len(notifs)
@@ -962,7 +962,7 @@ def approverequest(request):
 
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
-    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').values())
+    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').order_by('-date_created').values())
 
     context['notifs'] = notifs
     context['len'] = len(notifs)
@@ -988,7 +988,7 @@ def declinerequest(request):
 
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
-    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').values())
+    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').order_by('-date_created').values())
 
     context['notifs'] = notifs
     context['len'] = len(notifs)

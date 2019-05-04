@@ -536,11 +536,17 @@ img{ max-width:100%;}
     padding: 24px 20px;
 }
 
+.chatnavbar {
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+}
+
 .propro {
     margin-right: 50px;
 }
 
-#notifbell:hover, .propro:hover {
+#notifbell:hover, .propro:hover, .chatnavbar:hover {
     background-color: #c22626;
 }
 

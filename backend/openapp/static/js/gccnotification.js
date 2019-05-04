@@ -1,3 +1,15 @@
+function chatPopup() {
+
+    var chatOptions = {
+        title: '<p class="notifHeader"><b>Messages</b></p>',
+        content: '<h1>HELLO</h1>',
+        html: true,
+        placement: 'bottom'
+    }
+
+    $('#notifChat[data-toggle="popover"]').popover(chatOptions)
+}
+
 function notifPopup() {
     var imgpath = $('input[name=imgpath]').val()
     var username = $('input[name=username]').val()
@@ -14,7 +26,7 @@ function notifPopup() {
     $('#myprofile[data-toggle="popover"]').popover(options);
 
     notifOptions = {
-        title: '<p class="notifHeader"><b>NOTIFICATIONS</b></p>',
+        title: '<p class="notifHeader"><b>REQUESTS</b></p>',
         content:
             '<div id="notifBox">' + 
                 '<div>No new notifications.</div>' +
@@ -36,9 +48,7 @@ function pollNotifs(){
         
         // console.log(data)
 
-        var notifs = data['notifs']
-
-        var notifCount = 0;
+        var notifs = data['notifs'] 
 
         $('#notifBox').empty();
         
@@ -46,11 +56,6 @@ function pollNotifs(){
             if(notif['notifType'] === 'APPOINTMENT') {
                 
                 $('#notifBox').append('<div>' + notif['message'] + '</div><hr>');
-            }
-
-            notifCount++;
-            if(notifCount == 3) {            
-                return;
             }
         })
 
@@ -62,13 +67,9 @@ function pollNotifs(){
 
 $(document).ready(function() {
 
-    notifPopup();    
+    chatPopup();
+    notifPopup();
     pollNotifs();
-    
-    $('#notifbell').on('click', function() {
-        
-        // Read all notifications
-        
-        
-    })
+
+
 })

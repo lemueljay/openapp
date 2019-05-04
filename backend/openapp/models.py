@@ -55,6 +55,8 @@ class Schedule(models.Model):
 
 class Notification(models.Model):
 
+    date_created = models.DateTimeField(default=datetime.datetime.now)
+    
     sourceUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sourceUser')
     destUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='destUser')
 
