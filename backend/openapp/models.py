@@ -39,6 +39,9 @@ class Schedule(models.Model):
     date = models.DateField(default=datetime.date.today)
     time = models.CharField(max_length=1000,default=None)
     status = models.CharField(max_length=1000,default=None)
+    
+    # Approval status
+    approved = models.CharField(max_length=1000, blank=True, default='NOT_APPROVED')
 
     info_name = models.CharField(max_length=1000,default=None,null=True)
     info_id = models.CharField(max_length=1000,default=None,null=True)
@@ -49,3 +52,20 @@ class Schedule(models.Model):
     
     def __str__(self):
         return str(self.date) + ' ' + str(self.time)
+
+class Notification(models.Model):
+
+    sourceUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sourceUser')
+    destUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='destUser')
+
+    # Type of notification - message, appointment
+    notifType = models.CharField(max_length=1000,default=None,null=True)
+
+    # Foreign ID - Schedule or Chat
+    notifId = models.CharField(max_length=1000,default=None,null=True)
+
+    # Read or unread
+    status = models.CharField(max_length=1000,default=None,null=True)
+
+    # Message to be displayed
+    message = models.CharField(max_length=1000,default=None,null=True)
