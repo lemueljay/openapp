@@ -29,6 +29,7 @@ class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='source')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE,related_name='destination')
     message = models.CharField(max_length=1000)
+    seen = models.CharField(max_length=1000, default='UNSEEN')
 
     def __str__(self):
         return self.sender.username
@@ -56,7 +57,7 @@ class Schedule(models.Model):
 class Notification(models.Model):
 
     date_created = models.DateTimeField(default=datetime.datetime.now)
-    
+
     sourceUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sourceUser')
     destUser = models.ForeignKey(User, on_delete=models.CASCADE, related_name='destUser')
 
