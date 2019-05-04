@@ -228,6 +228,10 @@ def book(request):
         schedule.info_location = context['location']
         schedule.save()
 
+        notif = Notification(sourceUser=request.user, destUser=schedule.counselor, notifType="APPOINTMENT",
+                             notifId=schedule.id, status="UNREAD", message=(schedule.info_name + " sent a request."))
+        notif.save()
+
     except:
         return HttpResponse('Bad Request!')
 
@@ -894,3 +898,102 @@ def updatedata(request):
         attrib.save()
 
         return redirect('/openapp/settings')
+
+
+def notifications(request):
+    context = {}
+
+    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD').values())
+
+    context['notifs'] = notifs
+    context['len'] = len(notifs)
+
+    return JsonResponse(context)
+
+def requests(request):
+    context = {}
+
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+
+    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').values())
+
+    context['notifs'] = notifs
+    context['len'] = len(notifs)
+
+    return render(request, 'requests.html', context)
+
+
+def getRequest(request):
+    context = {}
+
+    notif = Notification.objects.get(id=request.GET['id'])
+
+    print(notif.notifType)
+
+    if notif.notifType == 'APPOINTMENT':
+        sched = Schedule.objects.get(id=notif.notifId)
+        context['sched_id'] = sched.id
+        context['info_name'] = sched.info_name
+        context['info_id'] = sched.info_id
+        context['info_college'] = sched.info_college
+        context['info_yrcourse'] = sched.info_yrcourse
+        context['info_gender'] = sched.info_gender
+        context['info_location'] = sched.info_location
+
+    return JsonResponse(context)
+
+
+def approverequest(request):
+    
+    context = {}
+
+    sched = Schedule.objects.get(id=request.GET['sched_id'])
+
+    sched.approved = 'APPROVED'
+    sched.save()
+
+    notif = Notification.objects.get(id=request.GET['request_id'])
+    notif.status = 'READ'
+    notif.save()
+
+    notif = Notification(sourceUser=request.user, destUser=notif.sourceUser, notifType="APPOINTMENT",
+                            notifId=sched.id, status="UNREAD", message=('Appointment with ' + request.user.get_full_name() + ' approved.'))
+    notif.save()
+
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+
+    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').values())
+
+    context['notifs'] = notifs
+    context['len'] = len(notifs)
+
+    context['approved'] = True
+    return render(request, 'requests.html', context)
+
+def declinerequest(request):
+
+    context = {}
+    
+    sched = Schedule.objects.get(id=request.GET['sched_id'])
+    sched.assignee = ''
+    sched.save()
+
+    notif = Notification.objects.get(id=request.GET['request_id'])
+    notif.status = 'READ'
+    notif.save()
+
+    notif = Notification(sourceUser=request.user, destUser=notif.sourceUser, notifType="APPOINTMENT",
+                        notifId=sched.id, status="UNREAD", message=('Appointment with ' + request.user.get_full_name() + ' declined.'))
+    notif.save()
+
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+
+    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').values())
+
+    context['notifs'] = notifs
+    context['len'] = len(notifs)
+    context['declined'] = True
+
+    return render(request, 'requests.html', context)
+
+    

@@ -536,6 +536,10 @@ img{ max-width:100%;}
     padding: 24px 20px;
 }
 
+.propro {
+    margin-right: 50px;
+}
+
 #notifbell:hover, .propro:hover {
     background-color: #c22626;
 }

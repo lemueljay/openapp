@@ -1,0 +1,14 @@
+.requestscontainer {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 5px;
+}
+
+.request {
+    background-color: gainsboro;
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+}

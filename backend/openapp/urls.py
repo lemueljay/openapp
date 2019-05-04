@@ -43,5 +43,13 @@ urlpatterns = [
 
     path('admin', views.admin, name='admin'),
 
-    path('upload_file', views.upload_file, name='upload_file'),
+    path('upload_file', views.upload_file, name='upload_file'), 
+
+    path('notifications', views.notifications, name='notifications'), 
+    path('requests', views.requests, name='requests'), 
+
+    path('getRequest', views.getRequest, name='getRequest'),
+    path('approverequest', views.approverequest, name='approverequest'),
+    path('declinerequest', views.declinerequest, name='declinerequest'),
+
 ]

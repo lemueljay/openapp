@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    
+    <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome-free-5.8.1-web/css/all.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/requests.css' %}">
+
+    <meta charset="UTF-8">
+    <title>OpenApp</title>
+</head>
+<body>
+    <script src="{% static 'bootstrap-4.3.1-dist/js/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap-4.3.1-dist/js/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/sidebar.js' %}"></script>
+    <script src="{% static 'js/gccnotification.js' %}"></script>
+    <script src="{% static 'js/requests.js' %}"></script>
+
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header text-center">
+                <h3><b>OPEN APP</b></h3>
+            </div>
+            <div class="containers">
+                <input name="imgpath" value="{{ request.user.imgpath }}" hidden>
+                <input name="username" value="{{ request.user.first_name }}" hidden>
+                <img src="{{ request.user.imgpath }}" alt="avatar" class="image" style="width:100%">
+                <div class="middle">
+                    <div class="text">Update Photo</div>
+                </div>                               
+            </div>
+            <form action="/openapp/upload_file" method="post" enctype="multipart/form-data" hidden>
+                {% csrf_token %}
+                <input id="myFile" type="file" name="myfile" hidden>
+                <button id="uploadButton" type="submit" hidden>Upload</button>
+            </form>
+            <ul class="list-unstyled components">
+                <p class="text-center">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                <li class="">
+                    <a href="/openapp">
+                        <i class="fas fa-clipboard-list"></i>
+                        Appointment
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/openapp/appointments">
+                        <i class="far fa-calendar-alt"></i>
+                        Schedule
+                    </a>
+                </li>
+                <li>
+                    <a href="/openapp/gccChat">
+                        <i class="fas fa-comment-dots"></i>
+                        Chat
+                    </a>
+                </li>
+                <li class="">
+                    <a href="/openapp/settings">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </li>         
+                <li>
+                    <a href="/openapp/logout">
+                        <i class="fas fa-power-off"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="content">
+            <nav id="topnavbar" class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                    <i class="fas fa-align-justify icon-color-white"></i>
+                    <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">                    
+                        <i id="notifbell" style="color: white; font-size: 25px; cursor:pointer" class="far fa-bell padder" data-toggle="popover"><span id="notifLen" class="badge badge-light" hidden></span></i>
+                        <div id="myprofile" class="propro padder" style="cursor:pointer" data-toggle="popover">
+                            <img src="{{ request.user.imgpath }}" alt="avatar" class="myprofileimg" style="margin-right: 10px;width:25px; height: auto;">
+                            <span class="icon-color-white">{{ request.user.first_name }}</span>
+                        </div>                    
+                    </div>
+                </div>
+            </nav>
+
+            <div id="minime" class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12 heading">Requests</div>
+                    {% if notifs %}
+                    <div class="col-sm-5 requestscontainer">
+                        {% for notif in notifs %}
+                        <div onclick=requestModalUpdate({{ notif.id }}) class="request" data-toggle="modal" data-target="#requestModal">
+                            {{ notif.message }}
+                        </div>
+                        {% endfor %}                      
+                    </div>
+                    {% endif %}
+                    <div class="col-sm-12 text-center footer">
+                        <p>
+                            "Blessed are the peacemakers, for they shall be called sons of God!" - Jesus
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">                 
+                        <div class="modal-body">
+                            <form class="col-sm-12" method="GET">
+                                <input name="request_id" value="" hidden>
+                                <input name="sched_id" value="" hidden>
+                                <div class="form-group row">
+                                <label for="name" class="col-sm-3 col-form-label">Name :</label>
+                                <div class="col-sm-9">
+                                    <input name="info_name" type="text" class="form-control" disabled>
+                                </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-3 col-form-label">ID No :</label>
+                                    <div class="col-sm-9">
+                                    <input name="info_id" type="text" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-3 col-form-label">College :</label>
+                                    <div class="col-sm-9">
+                                    <input name="info_college" type="text" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-3 col-form-label">Yr/Course :</label>
+                                    <div class="col-sm-9">
+                                    <input name="info_yrcourse" type="text" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-3 col-form-label">Gender :</label>
+                                    <div class="col-sm-9">
+                                    <input name="info_gender" type="text" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-3 col-form-label">Location :</label>
+                                    <div class="col-sm-9">
+                                    <input name="info_location" type="text" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-12 text-center">
+                                        <button formaction="/openapp/approverequest" type="submit" class="btn btn-primary mb-6">Approve</button>
+                                        <!-- <button formaction="/openapp/declinerequest" type="submit" class="btn btn-danger mb-6">Decline</button> -->
+                                        <button onclick='declineButton()' type="button" class="btn btn-danger mb-6" data-toggle="modal" data-target="#requestModal">Decline</button>
+                                    </div>
+                                </div>                                                              
+                            </form>        
+                        </div>                 
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade declinedmodal" tabindex="-1" role="dialog" aria-labelledby="declinedmodallabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <form action='/openapp/declinerequest' class="col-sm-12" method="GET">
+                                <input name="request_id" value="" hidden>
+                                <input name="sched_id" value="" hidden>
+                                <div class="form-group">
+                                    <textarea name="info_reason" class="form-control" rows="6" placeholder="Reason for declining..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary form-control">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>           
+            <div class="modal fade approvedmodal" tabindex="-1" role="dialog" aria-labelledby="approvedmodalsmall" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <h6>Appointment Approved.</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if approved %}
+            <script>
+                $('.approvedmodal').modal({'show': true})
+            </script>
+            {% endif %}
+    </div>
+    </div>
+
+</body>
+</html>
