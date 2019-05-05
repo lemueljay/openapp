@@ -10,7 +10,9 @@
 }
 
 .guidanceimg {
-    width: 150px;
     border-radius: 150px;
     -webkit-transform: translateY(60px);
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
 }

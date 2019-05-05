@@ -24,7 +24,7 @@
             <div class="containers">
                 <input name="imgpath" value="{{ request.user.imgpath }}" hidden>
                 <input name="username" value="{{ request.user.username }}" hidden>
-                <img src="{{ request.user.imgpath }}" alt="avatar" class="image" style="width:100%">
+                <img id="propic" src="{{ request.user.imgpath }}" alt="avatar" class="image" style="width:100%">
                 <div class="middle">
                     <div class="text">Update Photo</div>
                 </div>                               
@@ -78,25 +78,25 @@
                     <div class="form-group row">
                       <label for="name" class="col-sm-2 col-form-label">Name :</label>
                       <div class="col-sm-10">
-                        <input name="name" type="text" class="form-control">
+                        <input name="name" type="text" class="form-control" value=''>
                       </div>
                     </div>
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">ID No :</label>
                         <div class="col-sm-10">
-                          <input name="id" type="text" class="form-control">
+                          <input name="id" type="text" class="form-control" value=''>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">College :</label>
                         <div class="col-sm-10">
-                          <input name="college" type="text" class="form-control">
+                          <input name="college" type="text" class="form-control" value=''>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Yr. & Course :</label>
                         <div class="col-sm-10">
-                          <input name="yrcourse" type="text" class="form-control">
+                          <input name="yrcourse" type="text" class="form-control" value=''>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -115,7 +115,7 @@
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Location :</label>
                         <div class="col-sm-10">
-                          <input name="location" type="text" class="form-control">
+                          <input name="location" type="text" class="form-control" value=''>
                         </div>
                     </div>
                     <div class="form-group row">

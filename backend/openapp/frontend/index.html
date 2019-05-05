@@ -25,7 +25,7 @@
             <div class="containers">
                 <input name="imgpath" value="{{ request.user.imgpath }}" hidden>
                 <input name="username" value="{{ request.user.username }}" hidden>
-                <img src="{{ request.user.imgpath }}" alt="avatar" class="image" style="width:100%">
+                <img id="propic" src="{{ request.user.imgpath }}" alt="avatar" class="image" style="width:100%">
                 <div class="middle">
                     <div class="text">Update Photo</div>
                 </div>                               
@@ -79,45 +79,45 @@
                         <div class="row" id="collegegroup">
                             <a class="collegebox text-center col-md-2 offset-md-2" href="/openapp/profile/SCS">
                                 <div class="guidancebox">
-                                    <img src="{{ scs.imgpath }}" alt="...">
+                                    <img class="collegepic" src="{{ scs.imgpath }}" alt="...">
                                     <div class="guidancename">SCS</div>
                                 </div>
                             </a>
                             <a class="collegebox text-center col-md-2" href="/openapp/profile/COET">
                                 <div class="guidancebox">
-                                    <img src="{{ coet.imgpath }}" alt="...">
+                                    <img class="collegepic" src="{{ coet.imgpath }}" alt="...">
                                     <div class="guidancename">COET</div>
                                 </div>
                             </a>
                             <a class="collegebox text-center col-md-2" href="/openapp/profile/CSM">
                                 <div class="guidancebox">
-                                    <img src="{{ csm.imgpath }}" alt="...">
+                                    <img class="collegepic" src="{{ csm.imgpath }}" alt="...">
                                     <div class="guidancename">CSM</div>
                                 </div>
                             </a>
                             <a class="collegebox text-center col-md-2" href="/openapp/profile/CED">
                                 <div class="guidancebox">
-                                    <img src="{{ ced.imgpath }}" alt="...">
+                                    <img class="collegepic" src="{{ ced.imgpath }}" alt="...">
                                     <div class="guidancename">CED</div>
                                 </div>
                             </a>
 
                             <a class="collegebox text-center col-md-2 offset-md-3" href="/openapp/profile/CASS">
                                 <div class="guidancebox">
-                                    <img src="{{ cass.imgpath }}" alt="...">
+                                    <img class="collegepic" src="{{ cass.imgpath }}" alt="...">
                                     <div class="guidancename">CASS</div>
                                 </div>
 
                             </a>
                             <a class="collegebox text-center col-md-2" href="/openapp/profile/CBAA">
                                 <div class="guidancebox">
-                                    <img src="{{ cbaa.imgpath }}" alt="...">
+                                    <img class="collegepic" src="{{ cbaa.imgpath }}" alt="...">
                                     <div class="guidancename">CBAA</div>
                                 </div>
                             </a>
                             <a class="collegebox text-center col-md-2" href="/openapp/profile/CON">
                                 <div class="guidancebox">
-                                    <img src="{{ con.imgpath }}" alt="...">
+                                    <img class="collegepic" src="{{ con.imgpath }}" alt="...">
                                     <div class="guidancename">CON</div>
                                 </div>
                             </a>

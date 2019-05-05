@@ -587,13 +587,19 @@ img{ max-width:100%;}
 .poppic {
     width: 85px;
     border-radius: 100px;
-    margin-left: 80px;
+    margin-left: 70px;
     margin-top: 10px;
     margin-bottom: 10px;
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
 }
 
 .myprofileimg {
     border-radius: 100px;
+    object-fit: cover;
+    width: 25px !important;
+    height: 25px !important;
 }
 
 .badge {
@@ -608,4 +614,19 @@ img{ max-width:100%;}
     color: black;
     margin-bottom: 0px;
     font-size: 15px;
+}
+
+/* Fixing image issues */
+
+#propic {
+    object-fit: cover;
+    width: 100px;
+    height: 150px;
+}
+
+.collegepic {
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+    margin-bottom : 10px;
 }
