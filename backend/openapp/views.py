@@ -69,9 +69,29 @@ def index(request):
             context['ending_day'] = v
 
             # Get appointments
-            schedules = list(Schedule.objects.filter(counselor=request.user, approved='APPROVED', date=date_today).values())
-            
-            context['schedules'] = schedules
+            schedules = Schedule.objects.filter(counselor=request.user, approved='APPROVED', date=date_today)          
+            sched_list = []
+            print(schedules)
+            for sched in schedules:                
+                if sched.time == '8:00AM - 9:00AM':
+                    sched_list.insert(0, sched)
+                elif sched.time == '9:00AM - 10:00AM':
+                    sched_list.insert(1, sched)
+                elif sched.time == '10:00AM - 11:00AM':
+                    sched_list.insert(2, sched)
+                elif sched.time == '11:00AM - 12:00PM':
+                    sched_list.insert(3, sched)
+                elif sched.time == '1:00PM - 2:00PM':
+                    sched_list.insert(4, sched)
+                elif sched.time == '2:00PM - 3:00PM':
+                    sched_list.insert(5, sched)
+                elif sched.time == '3:00PM - 4:00PM':
+                    sched_list.insert(6, sched)
+                elif sched.time == '4:00PM - 5:00PM':
+                    sched_list.insert(7, sched)            
+
+            print(sched_list)
+            context['schedules'] = sched_list
 
             # Compute
             lead = int(w) + 1
@@ -89,15 +109,11 @@ def index(request):
             day_per_week = []
             dayList = []
 
-            print(dayArray)
-
             counter = 0
             for day in dayArray:
-                print('day: ' + str(day))
                 if counter < 7:            
                     dayList.append(day)
                     counter = counter + 1
-                    print('append :: ' + str(dayList))  
                 else:
                     day_per_week.append(dayList)
                     dayList = []            
@@ -106,7 +122,6 @@ def index(request):
 
             day_per_week.append(dayList)
             
-            print(day_per_week)
             context['day_per_week'] = day_per_week
 
             return render(request, 'appointment.html', context)
@@ -652,7 +667,7 @@ def getAppointmentSchedules(request, college):
                 elif sched.time == '10:00AM - 11:00AM':
                     context['2'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
                     context['id2'] = sched.id
-                elif sched.time == '11:00AM - 12:00AM':
+                elif sched.time == '11:00AM - 12:00PM':
                     context['3'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
                     context['id3'] = sched.id
                 elif sched.time == '1:00PM - 2:00PM':
@@ -708,7 +723,7 @@ def gccAppointmentSchedules(request, college):
                 context['1'] = True if sched.status == 'AVAILABLE'  else False
             elif sched.time == '10:00AM - 11:00AM':
                 context['2'] = True if sched.status == 'AVAILABLE'  else False
-            elif sched.time == '11:00AM - 12:00AM':
+            elif sched.time == '11:00AM - 12:00PM':
                 context['3'] = True if sched.status == 'AVAILABLE'  else False
             elif sched.time == '1:00PM - 2:00PM':
                 context['4'] = True if sched.status == 'AVAILABLE'  else False
