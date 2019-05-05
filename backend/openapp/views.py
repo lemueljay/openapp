@@ -45,6 +45,70 @@ def index(request):
 
             context['chat_list'] = chat_list
 
+
+            # Date computations
+            date_today = datetime.date.today()
+            year_today = date_today.year
+            month_today = date_today.month
+            day_today = date_today.day
+
+            num_days = calendar.monthrange(year_today, month_today)[1]
+            days = [datetime.date(year_today, month_today, day) for day in range(1, num_days + 1)]
+
+            w = str(days[0].weekday())
+            v = str(days[-1].weekday())
+
+            context = {}
+            context['date_today'] = date_today
+            context['year_today'] = year_today
+            context['month_today'] = month_today
+            context['day_today'] = day_today
+            context['num_days'] = num_days
+            context['days'] = days
+            context['starting_day'] = w
+            context['ending_day'] = v
+
+            # Get appointments
+            schedules = list(Schedule.objects.filter(counselor=request.user, approved='APPROVED', date=date_today).values())
+            
+            context['schedules'] = schedules
+
+            # Compute
+            lead = int(w) + 1
+            lag  = 5 - int(v)
+
+            dayArray = []
+            for day in days:
+                dayArray.append(day.day)
+
+            for i in range(lead):
+                dayArray.insert(0, -1)
+            for i in range(lag):
+                dayArray.append(-1)
+
+            day_per_week = []
+            dayList = []
+
+            print(dayArray)
+
+            counter = 0
+            for day in dayArray:
+                print('day: ' + str(day))
+                if counter < 7:            
+                    dayList.append(day)
+                    counter = counter + 1
+                    print('append :: ' + str(dayList))  
+                else:
+                    day_per_week.append(dayList)
+                    dayList = []            
+                    dayList.append(day)
+                    counter = 1
+
+            day_per_week.append(dayList)
+            
+            print(day_per_week)
+            context['day_per_week'] = day_per_week
+
             return render(request, 'appointment.html', context)
         else:
             userattrib = UserAttrib.objects.get(user=request.user)
@@ -997,3 +1061,70 @@ def declinerequest(request):
     return render(request, 'requests.html', context)
 
     
+
+def gccdashboard(request):
+
+    # Date computations
+    date_today = datetime.date.today()
+    year_today = date_today.year
+    month_today = date_today.month
+    day_today = date_today.day
+
+    num_days = calendar.monthrange(year_today, month_today)[1]
+    days = [datetime.date(year_today, month_today, day) for day in range(1, num_days + 1)]
+
+    w = str(days[0].weekday())
+    v = str(days[-1].weekday())
+
+    context = {}
+    context['year_today'] = year_today
+    context['month_today'] = month_today
+    context['day_today'] = day_today
+    context['num_days'] = num_days
+    context['days'] = days
+    context['starting_day'] = w
+    context['ending_day'] = v
+
+    # Get appointments
+    schedules = list(Schedule.objects.filter(counselor=request.user, approved='APPROVED', date=date_today).values())
+    
+    context['schedules'] = schedules
+
+
+    # Compute
+    lead = int(w) + 1
+    lag  = 5 - int(v)
+
+    dayArray = []
+    for day in days:
+        dayArray.append(day.day)
+
+    for i in range(lead):
+        dayArray.insert(0, -1)
+    for i in range(lag):
+        dayArray.append(-1)
+
+    day_per_week = []
+    dayList = []
+
+    print(dayArray)
+
+    counter = 0
+    for day in dayArray:
+        print('day: ' + str(day))
+        if counter < 7:            
+            dayList.append(day)
+            counter = counter + 1
+            print('append :: ' + str(dayList))  
+        else:
+            day_per_week.append(dayList)
+            dayList = []            
+            dayList.append(day)
+            counter = 1
+
+    day_per_week.append(dayList)
+
+    print(day_per_week)
+    
+
+    return JsonResponse(context)

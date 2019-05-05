@@ -52,4 +52,6 @@ urlpatterns = [
     path('approverequest', views.approverequest, name='approverequest'),
     path('declinerequest', views.declinerequest, name='declinerequest'),
 
+    path('gccdashboard', views.gccdashboard, name='gccdashboard'),
+
 ]

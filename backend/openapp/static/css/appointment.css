@@ -1,0 +1,33 @@
+html {
+    background: none;
+}
+
+.appointmentobject {
+    margin: 20px;
+}
+
+.appointmentstart {
+    font-size: 20px;
+}
+
+.appointmentend {
+    font-size: 15px;
+    color: grey;
+}
+
+.appointmenttitle {
+    font-size: 17px;
+    /* font-weight: bold; */
+}
+
+.appointmentlocation {
+    font-size: 15px;
+    color: grey;
+}
+
+.appointmentavailable {
+    -webkit-transform: translateY(-5px);
+    margin-right: 5px;
+    font-size: 10px;
+    color: yellowgreen;
+}
