@@ -1,9 +1,11 @@
+from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
 
-import json, calendar
+import json
+import calendar
 
 import datetime
 
@@ -15,11 +17,14 @@ from .utils import CodeGenerator
 """
 Default index handler.
 """
+
+
 def index(request):
 
     if request.user.is_authenticated:
 
-        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        request.user.imgpath = UserAttrib.objects.get(
+            user=request.user).imgpath
 
         context = {}
         context['username'] = request.user.username
@@ -42,9 +47,7 @@ def index(request):
                 print(user)
                 chat_list.append(user)
 
-
             context['chat_list'] = chat_list
-
 
             # Date computations
             date_today = datetime.date.today()
@@ -53,7 +56,8 @@ def index(request):
             day_today = date_today.day
 
             num_days = calendar.monthrange(year_today, month_today)[1]
-            days = [datetime.date(year_today, month_today, day) for day in range(1, num_days + 1)]
+            days = [datetime.date(year_today, month_today, day)
+                    for day in range(1, num_days + 1)]
 
             w = str(days[0].weekday())
             v = str(days[-1].weekday())
@@ -69,10 +73,11 @@ def index(request):
             context['ending_day'] = v
 
             # Get appointments
-            schedules = Schedule.objects.filter(counselor=request.user, approved='APPROVED', date=date_today)          
+            schedules = Schedule.objects.filter(
+                counselor=request.user, approved='APPROVED', date=date_today)
             sched_list = []
             print(schedules)
-            for sched in schedules:                
+            for sched in schedules:
                 if sched.time == '8:00AM - 9:00AM':
                     sched_list.insert(0, sched)
                 elif sched.time == '9:00AM - 10:00AM':
@@ -88,14 +93,14 @@ def index(request):
                 elif sched.time == '3:00PM - 4:00PM':
                     sched_list.insert(6, sched)
                 elif sched.time == '4:00PM - 5:00PM':
-                    sched_list.insert(7, sched)            
+                    sched_list.insert(7, sched)
 
             print(sched_list)
             context['schedules'] = sched_list
 
             # Compute
             lead = int(w) + 1
-            lag  = 5 - int(v)
+            lag = 5 - int(v)
 
             dayArray = []
             for day in days:
@@ -111,23 +116,23 @@ def index(request):
 
             counter = 0
             for day in dayArray:
-                if counter < 7:            
+                if counter < 7:
                     dayList.append(day)
                     counter = counter + 1
                 else:
                     day_per_week.append(dayList)
-                    dayList = []            
+                    dayList = []
                     dayList.append(day)
                     counter = 1
 
             day_per_week.append(dayList)
-            
+
             context['day_per_week'] = day_per_week
 
             return render(request, 'appointment.html', context)
         else:
             userattrib = UserAttrib.objects.get(user=request.user)
-            
+
             scs = User.objects.get(username='scs')
             context['scs'] = UserAttrib.objects.get(user=scs)
             coet = User.objects.get(username='coet')
@@ -153,6 +158,8 @@ API for generating a code.
 Generates a code.
 Then adds code to database.
 """
+
+
 def generateCode(request):
 
     # Generate code.
@@ -191,6 +198,8 @@ def generateCode(request):
 """
 
 """
+
+
 def register(request):
 
     if request.method == 'GET':
@@ -234,6 +243,8 @@ def register(request):
 """
 
 """
+
+
 def loginUser(request):
 
     context = {}
@@ -271,10 +282,10 @@ def settings(request):
     context = {}
     context['username'] = request.user.username
     if request.user.is_staff:
-        
+
         return render(request, 'settings_gcc.html', context)
     else:
-        
+
         return render(request, 'settings.html', context)
 
 
@@ -319,11 +330,13 @@ def book(request):
 
     return render(request, 'information.html', context)
 
+
 def updatepseudoname(request):
     pseudoname = request.GET['changePseudoNameInput']
 
     if pseudoname is '':
-        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        request.user.imgpath = UserAttrib.objects.get(
+            user=request.user).imgpath
         context = {}
         context['namemessage'] = 'Invalid username.'
         context['username'] = request.user.username
@@ -334,13 +347,15 @@ def updatepseudoname(request):
         user.username = pseudoname
         user.save()
     except:
-        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        request.user.imgpath = UserAttrib.objects.get(
+            user=request.user).imgpath
         context = {}
         context['namemessage'] = 'Invalid username.'
         context['username'] = request.user.username
         return render(request, 'settings.html', context)
-        
+
     return redirect('/openapp/settings')
+
 
 def updatepassword(request):
     oldpassword = request.GET['oldPasswordInput']
@@ -348,27 +363,31 @@ def updatepassword(request):
     confirmationpassword = request.GET['retypePasswordInput']
 
     if oldpassword is '' or newpassword is '' or confirmationpassword is '':
-        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        request.user.imgpath = UserAttrib.objects.get(
+            user=request.user).imgpath
         context = {}
         context['passmessage'] = 'Please fill out all forms.'
         context['username'] = request.user.username
         return render(request, 'settings.html', context)
 
     if newpassword != confirmationpassword:
-        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        request.user.imgpath = UserAttrib.objects.get(
+            user=request.user).imgpath
         context = {}
         context['passmessage'] = 'Password did not match.'
         context['username'] = request.user.username
         return render(request, 'settings.html', context)
 
     user = User.objects.get(username=request.user.username)
-    user = authenticate(request, username=request.user.username, password=oldpassword)
+    user = authenticate(
+        request, username=request.user.username, password=oldpassword)
 
     if user is not None:
         user.set_password(newpassword)
         user.save()
     else:
-        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        request.user.imgpath = UserAttrib.objects.get(
+            user=request.user).imgpath
         context = {}
         context['passmessage'] = 'Password mismatch.'
         context['username'] = request.user.username
@@ -432,7 +451,8 @@ def chat(request):
 def gccChat(request):
     if request.user.is_authenticated:
 
-        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        request.user.imgpath = UserAttrib.objects.get(
+            user=request.user).imgpath
 
         context = {}
         context['username'] = request.user.username
@@ -455,21 +475,23 @@ def gccChat(request):
                 print(user)
                 chat_list.append(user)
 
-
             context['chat_list'] = chat_list
 
             return render(request, 'gcc.html', context)
+
 
 def getMessages(request):
     context = {}
 
     receiver = request.GET['receiver']
     user = User.objects.get(username=receiver)
-    combined_queryset = Message.objects.filter(sender=request.user, receiver=user) | Message.objects.filter(sender=user, receiver=request.user)
+    combined_queryset = Message.objects.filter(
+        sender=request.user, receiver=user) | Message.objects.filter(sender=user, receiver=request.user)
     print(combined_queryset)
     messages = combined_queryset.order_by('date_created')
 
-    res = list(messages.values('message', 'sender', 'receiver', 'date_created'))
+    res = list(messages.values(
+        'message', 'sender', 'receiver', 'date_created'))
 
     context['messages'] = []
 
@@ -484,6 +506,7 @@ def getMessages(request):
 
     return JsonResponse(context)
 
+
 def collegechat(request, college):
     context = {}
 
@@ -494,9 +517,10 @@ def collegechat(request, college):
     context['imgpath'] = userAttrib.imgpath
     context['college'] = college
 
-    combined_queryset = Message.objects.filter(sender=user, receiver=request.user) | Message.objects.filter(sender=request.user, receiver=user)
+    combined_queryset = Message.objects.filter(
+        sender=user, receiver=request.user) | Message.objects.filter(sender=request.user, receiver=user)
     print(combined_queryset)
-    messages =  combined_queryset.order_by('date_created')
+    messages = combined_queryset.order_by('date_created')
     print(messages)
     for message in messages:
         print(message.date_created)
@@ -515,7 +539,8 @@ def appoint(request, college):
     month_today = date_today.month
 
     num_days = calendar.monthrange(year_today, month_today)[1]
-    days = [datetime.date(year_today, month_today, day) for day in range(1, num_days+1)]
+    days = [datetime.date(year_today, month_today, day)
+            for day in range(1, num_days+1)]
 
     context['today'] = date_today
     context['days'] = days
@@ -528,7 +553,7 @@ def appoint(request, college):
         context['ran'] = range(1)
     elif w in '1':
         context['ran'] = range(2)
-    elif  w in '2':
+    elif w in '2':
         context['ran'] = range(3)
     elif w in '3':
         context['ran'] = range(4)
@@ -543,7 +568,7 @@ def appoint(request, college):
         context['end'] = range(5)
     elif v in '1':
         context['end'] = range(4)
-    elif  v in '2':
+    elif v in '2':
         context['end'] = range(3)
     elif v in '3':
         context['end'] = range(2)
@@ -567,7 +592,8 @@ def appointments(request):
     month_today = date_today.month
 
     num_days = calendar.monthrange(year_today, month_today)[1]
-    days = [datetime.date(year_today, month_today, day) for day in range(1, num_days + 1)]
+    days = [datetime.date(year_today, month_today, day)
+            for day in range(1, num_days + 1)]
 
     context['today'] = date_today
     context['days'] = days
@@ -615,11 +641,13 @@ def createappointments(request):
     schedule = request.GET['schedule']
     day = request.GET['day']
 
-    sched = Schedule(counselor=request.user, time=schedule, date=datetime.datetime.strptime(day, '%B %d, %Y').date())
+    sched = Schedule(counselor=request.user, time=schedule,
+                     date=datetime.datetime.strptime(day, '%B %d, %Y').date())
     sched.save()
 
     context['rc'] = 'OK'
     return JsonResponse(context)
+
 
 def deleteappointments(request):
 
@@ -630,11 +658,11 @@ def deleteappointments(request):
 
     return JsonResponse({})
 
+
 def getAppointmentSchedules(request, college):
 
     date_str = request.GET['day']
     sched = datetime.datetime.strptime(date_str, '%B %d, %Y').date()
-
 
     context = {}
     context['rc'] = 'OK'
@@ -652,40 +680,40 @@ def getAppointmentSchedules(request, college):
         context['6'] = False
         context['7'] = False
 
-        if scheds is None  or len(scheds) == 0:
+        if scheds is None or len(scheds) == 0:
             context['scheds'] = 'None'
 
         else:
             context['scheds'] = list(scheds.values())
             for sched in scheds:
                 if sched.time == '8:00AM - 9:00AM':
-                    context['0'] = True if (sched.status == 'AVAILABLE' and sched.assignee == '')  else False
-                    context['id0'] = sched.id                    
+                    context['0'] = True if (
+                        sched.status == 'AVAILABLE' and sched.assignee == '') else False
+                    context['id0'] = sched.id
                 elif sched.time == '9:00AM - 10:00AM':
-                    context['1'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['1'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
                     context['id1'] = sched.id
                 elif sched.time == '10:00AM - 11:00AM':
-                    context['2'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['2'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
                     context['id2'] = sched.id
                 elif sched.time == '11:00AM - 12:00PM':
-                    context['3'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['3'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
                     context['id3'] = sched.id
                 elif sched.time == '1:00PM - 2:00PM':
-                    context['4'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['4'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
                     context['id4'] = sched.id
                 elif sched.time == '2:00PM - 3:00PM':
-                    context['5'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['5'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
                     context['id5'] = sched.id
                 elif sched.time == '3:00PM - 4:00PM':
-                    context['6'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['6'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
                     context['id6'] = sched.id
                 elif sched.time == '4:00PM - 5:00PM':
-                    context['7'] = True if sched.status == 'AVAILABLE' and sched.assignee == ''  else False
+                    context['7'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
                     context['id7'] = sched.id
 
     except:
         context['rc'] = 'NOT OK'
-
 
     return JsonResponse(context)
 
@@ -711,36 +739,36 @@ def gccAppointmentSchedules(request, college):
     context['6'] = False
     context['7'] = False
 
-    if scheds is None  or len(scheds) == 0:
+    if scheds is None or len(scheds) == 0:
         context['scheds'] = 'None'
-        
+
     else:
         context['scheds'] = 'Exists'
         for sched in scheds:
             if sched.time == '8:00AM - 9:00AM':
-                context['0'] = True if sched.status == 'AVAILABLE'  else False
+                context['0'] = True if sched.status == 'AVAILABLE' else False
             elif sched.time == '9:00AM - 10:00AM':
-                context['1'] = True if sched.status == 'AVAILABLE'  else False
+                context['1'] = True if sched.status == 'AVAILABLE' else False
             elif sched.time == '10:00AM - 11:00AM':
-                context['2'] = True if sched.status == 'AVAILABLE'  else False
+                context['2'] = True if sched.status == 'AVAILABLE' else False
             elif sched.time == '11:00AM - 12:00PM':
-                context['3'] = True if sched.status == 'AVAILABLE'  else False
+                context['3'] = True if sched.status == 'AVAILABLE' else False
             elif sched.time == '1:00PM - 2:00PM':
-                context['4'] = True if sched.status == 'AVAILABLE'  else False
+                context['4'] = True if sched.status == 'AVAILABLE' else False
             elif sched.time == '2:00PM - 3:00PM':
-                context['5'] = True if sched.status == 'AVAILABLE'  else False
+                context['5'] = True if sched.status == 'AVAILABLE' else False
             elif sched.time == '3:00PM - 4:00PM':
-                context['6'] = True if sched.status == 'AVAILABLE'  else False
+                context['6'] = True if sched.status == 'AVAILABLE' else False
             elif sched.time == '4:00PM - 5:00PM':
-                context['7'] = True if sched.status == 'AVAILABLE'  else False
-            
-        print(scheds)        
+                context['7'] = True if sched.status == 'AVAILABLE' else False
+
+        print(scheds)
 
     return JsonResponse(context)
 
 
 def setGccAppointmentSchedule(request):
-    
+
     context = {}
 
     date_str = request.GET['day']
@@ -752,9 +780,11 @@ def setGccAppointmentSchedule(request):
     schedule = None
 
     try:
-        schedule = Schedule.objects.get(counselor=request.user, date=context['sched'], time=context['time'])
+        schedule = Schedule.objects.get(
+            counselor=request.user, date=context['sched'], time=context['time'])
     except:
-        schedule = Schedule(counselor=request.user, date=context['sched'], time=context['time'], status='NOT_AVAILABLE')
+        schedule = Schedule(
+            counselor=request.user, date=context['sched'], time=context['time'], status='NOT_AVAILABLE')
         schedule.save()
 
     context['status'] = request.GET['status']
@@ -776,6 +806,7 @@ def setAppointmentSchedule(request):
 
     return JsonResponse(context)
 
+
 def cancelAppointment(request):
     context = {}
 
@@ -787,9 +818,12 @@ def cancelAppointment(request):
 
     return JsonResponse(context)
 
+
 """
 API for checking if code exists.
 """
+
+
 def hasCode(request):
 
     code = request.GET['code']
@@ -804,9 +838,12 @@ def hasCode(request):
 
     return JsonResponse(response)
 
+
 """
 API for getting code status.
 """
+
+
 def getCodeStatus(request):
 
     code = request.GET['code']
@@ -826,6 +863,8 @@ def getCodeStatus(request):
 """
 API for setting code is used.
 """
+
+
 def setCodeAsUsed(request):
 
     code = request.GET['code']
@@ -844,9 +883,12 @@ def setCodeAsUsed(request):
 
     return JsonResponse(response)
 
+
 """
 Generates a code.
 """
+
+
 def createCode():
 
     codeGenerator = CodeGenerator()
@@ -854,9 +896,12 @@ def createCode():
 
     return id
 
+
 """
 Check if code already exists.
 """
+
+
 def codeExists(code):
 
     # Check database if code exists
@@ -870,9 +915,12 @@ def codeExists(code):
 
     return isExists
 
+
 """
 Gets code status.
 """
+
+
 def codeUsed(code):
 
     # Check code status in database
@@ -886,18 +934,24 @@ def codeUsed(code):
 
     return isError
 
+
 """
 Sets the code is already used.
 """
+
+
 def setCodeStatus(code):
 
     res = Code.objects.get(code=code)
     res.used = True
     res.save()
 
+
 """
 Adds the code to the database
 """
+
+
 def addCode(code):
 
     rc = True
@@ -928,7 +982,7 @@ def admin(request):
             user.set_password(password)
             user.is_staff = True
             user.first_name = firstname
-            user.last_name = lastname            
+            user.last_name = lastname
             user.save()
 
             attrib = UserAttrib(user=user, imgpath='/media/vector.jpg')
@@ -939,13 +993,10 @@ def admin(request):
 
             # Generate default schedules
 
-
             return HttpResponse('User created successfully!')
         except:
             return HttpResponse('ERROR CREATING USER')
 
-
-from django.core.files.storage import FileSystemStorage
 
 def upload_file(request):
     if request.method == 'POST' and request.FILES['myfile']:
@@ -961,10 +1012,11 @@ def upload_file(request):
         print('Uploaded to: ' + uploaded_file_url)
         return redirect('/openapp')
 
+
 def updatedata(request):
 
     context = {}
-    
+
     if request.method == 'POST':
         context['degree'] = request.POST['degree']
         context['birthdate'] = request.POST['birthdate']
@@ -982,19 +1034,22 @@ def updatedata(request):
 def notifications(request):
     context = {}
 
-    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD').order_by('-date_created')[:3].values())
+    notifs = list(Notification.objects.filter(destUser=request.user,
+                                              status='UNREAD').order_by('-date_created')[:3].values())
     print(notifs)
     context['notifs'] = notifs
     context['len'] = len(notifs)
 
     return JsonResponse(context)
 
+
 def requests(request):
     context = {}
 
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
-    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').order_by('-date_created').values())
+    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD',
+                                              notifType='APPOINTMENT').order_by('-date_created').values())
 
     context['notifs'] = notifs
     context['len'] = len(notifs)
@@ -1023,7 +1078,7 @@ def getRequest(request):
 
 
 def approverequest(request):
-    
+
     context = {}
 
     sched = Schedule.objects.get(id=request.GET['sched_id'])
@@ -1036,12 +1091,13 @@ def approverequest(request):
     notif.save()
 
     notif = Notification(sourceUser=request.user, destUser=notif.sourceUser, notifType="APPOINTMENT",
-                            notifId=sched.id, status="UNREAD", message=('Appointment with ' + request.user.get_full_name() + ' approved.'))
+                         notifId=sched.id, status="UNREAD", message=('Appointment with ' + request.user.get_full_name() + ' approved.'))
     notif.save()
 
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
-    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').order_by('-date_created').values())
+    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD',
+                                              notifType='APPOINTMENT').order_by('-date_created').values())
 
     context['notifs'] = notifs
     context['len'] = len(notifs)
@@ -1049,10 +1105,11 @@ def approverequest(request):
     context['approved'] = True
     return render(request, 'requests.html', context)
 
+
 def declinerequest(request):
 
     context = {}
-    
+
     sched = Schedule.objects.get(id=request.GET['sched_id'])
     sched.assignee = ''
     sched.save()
@@ -1062,12 +1119,13 @@ def declinerequest(request):
     notif.save()
 
     notif = Notification(sourceUser=request.user, destUser=notif.sourceUser, notifType="APPOINTMENT",
-                        notifId=sched.id, status="UNREAD", message=('Appointment with ' + request.user.get_full_name() + ' declined.'))
+                         notifId=sched.id, status="UNREAD", message=('Appointment with ' + request.user.get_full_name() + ' declined.'))
     notif.save()
 
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
-    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').order_by('-date_created').values())
+    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD',
+                                              notifType='APPOINTMENT').order_by('-date_created').values())
 
     context['notifs'] = notifs
     context['len'] = len(notifs)
@@ -1075,71 +1133,115 @@ def declinerequest(request):
 
     return render(request, 'requests.html', context)
 
-    
 
 def gccdashboard(request):
 
-    # Date computations
-    date_today = datetime.date.today()
-    year_today = date_today.year
-    month_today = date_today.month
-    day_today = date_today.day
-
-    num_days = calendar.monthrange(year_today, month_today)[1]
-    days = [datetime.date(year_today, month_today, day) for day in range(1, num_days + 1)]
-
-    w = str(days[0].weekday())
-    v = str(days[-1].weekday())
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
     context = {}
-    context['year_today'] = year_today
-    context['month_today'] = month_today
-    context['day_today'] = day_today
-    context['num_days'] = num_days
-    context['days'] = days
-    context['starting_day'] = w
-    context['ending_day'] = v
+    context['username'] = request.user.username
 
-    # Get appointments
-    schedules = list(Schedule.objects.filter(counselor=request.user, approved='APPROVED', date=date_today).values())
-    
-    context['schedules'] = schedules
+    if request.user.is_staff:
+        context = {}
 
+        combined_queryset = Message.objects.filter(receiver=request.user)
+        messages = combined_queryset.values('sender').distinct()
 
-    # Compute
-    lead = int(w) + 1
-    lag  = 5 - int(v)
+        chat_list = []
 
-    dayArray = []
-    for day in days:
-        dayArray.append(day.day)
+        for message in messages:
+            user = User.objects.get(id=message['sender'])
+            try:
+                attrib = UserAttrib.objects.get(user=user)
+                user.imgpath = attrib.imgpath
+            except:
+                user.imgpath = '/media/001.png'
+            print(user)
+            chat_list.append(user)
 
-    for i in range(lead):
-        dayArray.insert(0, -1)
-    for i in range(lag):
-        dayArray.append(-1)
+        context['chat_list'] = chat_list
 
-    day_per_week = []
-    dayList = []
+        # Date computations
+        date_today = datetime.date.today()
+        ddd = int(request.GET['ddd'])
+        date_today = datetime.date(date_today.year, date_today.month, ddd)
 
-    print(dayArray)
+        year_today = date_today.year
+        month_today = date_today.month
+        day_today = date_today.day
 
-    counter = 0
-    for day in dayArray:
-        print('day: ' + str(day))
-        if counter < 7:            
-            dayList.append(day)
-            counter = counter + 1
-            print('append :: ' + str(dayList))  
-        else:
-            day_per_week.append(dayList)
-            dayList = []            
-            dayList.append(day)
-            counter = 1
+        num_days = calendar.monthrange(year_today, month_today)[1]
+        days = [datetime.date(year_today, month_today, day)
+                for day in range(1, num_days + 1)]
 
-    day_per_week.append(dayList)
+        w = str(days[0].weekday())
+        v = str(days[-1].weekday())
 
-    print(day_per_week)
-    
+        context = {}
+        context['date_today'] = date_today
+        context['year_today'] = year_today
+        context['month_today'] = month_today
+        context['day_today'] = day_today
+        context['num_days'] = num_days
+        context['days'] = days
+        context['starting_day'] = w
+        context['ending_day'] = v
 
-    return JsonResponse(context)
+        # Get appointments
+        schedules = Schedule.objects.filter(
+            counselor=request.user, approved='APPROVED', date=date_today)
+        sched_list = []
+        print(schedules)
+        for sched in schedules:
+            if sched.time == '8:00AM - 9:00AM':
+                sched_list.insert(0, sched)
+            elif sched.time == '9:00AM - 10:00AM':
+                sched_list.insert(1, sched)
+            elif sched.time == '10:00AM - 11:00AM':
+                sched_list.insert(2, sched)
+            elif sched.time == '11:00AM - 12:00PM':
+                sched_list.insert(3, sched)
+            elif sched.time == '1:00PM - 2:00PM':
+                sched_list.insert(4, sched)
+            elif sched.time == '2:00PM - 3:00PM':
+                sched_list.insert(5, sched)
+            elif sched.time == '3:00PM - 4:00PM':
+                sched_list.insert(6, sched)
+            elif sched.time == '4:00PM - 5:00PM':
+                sched_list.insert(7, sched)
+
+        print(sched_list)
+        context['schedules'] = sched_list
+
+        # Compute
+        lead = int(w) + 1
+        lag = 5 - int(v)
+
+        dayArray = []
+        for day in days:
+            dayArray.append(day.day)
+
+        for i in range(lead):
+            dayArray.insert(0, -1)
+        for i in range(lag):
+            dayArray.append(-1)
+
+        day_per_week = []
+        dayList = []
+
+        counter = 0
+        for day in dayArray:
+            if counter < 7:
+                dayList.append(day)
+                counter = counter + 1
+            else:
+                day_per_week.append(dayList)
+                dayList = []
+                dayList.append(day)
+                counter = 1
+
+        day_per_week.append(dayList)
+
+        context['day_per_week'] = day_per_week
+
+        return render(request, 'appointment.html', context)

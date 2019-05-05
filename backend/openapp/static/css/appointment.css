@@ -31,3 +31,16 @@ html {
     font-size: 10px;
     color: yellowgreen;
 }
+
+td:hover {
+    background-color: white;
+    color: #ffe843;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.datetoday {
+    background-color: white;
+    color: #ffe843;
+    font-weight: bold;
+}
