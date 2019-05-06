@@ -307,6 +307,15 @@ def book(request):
     context['gender'] = request.GET['inlineRadioOptions']
     context['location'] = request.GET['location']
     context['success'] = True
+
+    if context['schedule'] == '' or context['name'] == '' or context['idno'] == '' or context['college'] == '' or context['yrcourse'] == '' or context['gender'] == '' or context['location'] == '':
+        print(context)
+        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        context['success'] = False
+        context['username'] = request.user.username
+        context['errormessage'] = 'Please fill all required inputs.'
+        return render(request, 'information.html', context)
+
     try:
         schedule = Schedule.objects.get(id=context['schedule'])
         schedule.assignee = request.user.username

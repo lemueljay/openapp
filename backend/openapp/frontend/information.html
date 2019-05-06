@@ -123,6 +123,11 @@
                             <button type="submit" class="btn btn-primary mb-2">Book Appointment</button>
                         </div>
                     </div>
+                    {% if errormessage %}
+                    <div class="alert alert-danger text-center">
+                        {{ errormessage }}
+                    </div>
+                    {% endif %}
                   </form>
             </div>
         </div>
