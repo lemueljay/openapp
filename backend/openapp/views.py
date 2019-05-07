@@ -363,7 +363,19 @@ def updatepseudoname(request):
         context['username'] = request.user.username
         return render(request, 'settings.html', context)
 
-    return redirect('/openapp/settings')
+
+    context = {}
+    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+    request.user.attrib = UserAttrib.objects.get(user=request.user)
+    request.user.username = pseudoname
+    context['success'] = 'OK'
+
+    if request.user.is_staff:
+
+        return render(request, 'settings_gcc.html', context)
+    else:
+
+        return render(request, 'settings.html', context)
 
 
 def updatepassword(request):
