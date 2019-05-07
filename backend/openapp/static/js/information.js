@@ -6,6 +6,7 @@ function validateInformationForm() {
     var college = $('[name=college]').val()
     var yrcourse = $('[name=yrcourse]').val()
     var inlineRadioOptions = $('[name=inlineRadioOptions]').val()
+    var studentyear = $('[name=studentyear]').val()
     var location = $('[name=location]').val()
 
     var req = {
@@ -46,6 +47,13 @@ function validateInformationForm() {
         $('[name=yrcourse]').removeClass('valid').addClass('invalid')
     } else {
         $('[name=yrcourse]').removeClass('invalid').addClass('valid')
+    }
+
+    if (studentyear === '') {
+        hasError = true;
+        $('[name=studentyear]').removeClass('valid').addClass('invalid')
+    } else {
+        $('[name=studentyear]').removeClass('invalid').addClass('valid')
     }
 
     if (location === '') {
