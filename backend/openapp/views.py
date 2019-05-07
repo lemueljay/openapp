@@ -1049,7 +1049,13 @@ def updatedata(request):
         attrib.location = context['address']
         attrib.save()
 
-        return redirect('/openapp/settings')
+        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        request.user.attrib = UserAttrib.objects.get(user=request.user)
+        context['username'] = request.user.username
+        context['success'] = True
+        if request.user.is_staff:
+
+            return render(request, 'settings_gcc.html', context)
 
 
 def notifications(request):

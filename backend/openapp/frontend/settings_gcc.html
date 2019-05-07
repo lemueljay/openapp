@@ -130,6 +130,28 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade approvalnotifmodal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body row">
+                            <div class="col-sm-2 text-center">
+                                <i style="color: blue; -webkit-transform: scale(3) translate(5px, 3px)" class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="col-sm-10">
+                                <h6 style="font-size: 20px; padding: 10px;" class="text-center">
+                                    Updated successfully.
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if success%}
+            <script type="text/javascript">
+                $('.approvalnotifmodal').modal('show');
+            </script>
+            {% endif %}
     </div>
     </div>
 
