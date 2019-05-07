@@ -48,6 +48,7 @@ class Schedule(models.Model):
     info_id = models.CharField(max_length=1000,default=None,null=True)
     info_college = models.CharField(max_length=1000,default=None,null=True)
     info_yrcourse = models.CharField(max_length=1000,default=None,null=True)
+    info_studentyear = models.CharField(max_length=1000,default=None,null=True)
     info_gender = models.CharField(max_length=1000,default=None,null=True)
     info_location = models.CharField(max_length=1000,default=None,null=True)
     

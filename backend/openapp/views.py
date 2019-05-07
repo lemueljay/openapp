@@ -304,11 +304,12 @@ def book(request):
     context['idno'] = request.GET['id']
     context['college'] = request.GET['college']
     context['yrcourse'] = request.GET['yrcourse']
+    context['studentyear'] = request.GET['studentyear']
     context['gender'] = request.GET['inlineRadioOptions']
     context['location'] = request.GET['location']
     context['success'] = True
 
-    if context['schedule'] == '' or context['name'] == '' or context['idno'] == '' or context['college'] == '' or context['yrcourse'] == '' or context['gender'] == '' or context['location'] == '':
+    if context['schedule'] == '' or context['name'] == '' or context['idno'] == '' or context['college'] == '' or context['yrcourse'] == '' or context['gender'] == '' or context['location'] == '' or context['studentyear'] == '':
         print(context)
         request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
         context['success'] = False
@@ -323,10 +324,11 @@ def book(request):
         schedule.info_id = context['idno']
         schedule.info_college = context['college']
         schedule.info_yrcourse = context['yrcourse']
+        schedule.info_studentyear = context['studentyear']
         schedule.info_gender = context['gender']
         schedule.info_location = context['location']
         schedule.save()
-
+        print(schedule)
         notif = Notification(sourceUser=request.user, destUser=schedule.counselor, notifType="APPOINTMENT",
                              notifId=schedule.id, status="UNREAD", message=(schedule.info_name + " sent a request."))
         notif.save()
@@ -1098,9 +1100,10 @@ def getRequest(request):
         context['info_id'] = sched.info_id
         context['info_college'] = sched.info_college
         context['info_yrcourse'] = sched.info_yrcourse
+        context['info_studentyear'] = sched.info_studentyear
         context['info_gender'] = sched.info_gender
         context['info_location'] = sched.info_location
-
+    print(context)
     return JsonResponse(context)
 
 
