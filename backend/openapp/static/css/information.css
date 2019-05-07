@@ -1,3 +1,11 @@
 html {
     background: none;
 }
+
+.invalid {
+    border-color: #dc3545;
+}
+
+.valid {
+    border-color: #28a745;
+}

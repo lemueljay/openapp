@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     {% load static %}
     <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome-free-5.8.1-web/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
     <link rel="stylesheet" href="{% static 'css/information.css' %}">
 
-    <meta charset="UTF-8">
-    <title>OpenApp</title>
-</head>
-<body>
     <script src="{% static 'bootstrap-4.3.1-dist/js/jquery.js' %}"></script>
     <script src="{% static 'bootstrap-4.3.1-dist/js/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
     <script src="{% static 'js/information.js' %}"></script>
+    <script src="{% static 'js/notification.js' %}"></script>
+    
+    <title>OpenApp</title>
+</head>
+<body>   
     <div class="wrapper">
         <nav id="sidebar">        
             <div class="sidebar-header text-center">
@@ -73,18 +75,19 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12 heading" style="color: black">Information Sheet<hr></div>                
-                <form class="col-sm-6 offset-sm-3" action="/openapp/book" method="GET">
+                <form id="informationForm" class="col-sm-6 offset-sm-3" action="/openapp/book" method="GET">
+                <!-- <form class="col-sm-6 offset-sm-3"> -->
                     <input name="schedule" value="{{ schedule }}" hidden>
                     <div class="form-group row">
                       <label for="name" class="col-sm-2 col-form-label">Name :</label>
                       <div class="col-sm-10">
-                        <input name="name" type="text" class="form-control" value=''>
+                        <input name="name" type="text" class="form-control" placeholder="Firstname, Lastname" value=''>
                       </div>
                     </div>
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">ID No :</label>
                         <div class="col-sm-10">
-                          <input name="id" type="text" class="form-control" value=''>
+                          <input name="id" type="text" class="form-control" value=''  pattern="[0-9]+([-\,][0-9]+)?" maxlength="9" placeholder="XXXX-XXXX">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -123,19 +126,19 @@
                     <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">Location :</label>
                         <div class="col-sm-10">
-                          <input name="location" type="text" class="form-control" value=''>
+                          <input name="location" type="text" class="form-control" placeholder="IIT Premises (College and Room No.)" value=''>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-4 offset-sm-4">
-                            <button type="submit" class="btn btn-primary mb-2">Book Appointment</button>
+                            <button type="button" onclick=validateInformationForm() class="btn btn-primary mb-2">Book Appointment</button>
                         </div>
                     </div>
-                    {% if errormessage %}
-                    <div class="alert alert-danger text-center">
-                        {{ errormessage }}
+                    
+                    <div id="errorcontainer" class="alert alert-danger text-center hidden">
+                        Please fill up all required inputs.
                     </div>
-                    {% endif %}
+                    
                   </form>
             </div>
         </div>
