@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{% static 'bootstrap-4.3.1-dist/css/bootstrap.css' %}">
     <link rel="stylesheet" href="{% static 'fontawesome-free-5.8.1-web/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/notification.css' %}">
     <link rel="stylesheet" href="{% static 'css/requests.css' %}">
 
     <meta charset="UTF-8">
@@ -16,10 +17,15 @@
     <script src="{% static 'bootstrap-4.3.1-dist/js/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
+    {% if is_staff %}
     <script src="{% static 'js/gccnotification.js' %}"></script>
+    {% else %}
+    <script src="{% static 'js/notification.js' %}"></script>
+    {% endif %}
     <script src="{% static 'js/requests.js' %}"></script>
 
     <div class="wrapper">
+        {% if is_staff %}
         <nav id="sidebar">
             <div class="sidebar-header text-center">
                 <h3><b>OPEN APP</b></h3>
@@ -71,7 +77,47 @@
                 </li>
             </ul>
         </nav>
-
+        {% else %}
+        <nav id="sidebar">        
+            <div class="sidebar-header text-center">
+                <h3><b>OPEN APP</b></h3>
+            </div>
+            <div class="containers">
+                <input name="imgpath" value="{{ request.user.imgpath }}" hidden>
+                <input name="username" value="{{ request.user.username }}" hidden>
+                <img id="propic" src="{{ request.user.imgpath }}" alt="avatar" class="image" style="width:100%">
+                <div class="middle">
+                    <div class="text">Update Photo</div>
+                </div>                               
+            </div>
+            <form action="/openapp/upload_file" method="post" enctype="multipart/form-data" hidden>
+                {% csrf_token %}
+                <input id="myFile" type="file" name="myfile" hidden>
+                <button id="uploadButton" type="submit" hidden>Upload</button>
+            </form>
+            <ul class="list-unstyled components">
+                <p class="text-center">{{ request.user.username }}</p>
+                <li>
+                    <a href="/openapp">
+                        <i class="fas fa-user"></i>
+                        Counselors
+                    </a>
+                </li>
+                <li>
+                    <a href="/openapp/settings">
+                        <i class="fas fa-cog"></i>
+                        Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="/openapp/logout">
+                        <i class="fas fa-power-off"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        {% endif %}
         <div id="content">
             <nav id="topnavbar" class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">
