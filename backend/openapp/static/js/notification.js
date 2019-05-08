@@ -13,8 +13,6 @@ function notifPopup() {
         placement: 'bottom'
     }
     $('#myprofile[data-toggle="popover"]').popover(options);
-
-    
 }
 
 function pollNotifs(){
