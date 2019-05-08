@@ -1,4 +1,5 @@
 function notifPopup() {
+    console.log('updating...')
     var imgpath = $('input[name=imgpath]').val()
     var username = $('input[name=username]').val()
     options = {
@@ -13,40 +14,27 @@ function notifPopup() {
     }
     $('#myprofile[data-toggle="popover"]').popover(options);
 
-    notifOptions = {
-        title: '<p class="notifHeader"><b>NOTIFICATIONS</b></p>',
-        content:
-            '<div id="notifBox">' + 
-                '<div>No new notifications.</div>' +
-                '<hr>' +
-                // '<div>1 unread message</div>' +                    
-            '</div>' + 
-            '<div class="text-center">' +
-                '<a href="/openapp/requests">View All Requests</a>' +  
-            '</div>'
-            ,
-        html: true,
-        placement: 'bottom'
-    }
-    $('#notifbell[data-toggle="popover"]').popover(notifOptions)
+    
 }
 
 function pollNotifs(){
-    $.get('/openapp/notifications', function(data) {
-        
-        // console.log(data)
 
+    $.get('/openapp/notifications', function(data) {
+    
         var notifs = data['notifs']
 
         var notifCount = 0;
+        var elements = ''
 
-       if(notifs.length != 0) {
+        if(notifs.length != 0) {
+        
             $('#notifBox').empty();
             
             notifs.forEach(function(notif) {
                 if(notif['notifType'] === 'APPOINTMENT') {
                     
-                    $('#notifBox').append('<div>' + notif['message'] + '</div><hr>');
+                    // $('#notifBox').append('<div>' + notif['message'] + '</div><hr>');
+                    elements += '<div>' + notif['message'] + '</div><hr>'
                 }
 
                 notifCount++;
@@ -54,17 +42,54 @@ function pollNotifs(){
                     return;
                 }
             })
-       }
+        }
+
 
         $('#notifLen').text(data['len'])
 
-        setTimeout(pollNotifs, 1000);
+        if(elements === '') {
+            notifOptions = {
+                title: '<p class="notifHeader"><b>NOTIFICATIONS</b></p>',
+                content:
+                    '<div id="notifBox">' + 
+                        '<div>No new notifications.</div>' +
+                        '<hr>' +
+                    '</div>' + 
+                    '<div class="text-center">' +
+                        '<a href="/openapp/requests">View All Requests</a>' +  
+                    '</div>'
+                    ,
+                html: true,
+                placement: 'bottom'
+            }
+        } else {
+            notifOptions = {
+                title: '<p class="notifHeader"><b>NOTIFICATIONS</b></p>',
+                content:
+                    '<div id="notifBox">' +                         
+                        elements +                 
+                    '</div>' + 
+                    '<div class="text-center">' +
+                        '<a href="/openapp/requests">View All Requests</a>' +  
+                    '</div>'
+                    ,
+                html: true,
+                placement: 'bottom'
+            }
+        }
+
+       
+        $('#notifbell[data-toggle="popover"]').popover(notifOptions)
+
+        // setTimeout(pollNotifs, 1000);
+
+        
     });
 }
 
 $(document).ready(function() {
 
-    notifPopup();    
+    notifPopup();     
     pollNotifs();
     
     $('#notifbell').on('click', function() {
