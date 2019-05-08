@@ -77,28 +77,32 @@ def index(request):
             # Get appointments
             schedules = Schedule.objects.filter(
                 counselor=request.user, approved='APPROVED', date=date_today)
-            sched_list = []
-            print(schedules)
-            for sched in schedules:
-                if sched.time == '8:00AM - 9:00AM':
-                    sched_list.insert(0, sched)
-                elif sched.time == '9:00AM - 10:00AM':
-                    sched_list.insert(1, sched)
-                elif sched.time == '10:00AM - 11:00AM':
-                    sched_list.insert(2, sched)
-                elif sched.time == '11:00AM - 12:00PM':
-                    sched_list.insert(3, sched)
-                elif sched.time == '1:00PM - 2:00PM':
-                    sched_list.insert(4, sched)
-                elif sched.time == '2:00PM - 3:00PM':
-                    sched_list.insert(5, sched)
-                elif sched.time == '3:00PM - 4:00PM':
-                    sched_list.insert(6, sched)
-                elif sched.time == '4:00PM - 5:00PM':
-                    sched_list.insert(7, sched)
+            if schedules is None or len(schedules) == 0:
+                context['scheds'] = 'None'
 
-            print(sched_list)
-            context['schedules'] = sched_list
+            else:
+                print('ENTERING MAZE')
+
+                # sort based on time schedule
+                sortedSched = []
+                for sched in schedules:
+                    sched.startTime = sched.time.split(' ')[0]
+
+                format = '%I:%M%p'
+
+                sortedSched = sorted(schedules, key=lambda sched: time.strptime(sched.startTime, format))
+                print('PRINTING RESULTS:::')
+                print(sortedSched)
+                context['schedules'] = []
+
+                for sched in sortedSched:
+                    x = {}
+                    x['sched_id'] = sched.id
+                    x['time'] = sched.time
+                    x['info_location'] = sched.info_location
+                    x['info_name'] = sched.info_name
+                    x['sched_available'] = True if (sched.status == 'AVAILABLE' and sched.assignee == '') else False
+                    context['schedules'].append(x)
 
             # Compute
             lead = int(w) + 1
@@ -1280,28 +1284,33 @@ def gccdashboard(request):
         # Get appointments
         schedules = Schedule.objects.filter(
             counselor=request.user, approved='APPROVED', date=date_today)
-        sched_list = []
-        print(schedules)
-        for sched in schedules:
-            if sched.time == '8:00AM - 9:00AM':
-                sched_list.insert(0, sched)
-            elif sched.time == '9:00AM - 10:00AM':
-                sched_list.insert(1, sched)
-            elif sched.time == '10:00AM - 11:00AM':
-                sched_list.insert(2, sched)
-            elif sched.time == '11:00AM - 12:00PM':
-                sched_list.insert(3, sched)
-            elif sched.time == '1:00PM - 2:00PM':
-                sched_list.insert(4, sched)
-            elif sched.time == '2:00PM - 3:00PM':
-                sched_list.insert(5, sched)
-            elif sched.time == '3:00PM - 4:00PM':
-                sched_list.insert(6, sched)
-            elif sched.time == '4:00PM - 5:00PM':
-                sched_list.insert(7, sched)
 
-        print(sched_list)
-        context['schedules'] = sched_list
+        if schedules is None or len(schedules) == 0:
+            context['scheds'] = 'None'
+
+        else:
+            print('ENTERING MAZE')
+
+            # sort based on time schedule
+            sortedSched = []
+            for sched in schedules:
+                sched.startTime = sched.time.split(' ')[0]
+
+            format = '%I:%M%p'
+
+            sortedSched = sorted(schedules, key=lambda sched: time.strptime(sched.startTime, format))
+            print('PRINTING RESULTS:::')
+            print(sortedSched)
+            context['schedules'] = []
+
+            for sched in sortedSched:
+                x = {}
+                x['sched_id'] = sched.id
+                x['time'] = sched.time
+                x['info_location'] = sched.info_location
+                x['info_name'] = sched.info_name
+                x['sched_available'] = True if (sched.status == 'AVAILABLE' and sched.assignee == '') else False
+                context['schedules'].append(x)
 
         # Compute
         lead = int(w) + 1
