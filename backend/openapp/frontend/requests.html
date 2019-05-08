@@ -92,9 +92,18 @@
                     {% if notifs %}
                     <div class="col-sm-5 requestscontainer">
                         {% for notif in notifs %}
+                        {% if is_staff %}
                         <div onclick=requestModalUpdate({{ notif.id }}) class="request" data-toggle="modal" data-target="#requestModal">
                             {{ notif.message }}
                         </div>
+                        {% else %}
+                        <div class="request row">
+                            <div class="col-sm-12">
+                                {{ notif.message }}
+                            </div>
+                            <button onclick="window.location.href='http://localhost:8000/openapp/appoint/{{notif.fromUser}}'" class="btn btn-primary col-sm-6 offset-6">Proceed Appointment</button>
+                        </div>
+                        {% endif%}
                         {% endfor %}                      
                     </div>
                     {% endif %}
@@ -158,8 +167,8 @@
                                 <div class="form-group row">
                                     <div class="col-sm-12 text-center">
                                         <button formaction="/openapp/approverequest" type="submit" class="btn btn-primary mb-6">Approve</button>
-                                        <!-- <button formaction="/openapp/declinerequest" type="submit" class="btn btn-danger mb-6">Decline</button> -->
-                                        <button onclick='declineButton()' type="button" class="btn btn-danger mb-6" data-toggle="modal" data-target="#requestModal">Decline</button>
+                                        <button formaction="/openapp/declinerequest" type="submit" class="btn btn-danger mb-6">Reschedule</button>
+                                        <!-- <button onclick='declineButton()' type="button" class="btn btn-danger mb-6" data-toggle="modal" data-target="#requestModal">Decline</button> -->
                                     </div>
                                 </div>                                                              
                             </form>        

@@ -1077,11 +1077,18 @@ def requests(request):
 
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
-    notifs = list(Notification.objects.filter(destUser=request.user, status='UNREAD',
-                                              notifType='APPOINTMENT').order_by('-date_created').values())
+    notifs = Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').order_by('-date_created')
 
-    context['notifs'] = notifs
+    context['notifs'] = []
+    for notif in notifs:
+        print(notif)
+        notif.fromUser = User.objects.get(id=notif.sourceUser.id).username
+        context['notifs'].append(notif)
+
     context['len'] = len(notifs)
+    context['is_staff'] = False
+    if request.user.is_staff:
+        context['is_staff'] = True
 
     return render(request, 'requests.html', context)
 
@@ -1149,7 +1156,7 @@ def declinerequest(request):
     notif.save()
 
     notif = Notification(sourceUser=request.user, destUser=notif.sourceUser, notifType="APPOINTMENT",
-                         notifId=sched.id, status="UNREAD", message=('Appointment with ' + request.user.get_full_name() + ' declined.'))
+                         notifId=sched.id, status="UNREAD", message=(request.user.get_full_name() + ' requested to reschedule your appointment.'))
     notif.save()
 
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath

@@ -20,6 +20,9 @@ function notifPopup() {
                 '<div>No new notifications.</div>' +
                 '<hr>' +
                 // '<div>1 unread message</div>' +                    
+            '</div>' + 
+            '<div class="text-center">' +
+                '<a href="/openapp/requests">View All Requests</a>' +  
             '</div>'
             ,
         html: true,
