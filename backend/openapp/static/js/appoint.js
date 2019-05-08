@@ -109,55 +109,103 @@ function getSchedules(day) {
     // Get the schedules for this college guidance counselor
     $.get("http://localhost:8000/openapp/getAppointmentSchedules/" + counselor, data, function(data) {
         
-        console.log(data)
+        console.log(JSON.stringify(data))
 
-        if(data[0]) {
-            $('#0box').empty().append('<input onclick=bookAppointment("' + data['id0'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
-        } else {
-            $('#0box').empty().append('<input type="button" class="form-control btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        $('#morning_session').empty()
+        $('#noon_session').empty()
+
+        if(data['morning_sched']) {
+            data['morning_sched'].forEach(function(sched) {
+                if(sched['sched_available']) {
+                    $('#morning_session').append('' +
+                        '<div class="timebox">' +
+                            '<span>' + sched['sched_time'] + '</span>' +
+                            '<span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">' +
+                            '<input onclick=bookAppointment("' + sched['sched_id'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">' + 
+                        '</div>' +
+                    '')
+                } else {
+                    $('#morning_session').append('' +
+                        '<div class="timebox">' +
+                            '<span>' + sched['sched_time'] + '</span>' +
+                            '<span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">' +
+                            '<input type="button" class="form-control btn btn-danger" value="     NOT AVAILABLE     " disabled>' + 
+                        '</div>' +
+                    '')
+                }
+            })
         }
 
-        if(data[1]) {
-            $('#1box').empty().append('<input onclick=bookAppointment("' + data['id1'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
-        } else {
-            $('#1box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        if(data['noon_sched']) {
+            data['noon_sched'].forEach(function(sched) {
+                if(sched['sched_available']) {
+                    $('#noon_session').append('' +
+                        '<div class="timebox">' +
+                            '<span>' + sched['sched_time'] + '</span>' +
+                            '<span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">' +
+                            '<input onclick=bookAppointment("' + sched['sched_id'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">' + 
+                        '</div>' +
+                    '')
+                } else {
+                    $('#noon_session').append('' +
+                        '<div class="timebox">' +
+                            '<span>' + sched['sched_time'] + '</span>' +
+                            '<span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">' +
+                            '<input type="button" class="form-control btn btn-danger" value="     NOT AVAILABLE     " disabled>' + 
+                        '</div>' +
+                    '')
+                }
+            })
         }
+        
+        // $('#morning_session').append()
+        // if(data[0]) {
+        //     $('#0box').empty().append('<input onclick=bookAppointment("' + data['id0'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        // } else {
+        //     $('#0box').empty().append('<input type="button" class="form-control btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        // }
 
-        if(data[2]) {
-            $('#2box').empty().append('<input onclick=bookAppointment("' + data['id2'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
-        } else {
-            $('#2box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
-        }
+        // if(data[1]) {
+        //     $('#1box').empty().append('<input onclick=bookAppointment("' + data['id1'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        // } else {
+        //     $('#1box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        // }
 
-        if(data[3]) {
-            $('#3box').empty().append('<input onclick=bookAppointment("' + data['id3'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
-        } else {
-            $('#3box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
-        }
+        // if(data[2]) {
+        //     $('#2box').empty().append('<input onclick=bookAppointment("' + data['id2'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        // } else {
+        //     $('#2box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        // }
 
-        if(data[4]) {
-            $('#4box').empty().append('<input onclick=bookAppointment("' + data['id4'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
-        } else {
-            $('#4box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
-        }
+        // if(data[3]) {
+        //     $('#3box').empty().append('<input onclick=bookAppointment("' + data['id3'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        // } else {
+        //     $('#3box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        // }
 
-        if(data[5]) {
-            $('#5box').empty().append('<input onclick=bookAppointment("' + data['id5'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
-        } else {
-            $('#5box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
-        }
+        // if(data[4]) {
+        //     $('#4box').empty().append('<input onclick=bookAppointment("' + data['id4'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        // } else {
+        //     $('#4box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        // }
 
-        if(data[6]) {
-            $('#6box').empty().append('<input onclick=bookAppointment("' + data['id6'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
-        } else {
-            $('#6box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
-        }
+        // if(data[5]) {
+        //     $('#5box').empty().append('<input onclick=bookAppointment("' + data['id5'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        // } else {
+        //     $('#5box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        // }
 
-        if(data[7]) {
-            $('#7box').empty().append('<input onclick=bookAppointment("' + data['id7'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
-        } else {
-            $('#7box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
-        }
+        // if(data[6]) {
+        //     $('#6box').empty().append('<input onclick=bookAppointment("' + data['id6'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        // } else {
+        //     $('#6box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        // }
+
+        // if(data[7]) {
+        //     $('#7box').empty().append('<input onclick=bookAppointment("' + data['id7'] + '") type="button" class="btn btn-primary" value="BOOK APPOINTMENT" data-dismiss="modal" data-toggle="modal" data-target=".bd-example-modal-sm">')
+        // } else {
+        //     $('#7box').empty().append('<input type="button" class="btn btn-danger" value="     NOT AVAILABLE     " disabled>')
+        // }
 
     });
 

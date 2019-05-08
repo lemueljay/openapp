@@ -147,7 +147,9 @@
                             <div class="col-sm-12">
                                 {{ notif.message }}
                             </div>
+                            {% if 'reschedule' in notif.message %}
                             <button onclick="window.location.href='http://localhost:8000/openapp/appoint/{{notif.fromUser}}'" class="btn btn-outline-primary col-sm-6 offset-6">Proceed Appointment</a>
+                            {% endif %}
                         </div>
                         {% endif%}
                         {% endfor %}                      

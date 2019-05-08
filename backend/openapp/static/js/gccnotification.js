@@ -52,9 +52,12 @@ function pollNotifs(){
                 }
             })
         }
-
-
-        $('#notifLen').text(data['len'])
+        
+        if(data['len'] === 0) {
+            $('#notifLen').hide()    
+        } else {
+            $('#notifLen').show().text(data['len'])
+        }
 
         if(elements === '') {
             notifOptions = {

@@ -3,9 +3,11 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
-
+import time
 import json
 import calendar
+from json import JSONEncoder
+
 
 import datetime
 
@@ -311,7 +313,8 @@ def book(request):
 
     if context['schedule'] == '' or context['name'] == '' or context['idno'] == '' or context['college'] == '' or context['yrcourse'] == '' or context['gender'] == '' or context['location'] == '' or context['studentyear'] == '':
         print(context)
-        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        request.user.imgpath = UserAttrib.objects.get(
+            user=request.user).imgpath
         context['success'] = False
         context['username'] = request.user.username
         context['errormessage'] = 'Please fill all required inputs.'
@@ -364,7 +367,6 @@ def updatepseudoname(request):
         context['namemessage'] = 'Invalid username.'
         context['username'] = request.user.username
         return render(request, 'settings.html', context)
-
 
     context = {}
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
@@ -664,9 +666,17 @@ def createappointments(request):
     schedule = request.GET['schedule']
     day = request.GET['day']
 
-    sched = Schedule(counselor=request.user, time=schedule,
-                     date=datetime.datetime.strptime(day, '%B %d, %Y').date())
-    sched.save()
+    doesExist = True
+    try:
+        sched = Schedule.objects.get(
+            counselor=request.user, time=schedule, date=datetime.datetime.strptime(day, '%B %d, %Y').date())
+    except:
+        doesExist = False
+
+    if not doesExist:
+        sched = Schedule(counselor=request.user, time=schedule, status='AVAILABLE',
+                         date=datetime.datetime.strptime(day, '%B %d, %Y').date())
+        sched.save()
 
     context['rc'] = 'OK'
     return JsonResponse(context)
@@ -694,46 +704,74 @@ def getAppointmentSchedules(request, college):
         counselor = User.objects.get(username__icontains=college)
         scheds = Schedule.objects.filter(counselor=counselor, date=sched)
 
-        context['0'] = False
-        context['1'] = False
-        context['2'] = False
-        context['3'] = False
-        context['4'] = False
-        context['5'] = False
-        context['6'] = False
-        context['7'] = False
-
         if scheds is None or len(scheds) == 0:
             context['scheds'] = 'None'
 
         else:
-            context['scheds'] = list(scheds.values())
+            print('ENTERING MAZE')
+
+            # sort based on time schedule
+            sortedSched = []
             for sched in scheds:
-                if sched.time == '8:00AM - 9:00AM':
-                    context['0'] = True if (
+                sched.startTime = sched.time.split(' ')[0]
+
+            format = '%I:%M%p'
+
+            sortedSched = sorted(
+                scheds, key=lambda sched: time.strptime(sched.startTime, format))
+
+            # time_hours = [time.strptime(t, format) for t in sortedSched]
+            # result = [time.strftime(format, h) for h in sorted(time_hours)]
+
+            print('PRINTING RESULTS:::')
+            print(sortedSched)
+            context['morning_sched'] = []
+            context['noon_sched'] = []
+
+            for sched in sortedSched:
+
+                if sched.startTime[-2:] == 'AM':
+                    x = {}
+                    x['sched_id'] = sched.id
+                    x['sched_time'] = sched.time
+                    x['sched_available'] = True if (
                         sched.status == 'AVAILABLE' and sched.assignee == '') else False
-                    context['id0'] = sched.id
-                elif sched.time == '9:00AM - 10:00AM':
-                    context['1'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
-                    context['id1'] = sched.id
-                elif sched.time == '10:00AM - 11:00AM':
-                    context['2'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
-                    context['id2'] = sched.id
-                elif sched.time == '11:00AM - 12:00PM':
-                    context['3'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
-                    context['id3'] = sched.id
-                elif sched.time == '1:00PM - 2:00PM':
-                    context['4'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
-                    context['id4'] = sched.id
-                elif sched.time == '2:00PM - 3:00PM':
-                    context['5'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
-                    context['id5'] = sched.id
-                elif sched.time == '3:00PM - 4:00PM':
-                    context['6'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
-                    context['id6'] = sched.id
-                elif sched.time == '4:00PM - 5:00PM':
-                    context['7'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
-                    context['id7'] = sched.id
+                    context['morning_sched'].append(x)
+                else:
+                    x = {}
+                    x['sched_id'] = sched.id
+                    x['sched_time'] = sched.time
+                    x['sched_available'] = True if (
+                        sched.status == 'AVAILABLE' and sched.assignee == '') else False
+                    context['noon_sched'].append(x)
+
+            # context['scheds'] =  json.dumps(sortedSched)
+            # for sched in scheds:
+            #     if sched.time == '8:00AM - 9:00AM':
+            #         context['0'] = True if (
+            #             sched.status == 'AVAILABLE' and sched.assignee == '') else False
+            #         context['id0'] = sched.id
+            #     elif sched.time == '9:00AM - 10:00AM':
+            #         context['1'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
+            #         context['id1'] = sched.id
+            #     elif sched.time == '10:00AM - 11:00AM':
+            #         context['2'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
+            #         context['id2'] = sched.id
+            #     elif sched.time == '11:00AM - 12:00PM':
+            #         context['3'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
+            #         context['id3'] = sched.id
+            #     elif sched.time == '1:00PM - 2:00PM':
+            #         context['4'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
+            #         context['id4'] = sched.id
+            #     elif sched.time == '2:00PM - 3:00PM':
+            #         context['5'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
+            #         context['id5'] = sched.id
+            #     elif sched.time == '3:00PM - 4:00PM':
+            #         context['6'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
+            #         context['id6'] = sched.id
+            #     elif sched.time == '4:00PM - 5:00PM':
+            #         context['7'] = True if sched.status == 'AVAILABLE' and sched.assignee == '' else False
+            #         context['id7'] = sched.id
 
     except:
         context['rc'] = 'NOT OK'
@@ -753,39 +791,45 @@ def gccAppointmentSchedules(request, college):
     counselor = User.objects.get(username__icontains=college)
     scheds = Schedule.objects.filter(counselor=counselor, date=sched)
 
-    context['0'] = False
-    context['1'] = False
-    context['2'] = False
-    context['3'] = False
-    context['4'] = False
-    context['5'] = False
-    context['6'] = False
-    context['7'] = False
-
     if scheds is None or len(scheds) == 0:
         context['scheds'] = 'None'
 
     else:
-        context['scheds'] = 'Exists'
-        for sched in scheds:
-            if sched.time == '8:00AM - 9:00AM':
-                context['0'] = True if sched.status == 'AVAILABLE' else False
-            elif sched.time == '9:00AM - 10:00AM':
-                context['1'] = True if sched.status == 'AVAILABLE' else False
-            elif sched.time == '10:00AM - 11:00AM':
-                context['2'] = True if sched.status == 'AVAILABLE' else False
-            elif sched.time == '11:00AM - 12:00PM':
-                context['3'] = True if sched.status == 'AVAILABLE' else False
-            elif sched.time == '1:00PM - 2:00PM':
-                context['4'] = True if sched.status == 'AVAILABLE' else False
-            elif sched.time == '2:00PM - 3:00PM':
-                context['5'] = True if sched.status == 'AVAILABLE' else False
-            elif sched.time == '3:00PM - 4:00PM':
-                context['6'] = True if sched.status == 'AVAILABLE' else False
-            elif sched.time == '4:00PM - 5:00PM':
-                context['7'] = True if sched.status == 'AVAILABLE' else False
+        print('ENTERING MAZE')
 
-        print(scheds)
+        # sort based on time schedule
+        sortedSched = []
+        for sched in scheds:
+            sched.startTime = sched.time.split(' ')[0]
+
+        format = '%I:%M%p'
+
+        sortedSched = sorted(scheds, key=lambda sched: time.strptime(sched.startTime, format))
+
+        # time_hours = [time.strptime(t, format) for t in sortedSched]
+        # result = [time.strftime(format, h) for h in sorted(time_hours)]
+
+        print('PRINTING RESULTS:::')
+        print(sortedSched)
+        context['morning_sched'] = []
+        context['noon_sched'] = []
+
+        for sched in sortedSched:
+
+            if sched.startTime[-2:] == 'AM':
+                x = {}
+                x['sched_id'] = sched.id
+                x['sched_time'] = sched.time
+                x['sched_available'] = True if (
+                sched.status == 'AVAILABLE') else False
+                context['morning_sched'].append(x)
+            else:
+                x = {}
+                x['sched_id'] = sched.id
+                x['sched_time'] = sched.time
+                x['sched_available'] = True if (
+                sched.status == 'AVAILABLE') else False
+                context['noon_sched'].append(x)
 
     return JsonResponse(context)
 
@@ -1051,7 +1095,8 @@ def updatedata(request):
         attrib.location = context['address']
         attrib.save()
 
-        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+        request.user.imgpath = UserAttrib.objects.get(
+            user=request.user).imgpath
         request.user.attrib = UserAttrib.objects.get(user=request.user)
         context['username'] = request.user.username
         context['success'] = True
@@ -1077,7 +1122,8 @@ def requests(request):
 
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
-    notifs = Notification.objects.filter(destUser=request.user, status='UNREAD', notifType='APPOINTMENT').order_by('-date_created')
+    notifs = Notification.objects.filter(
+        destUser=request.user, status='UNREAD', notifType='APPOINTMENT').order_by('-date_created')
 
     context['notifs'] = []
     for notif in notifs:
@@ -1140,6 +1186,10 @@ def approverequest(request):
     context['len'] = len(notifs)
 
     context['approved'] = True
+
+    if request.user.is_staff:
+        context['is_staff'] = True
+
     return render(request, 'requests.html', context)
 
 
@@ -1167,6 +1217,9 @@ def declinerequest(request):
     context['notifs'] = notifs
     context['len'] = len(notifs)
     context['declined'] = True
+
+    if request.user.is_staff:
+        context['is_staff'] = True
 
     return render(request, 'requests.html', context)
 

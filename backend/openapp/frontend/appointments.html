@@ -78,7 +78,7 @@
                 <div class="container-fluid">
                     <i class="fas fa-align-justify icon-color-white"></i>
                     <div class="nav navbar-nav ml-auto" id="navbarSupportedContent">                    
-                        <i id="notifbell" style="color: white; font-size: 25px; cursor:pointer" class="far fa-bell padder" data-toggle="popover"><span class="badge badge-light" hidden>2</span></i>
+                        <i id="notifbell" style="color: white; font-size: 25px; cursor:pointer" class="far fa-bell padder" data-toggle="popover"><span id="notifLen" class="badge badge-light">2</span></i>
                         <div id="myprofile" class="propro padder" style="cursor:pointer" data-toggle="popover">
                             <img src="{{ request.user.imgpath }}" alt="avatar" class="myprofileimg" style="margin-right: 10px;width:25px; height: auto;">
                             <span class="icon-color-white">{{ request.user.first_name }}</span>
@@ -150,14 +150,14 @@
               <h5 class="text-center">Time Slot Schedule</h5>
               <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner text-center">
-                        <div class="carousel-item active">                            
-                            <div class="timebox">
+                        <div id="morning_session" class="carousel-item active">                            
+                            <!-- <div class="timebox">
                                 <span>8:00AM - 9:00AM</span>
                                 <span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">
                                     <label id="0A" onclick="setAvailable('8:00AM - 9:00AM')" class="btn btn-outline-primary">
                                         <input type="radio" name="optionA" autocomplete="off" checked value="a"> A
                                     </label>
-                                    <label id="0B" onclick="setNotAvailable('8:00AM - 9:00AM')" class="btn btn-outline-primary">
+                                    <label id="0B" onclick="setNotAvailable('8:00AM - 9:00AM')" class="btn btn-outline-primary active">
                                         <input type="radio" name="optionA" autocomplete="off" value="b"> NA
                                     </label>
                                 </span>
@@ -168,7 +168,7 @@
                                     <label id="1A" onclick="setAvailable('9:00AM - 10:00AM')" class="btn btn-outline-primary">
                                         <input type="radio" name="optionB" autocomplete="off" checked> A
                                     </label>
-                                    <label id="1B" onclick="setNotAvailable('9:00AM - 10:00AM')" class="btn btn-outline-primary">
+                                    <label id="1B" onclick="setNotAvailable('9:00AM - 10:00AM')" class="btn btn-outline-primary  active">
                                         <input type="radio" name="optionB" autocomplete="off"> NA
                                     </label>
                                 </span>
@@ -179,7 +179,7 @@
                                     <label id="2A" onclick="setAvailable('10:00AM - 11:00AM')" class="btn btn-outline-primary">
                                         <input type="radio" name="optionC" autocomplete="off" checked> A
                                     </label>
-                                    <label id="2B" onclick="setNotAvailable('10:00AM - 11:00AM')" class="btn btn-outline-primary">
+                                    <label id="2B" onclick="setNotAvailable('10:00AM - 11:00AM')" class="btn btn-outline-primary  active">
                                         <input type="radio" name="optionC" autocomplete="off"> NA
                                     </label>
                                 </span>
@@ -190,20 +190,20 @@
                                     <label id="3A" onclick="setAvailable('11:00AM - 12:00PM')" class="btn btn-outline-primary">
                                         <input type="radio" name="optionD" autocomplete="off" checked> A
                                     </label>
-                                    <label id="3B" onclick="setNotAvailable('11:00AM - 12:00PM')" class="btn btn-outline-primary">
+                                    <label id="3B" onclick="setNotAvailable('11:00AM - 12:00PM')" class="btn btn-outline-primary  active">
                                         <input type="radio" name="optionD" autocomplete="off"> NA
                                     </label>
                                 </span>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="carousel-item">
-                           <div class="timebox">
+                        <div id="noon_session" class="carousel-item">
+                           <!-- <div class="timebox">
                                 <span>1:00PM - 2:00PM</span>
                                 <span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">
                                     <label id="4A" onclick="setAvailable('1:00PM - 2:00PM')"class="btn btn-outline-primary">
                                         <input type="radio" name="optionE" autocomplete="off" checked> A
                                     </label>
-                                    <label id="4B" onclick="setNotAvailable('1:00PM - 2:00PM')" class="btn btn-outline-primary">
+                                    <label id="4B" onclick="setNotAvailable('1:00PM - 2:00PM')" class="btn btn-outline-primary  active">
                                         <input type="radio" name="optionE" autocomplete="off"> NA
                                     </label>
                                 </span>
@@ -214,7 +214,7 @@
                                     <label id="5A" onclick="setAvailable('2:00PM - 3:00PM')" class="btn btn-outline-primary">
                                         <input type="radio" name="optionF" autocomplete="off" checked> A
                                     </label>
-                                    <label id="5B" onclick="setNotAvailable('2:00PM - 3:00PM')" class="btn btn-outline-primary">
+                                    <label id="5B" onclick="setNotAvailable('2:00PM - 3:00PM')" class="btn btn-outline-primary  active">
                                         <input type="radio" name="optionF" autocomplete="off"> NA
                                     </label>
                                 </span>
@@ -225,7 +225,7 @@
                                     <label id="6A" onclick="setAvailable('3:00PM - 4:00PM')" class="btn btn-outline-primary">
                                         <input type="radio" name="optionG" autocomplete="off" checked> A
                                     </label>
-                                    <label id="6B" onclick="setNotAvailable('3:00PM - 4:00PM')" class="btn btn-outline-primary">
+                                    <label id="6B" onclick="setNotAvailable('3:00PM - 4:00PM')" class="btn btn-outline-primary active">
                                         <input type="radio" name="optionG" autocomplete="off"> NA
                                     </label>
                                 </span>
@@ -236,11 +236,11 @@
                                     <label id="7A" onclick="setAvailable('4:00PM - 5:00PM')" class="btn btn-outline-primary">
                                         <input type="radio" name="optionH" autocomplete="off" checked> A
                                     </label>
-                                    <label id="7B" onclick="setNotAvailable('4:00PM - 5:00PM')" class="btn btn-outline-primary">
+                                    <label id="7B" onclick="setNotAvailable('4:00PM - 5:00PM')" class="btn btn-outline-primary active">
                                         <input type="radio" name="optionH" autocomplete="off"> NA
                                     </label>
                                 </span>
-                            </div>
+                            </div> -->
                         </div>
                                            
                     </div>                   
@@ -249,14 +249,17 @@
                         <i id="nextslide" class="far fa-circle"></i>
                     </div>
               </div>
-            <!-- <div class="row" id="slotter"></div> -->
+            <!-- <div class="row" id="slotter">
+                <div class="col-sm-12"></div>
+            </div> -->
           </div>
-          <!-- <div class="modal-footer">
+          <div class="modal-footer">
               <input name="assignee" value="{{ request.user.username }}" hidden>
-              <input name="createappointments" class="form-control" type="text">
-              <button type="button" class="btn btn-primary" onclick="createappointments()">Create Schedule</button>
+              <button id="createButton" onclick="showCreateButton()" type="button" class="btn btn-primary form-control"">Create</button>
+              <input name="createappointments" class="form-control" type="text" maxlength="17">
+              <button id="saveButton" type="button" class="btn btn-primary" onclick="createappointments()">Save</button>
               <button data-dismiss="modal" id="modalBbutton" type="button" class="btn btn-primary" hidden></button>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
