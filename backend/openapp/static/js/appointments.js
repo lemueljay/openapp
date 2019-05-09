@@ -121,6 +121,7 @@ function getSchedules(day) {
                 '')
                 }
             })
+           
         }
         // // Update data
         // if(data[0]) {
@@ -186,11 +187,13 @@ function getSchedules(day) {
         //     $('#7A').removeClass('active')
         //     $('#7B').addClass('active')
         // }
+        $('[name=createappointments], #saveButton').hide();
+        $('#createButton').show()
+        $('#scheduleModal').modal('show')
     });
     
 
-    $('[name=createappointments], #saveButton').hide();
-    $('#createButton').show()
+    
 }
 
 function createappointments() {

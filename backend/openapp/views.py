@@ -25,15 +25,13 @@ def index(request):
 
     if request.user.is_authenticated:
 
-        request.user.imgpath = UserAttrib.objects.get(
-            user=request.user).imgpath
+        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
         context = {}
         context['username'] = request.user.username
 
         if request.user.is_staff:
             context = {}
-
             combined_queryset = Message.objects.filter(receiver=request.user)
             messages = combined_queryset.values('sender').distinct()
 
@@ -252,7 +250,7 @@ def register(request):
 
 
 def loginUser(request):
-
+    
     context = {}
 
     if request.method == 'GET':
@@ -796,44 +794,45 @@ def gccAppointmentSchedules(request, college):
     scheds = Schedule.objects.filter(counselor=counselor, date=sched)
 
     if scheds is None or len(scheds) == 0:
-        context['scheds'] = 'None'
+        timeList  = ['8:00AM - 9:00AM', '9:00AM - 10:00AM', '10:00AM - 11:00AM', '11:00AM - 12:00PM', '1:00PM - 2:00PM', '2:00PM - 3:00PM', '3:00PM - 4:00PM', '5:00PM - 6:00PM']
 
-    else:
-        print('ENTERING MAZE')
+        for t in timeList:
+            Schedule(counselor=counselor, date=sched, time=t, status='NOT_AVAILABLE').save()
 
-        # sort based on time schedule
-        sortedSched = []
-        for sched in scheds:
-            sched.startTime = sched.time.split(' ')[0]
+    scheds = Schedule.objects.filter(counselor=counselor, date=sched)
 
-        format = '%I:%M%p'
+    # sort based on time schedule
+    sortedSched = []
+    for sched in scheds:
+        sched.startTime = sched.time.split(' ')[0]
 
-        sortedSched = sorted(scheds, key=lambda sched: time.strptime(sched.startTime, format))
+    format = '%I:%M%p'
 
-        # time_hours = [time.strptime(t, format) for t in sortedSched]
-        # result = [time.strftime(format, h) for h in sorted(time_hours)]
+    sortedSched = sorted(scheds, key=lambda sched: time.strptime(sched.startTime, format))
 
-        print('PRINTING RESULTS:::')
-        print(sortedSched)
-        context['morning_sched'] = []
-        context['noon_sched'] = []
+    # time_hours = [time.strptime(t, format) for t in sortedSched]
+    # result = [time.strftime(format, h) for h in sorted(time_hours)]
 
-        for sched in sortedSched:
+    print('PRINTING RESULTS:::')
+    print(sortedSched)
+    context['morning_sched'] = []
+    context['noon_sched'] = []
 
-            if sched.startTime[-2:] == 'AM':
-                x = {}
-                x['sched_id'] = sched.id
-                x['sched_time'] = sched.time
-                x['sched_available'] = True if (
-                sched.status == 'AVAILABLE') else False
-                context['morning_sched'].append(x)
-            else:
-                x = {}
-                x['sched_id'] = sched.id
-                x['sched_time'] = sched.time
-                x['sched_available'] = True if (
-                sched.status == 'AVAILABLE') else False
-                context['noon_sched'].append(x)
+    for sched in sortedSched:
+        if sched.startTime[-2:] == 'AM':
+            x = {}
+            x['sched_id'] = sched.id
+            x['sched_time'] = sched.time
+            x['sched_available'] = True if (
+            sched.status == 'AVAILABLE') else False
+            context['morning_sched'].append(x)
+        else:
+            x = {}
+            x['sched_id'] = sched.id
+            x['sched_time'] = sched.time
+            x['sched_available'] = True if (
+            sched.status == 'AVAILABLE') else False
+            context['noon_sched'].append(x)
 
     return JsonResponse(context)
 
