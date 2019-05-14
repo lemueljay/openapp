@@ -60,8 +60,10 @@ $(document).ready(function(global) {
 
     // Set the first chat list to as active
     // $('.chat_list:first-child').addClass('active_chat');
-
+    $('#messagebaretto').hide();
     $('.chat_list').on('click', function() {
+
+        $('#messagebaretto').show();
 
         $('.msghistory').empty();
 

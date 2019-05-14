@@ -1,3 +1,21 @@
 html {
     background: none;
 }
+
+#messagebaretto {
+    position: absolute;
+    max-width: 740px;
+    right: 0;
+    bottom: 0;
+    left: 530px;
+    z-index: 1030;
+    padding: 0px;
+}
+
+.msghistory {
+    height: 600px;
+}
+
+.inbox_chat {
+    height: 680px;
+}

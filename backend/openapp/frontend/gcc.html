@@ -130,17 +130,17 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-                <nav class="navbar navbar-light bg-light" id="messagebar">
-                <div class="input-group mb-3">
-                    {% csrf_token %}
-                    <input id="chatmessage" name="chatmessage" type="text" class="form-control" placeholder="What's going on?" aria-label="Username" aria-describedby="basic-addon1">
-                    <input name="senderinput" type="text" value="{{ request.user }}" hidden>
-                    <input name="receiverinput" type="text" value="{{ college|lower }}" hidden>
-                     <div class="input-group-prepend">
-                    <i class="input-group-text fas fa-paper-plane sendButton" id="sendButton"></i>
-                  </div>
-                </div>
-            </nav>
+                <nav class="navbar navbar-light bg-light" id="messagebaretto">
+                    <div class="input-group mb-3">
+                        {% csrf_token %}
+                        <input id="chatmessage" name="chatmessage" type="text" class="form-control" placeholder="What's going on?" aria-label="Username" aria-describedby="basic-addon1">
+                        <input name="senderinput" type="text" value="{{ request.user }}" hidden>
+                        <input name="receiverinput" type="text" value="{{ college|lower }}" hidden>
+                        <div class="input-group-prepend">
+                        <i class="input-group-text fas fa-paper-plane sendButton" id="sendButton"></i>
+                    </div>
+                    </div>
+                </nav>
             </div>
         </div>
     </div>
