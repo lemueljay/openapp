@@ -66,10 +66,10 @@ function getSchedules(day) {
                         '<div class="timebox">' +
                             '<span>' + sched['sched_time'] + '</span>' +
                             '<span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">' +
-                            '<label onclick="setAvailable(' + sched['sched_time'] + ')" class="btn btn-outline-primary active">' +
+                            '<label onclick="setAvailable(\'' + sched['sched_time'] + '\')" class="btn btn-outline-primary active">' +
                                 '<input type="radio" name="optionB" autocomplete="off" checked> A' +
                             '</label>' +
-                            '<label onclick="setNotAvailable(' + sched['sched_time'] + ')" class="btn btn-outline-primary">' +
+                            '<label onclick="setNotAvailable(\'' + sched['sched_time'] + '\')" class="btn btn-outline-primary">' +
                                 '<input type="radio" name="optionA" autocomplete="off" value="b"> NA' +
                             '</label>' +
                         '</div>' +
@@ -79,10 +79,10 @@ function getSchedules(day) {
                     '<div class="timebox">' +
                         '<span>' + sched['sched_time'] + '</span>' +
                         '<span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">' +
-                        '<label onclick="setAvailable(' + sched['sched_time'] + ')" class="btn btn-outline-primary">' +
+                        '<label onclick="setAvailable(\'' + sched['sched_time'] + '\')" class="btn btn-outline-primary">' +
                             '<input type="radio" name="optionB" autocomplete="off" checked> A' +
                         '</label>' +
-                        '<label onclick="setNotAvailable(' + sched['sched_time'] + ')" class="btn btn-outline-primary active">' +
+                        '<label onclick="setNotAvailable(\"' + sched['sched_time'] + '\")" class="btn btn-outline-primary active">' +
                             '<input type="radio" name="optionA" autocomplete="off" value="b"> NA' +
                         '</label>' +
                     '</div>' +
@@ -98,10 +98,10 @@ function getSchedules(day) {
                         '<div class="timebox">' +
                             '<span>' + sched['sched_time'] + '</span>' +
                             '<span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">' +
-                            '<label onclick="setAvailable(' + sched['sched_time'] + ')" class="btn btn-outline-primary active">' +
+                            '<label onclick="setAvailable(\'' + sched['sched_time'] + '\')" class="btn btn-outline-primary active">' +
                                 '<input type="radio" name="optionB" autocomplete="off" checked> A' +
                             '</label>' +
-                            '<label onclick="setNotAvailable(' + sched['sched_time'] + ')" class="btn btn-outline-primary">' +
+                            '<label onclick="setNotAvailable(\'' + sched['sched_time'] + '\')" class="btn btn-outline-primary">' +
                                 '<input type="radio" name="optionA" autocomplete="off" value="b"> NA' +
                             '</label>' +
                         '</div>' +
@@ -111,10 +111,10 @@ function getSchedules(day) {
                     '<div class="timebox">' +
                         '<span>' + sched['sched_time'] + '</span>' +
                         '<span class="timebutton btn-group btn-group-toggle" data-toggle="buttons">' +
-                        '<label onclick="setAvailable(' + sched['sched_time'] + ')" class="btn btn-outline-primary">' +
+                        '<label onclick="setAvailable(\'' + sched['sched_time'] + '\')" class="btn btn-outline-primary">' +
                             '<input type="radio" name="optionB" autocomplete="off" checked> A' +
                         '</label>' +
-                        '<label onclick="setNotAvailable(' + sched['sched_time'] + ')" class="btn btn-outline-primary active">' +
+                        '<label onclick="setNotAvailable(\'' + sched['sched_time'] + '\')" class="btn btn-outline-primary active">' +
                             '<input type="radio" name="optionA" autocomplete="off" value="b"> NA' +
                         '</label>' +
                     '</div>' +
