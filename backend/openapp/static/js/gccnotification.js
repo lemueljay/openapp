@@ -93,7 +93,7 @@ function pollNotifs(){
        
         $('#notifbell[data-toggle="popover"]').popover(notifOptions)
 
-        // setTimeout(pollNotifs, 1000);
+        setTimeout(pollNotifs, 1000);
 
         
     });
