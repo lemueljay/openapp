@@ -265,8 +265,7 @@ a.article:hover {
 
 
 #messagebar {
-    max-width: 100px;
-    position: fixed;
+    position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
