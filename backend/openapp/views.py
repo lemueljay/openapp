@@ -1088,9 +1088,15 @@ def updatedata(request):
     context = {}
 
     if request.method == 'POST':
+        context['first_name'] = request.POST['first_name']
+        context['last_name'] = request.POST['last_name']
         context['degree'] = request.POST['degree']
         context['birthdate'] = request.POST['birthdate']
         context['address'] = request.POST['address']
+
+        request.user.first_name = context['first_name']
+        request.user.last_name = context['last_name']
+        request.user.save()
 
         attrib = UserAttrib.objects.get(user=request.user)
         attrib.course = context['degree']

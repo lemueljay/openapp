@@ -94,6 +94,10 @@
                             {% csrf_token %}
                             <div class="form-group">
                                 <label><b>Update Data</b></label><br>
+                                <label>First Name</label>
+                                <input type="text" class="form-control" name="first_name" value="{{ request.user.first_name  }}">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" name="last_name" value="{{ request.user.last_name  }}">
                                 <label>Degree</label>
                                 <input type="text" class="form-control" name="degree" value="{{ request.user.attrib.course  }}">
                                 <label>Birthdate</label>
