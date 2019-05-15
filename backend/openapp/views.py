@@ -1112,7 +1112,7 @@ def notifications(request):
     context = {}
 
     notifs = list(Notification.objects.filter(destUser=request.user,
-                                              status='UNREAD').order_by('-date_created')[:3].values())
+                                              status='UNREAD').order_by('-date_created').values())
     print(notifs)
     context['notifs'] = notifs
     context['len'] = len(notifs)

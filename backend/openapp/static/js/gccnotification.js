@@ -54,7 +54,7 @@ function pollNotifs(){
         }
         
         if(data['len'] === 0) {
-            $('#notifLen').hide()    
+            
         } else {
             $('#notifLen').show().text(data['len'])
         }
@@ -91,12 +91,27 @@ function pollNotifs(){
         }
 
        
-        $('#notifbell[data-toggle="popover"]').popover(notifOptions)
-
-        setTimeout(pollNotifs, 1000);
+        $('#notifbell[data-toggle="popover"]').popover(notifOptions)        
 
         
     });
+}
+
+function badger() {
+
+    $.get('/openapp/notifications', function(data) {
+        
+        var len = $('#notifLen').text()
+
+        if(len != data['len']) {
+            location.reload();
+        } else {
+            console.log('BADGER POLLING...')
+        }
+        
+    });
+    
+    setTimeout(badger, 1000);
 }
 
 $(document).ready(function() {
@@ -104,6 +119,6 @@ $(document).ready(function() {
     chatPopup();
     notifPopup();
     pollNotifs();
-
-
+    badger();
+    
 })
