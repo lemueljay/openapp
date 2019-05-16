@@ -224,4 +224,10 @@ $(document).ready(function() {
         $('#prevslide').toggleClass('fas').toggleClass('far')
         $('#carouselExampleControls').carousel('next')
     })
+
+    $('#scheduleModal').on('hidden.bs.modal', function(e) {
+        $('.carousel').carousel(0)
+        $('#prevslide').addClass('fas').removeClass('far')
+        $('#nextslide').removeClass('fas').addClass('far')
+    })
 });
