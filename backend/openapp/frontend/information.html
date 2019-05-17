@@ -108,7 +108,7 @@
                         <label for="name" class="col-sm-2 col-form-label">Course:</label>
                         <div class="col-sm-10">
                             <select name="yrcourse" class="form-control">
-                                <option value="DIPLOMA IN ELECTRONICS ENGINEERING TECH (Computer Electronics">DIPLOMA IN ELECTRONICS ENGINEERING TECH (Computer Electronics)</option>
+                                <option value="DIPLOMA IN ELECTRONICS ENGINEERING TECH (Computer Electronics)">DIPLOMA IN ELECTRONICS ENGINEERING TECH (Computer Electronics)</option>
                                 <option value="BACHELOR OF SCIENCE IN INFORMATION SYSTEM">BACHELOR OF SCIENCE IN INFORMATION SYSTEMS</option>
                                 <option value="BACHELOR OF SCIENCE IN INFORMATION TECHNOLOG">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</option>
                                 <option value="DIPLOMA IN ELECTRONICS TECHNOLOGY">DIPLOMA IN ELECTRONICS TECHNOLOGY</option>
@@ -128,7 +128,7 @@
                                 <option value="2nd Year">2nd Year</option>
                                 <option value="3rd Year">3rd Year</option>
                                 <option value="4th Year">4th Year</option>
-                                <option value=">5th Year">5th Year</option>
+                                <option value="5th Year">5th Year</option>
                             </select>
                         </div>
                         <label for="name" class="col-sm-2 col-form-label">Gender :</label>
@@ -181,9 +181,20 @@
     </div>
     </div>
     {% if success %}
-    <script type="text/javascript">
-        $('.approvalnotifmodal').modal('show');
+    <script type="text/javascript">        
+        $('.approvalnotifmodal').modal('show');        
+        $('.approvalnotifmodal').on('hidden.bs.modal', function(e) {
+            window.history.back();
+        })
     </script>
     {% endif %}
+    <script>
+        $('[name=name]').val('')
+        $('[name=id]').val('')
+        $('[name=college]').val('College of Computer Studies (SCS)')
+        $('[name=yrcourse]').val('DIPLOMA IN ELECTRONICS ENGINEERING TECH (Computer Electronics)')
+        $('[name=studentyear]').val('1st Year')
+        $('[name=location]').val('')
+    </script>
 </body>
 </html>

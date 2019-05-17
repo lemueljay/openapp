@@ -313,14 +313,14 @@ def book(request):
     context['location'] = request.GET['location']
     context['success'] = True
 
-    if context['schedule'] == '' or context['name'] == '' or context['idno'] == '' or context['college'] == '' or context['yrcourse'] == '' or context['gender'] == '' or context['location'] == '' or context['studentyear'] == '':
-        print(context)
-        request.user.imgpath = UserAttrib.objects.get(
-            user=request.user).imgpath
-        context['success'] = False
-        context['username'] = request.user.username
-        context['errormessage'] = 'Please fill all required inputs.'
-        return render(request, 'information.html', context)
+    # if context['schedule'] == '' or context['name'] == '' or context['idno'] == '' or context['college'] == '' or context['yrcourse'] == '' or context['gender'] == '' or context['location'] == '' or context['studentyear'] == '':
+    #     print(context)
+    #     request.user.imgpath = UserAttrib.objects.get(
+    #         user=request.user).imgpath
+    #     context['success'] = False
+    #     context['username'] = request.user.username
+    #     context['errormessage'] = 'Please fill all required inputs.'
+    #     return render(request, 'information.html', context)
 
     try:
         schedule = Schedule.objects.get(id=context['schedule'])
@@ -1204,7 +1204,11 @@ def approverequest(request):
 
 def declinerequest(request):
 
+    print('declinerequest()')
+
     context = {}
+
+    info_reason = request.GET['info_reason']
 
     sched = Schedule.objects.get(id=request.GET['sched_id'])
     sched.assignee = ''
@@ -1214,9 +1218,9 @@ def declinerequest(request):
     notif.status = 'READ'
     notif.save()
 
-    notif = Notification(sourceUser=request.user, destUser=notif.sourceUser, notifType="APPOINTMENT",
-                         notifId=sched.id, status="UNREAD", message=(request.user.get_full_name() + ' requested to reschedule your appointment.'))
-    notif.save()
+    newNotif = Notification(sourceUser=request.user, destUser=notif.sourceUser, notifType="APPOINTMENT",
+                         notifId=sched.id, status="UNREAD", message=(request.user.get_full_name() + ' requested to reschedule your appointment.\nReason: ' + info_reason))
+    newNotif.save()
 
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
@@ -1230,7 +1234,8 @@ def declinerequest(request):
     if request.user.is_staff:
         context['is_staff'] = True
 
-    return render(request, 'requests.html', context)
+    return redirect('/openapp/requests')
+    # return render(request, 'requests.html', context)
 
 
 def gccdashboard(request):

@@ -232,14 +232,14 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-body text-center">
-                            <form action='/openapp/declinerequest' class="col-sm-12" method="GET">
+                            <form class="col-sm-12" method="GET">
                                 <input name="request_id" value="" hidden>
                                 <input name="sched_id" value="" hidden>
                                 <div class="form-group">
                                     <textarea name="info_reason" class="form-control" rows="6" placeholder="Reason for declining..."></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary form-control">Submit</button>
+                                    <button formaction='/openapp/declinerequest' type="submit" class="btn btn-primary form-control">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -265,6 +265,9 @@
             {% if approved %}
             <script>
                 $('.approvedmodal').modal({'show': true})
+                $('.approvedmodal').on('hidden.bs.modal', function(e) {
+                    window.location.replace('/openapp/requests')                    
+                })
             </script>
             {% endif %}
     </div>

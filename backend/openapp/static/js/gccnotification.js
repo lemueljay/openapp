@@ -104,7 +104,7 @@ function badger() {
         var len = $('#notifLen').text()
 
         if(len != data['len']) {
-            location.reload();
+            window.location = window.location.pathname;
         } else {
             console.log('BADGER POLLING...')
         }

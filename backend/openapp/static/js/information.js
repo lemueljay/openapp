@@ -81,7 +81,7 @@ $(document).ready(function() {
         console.log('changed')
         if(selectedCollege === 'College of Computer Studies (SCS)') {
             console.log('College of Computer Studies (SCS)')
-            $('[name=yrcourse]').append('<option value="DIPLOMA IN ELECTRONICS ENGINEERING TECH (Computer Electronics">DIPLOMA IN ELECTRONICS ENGINEERING TECH (Computer Electronics)</option>')
+            $('[name=yrcourse]').append('<option value="DIPLOMA IN ELECTRONICS ENGINEERING TECH (Computer Electronics)">DIPLOMA IN ELECTRONICS ENGINEERING TECH (Computer Electronics)</option>')
             $('[name=yrcourse]').append('<option value="BACHELOR OF SCIENCE IN INFORMATION SYSTEM">BACHELOR OF SCIENCE IN INFORMATION SYSTEMS</option>')
             $('[name=yrcourse]').append('<option value="BACHELOR OF SCIENCE IN INFORMATION TECHNOLOG">BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY</option>')
             $('[name=yrcourse]').append('<option value="DIPLOMA IN ELECTRONICS TECHNOLOGY">DIPLOMA IN ELECTRONICS TECHNOLOGY</option>')
