@@ -303,15 +303,18 @@ def information(request, schedule):
 
 def book(request):
     context = {}
-    context['schedule'] = request.GET['schedule']
-    context['name'] = request.GET['name']
-    context['idno'] = request.GET['id']
-    context['college'] = request.GET['college']
-    context['yrcourse'] = request.GET['yrcourse']
-    context['studentyear'] = request.GET['studentyear']
-    context['gender'] = request.GET['inlineRadioOptions']
-    context['location'] = request.GET['location']
-    context['success'] = True
+    try:
+        context['schedule'] = request.GET['schedule']
+        context['name'] = request.GET['name']
+        context['idno'] = request.GET['id']
+        context['college'] = request.GET['college']
+        context['yrcourse'] = request.GET['yrcourse']
+        context['studentyear'] = request.GET['studentyear']
+        context['gender'] = request.GET['inlineRadioOptions']
+        context['location'] = request.GET['location']
+        context['success'] = True
+    except:
+        return redirect('/openapp/information')
 
     # if context['schedule'] == '' or context['name'] == '' or context['idno'] == '' or context['college'] == '' or context['yrcourse'] == '' or context['gender'] == '' or context['location'] == '' or context['studentyear'] == '':
     #     print(context)
@@ -1131,8 +1134,12 @@ def requests(request):
 
     request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
-    notifs = Notification.objects.filter(
-        destUser=request.user, status='UNREAD', notifType='APPOINTMENT').order_by('-date_created')
+    if request.user.is_staff:
+        notifs = Notification.objects.filter(
+            destUser=request.user, status='UNREAD', notifType='APPOINTMENT').order_by('-date_created')
+    else:
+        notifs = Notification.objects.filter(
+            destUser=request.user, notifType='APPOINTMENT').order_by('-date_created')
 
     context['notifs'] = []
     for notif in notifs:
@@ -1144,6 +1151,10 @@ def requests(request):
     context['is_staff'] = False
     if request.user.is_staff:
         context['is_staff'] = True
+    else:
+        for notif in notifs:
+            notif.status = 'READ'
+            notif.save()
 
     return render(request, 'requests.html', context)
 

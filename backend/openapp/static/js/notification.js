@@ -43,7 +43,11 @@ function pollNotifs(){
         }
 
 
-        $('#notifLen').text(data['len'])
+        if(data['len'] === 0) {
+            
+        } else {
+            $('#notifLen').show().text(data['len'])
+        }
 
         if(elements === '') {
             notifOptions = {
@@ -85,15 +89,30 @@ function pollNotifs(){
     });
 }
 
+function badger() {
+
+    $.get('/openapp/notifications', function(data) {
+        
+        var len = $('#notifLen').text()
+
+        if(len != data['len']) {
+            if(window.location.pathname === '/openapp/book') {
+                window.location.replace('/openapp/')
+            } else {
+                window.location = window.location.pathname;
+            }
+        } else {
+            console.log('BADGER POLLING...')
+        }
+        
+    });
+    
+    setTimeout(badger, 1000);
+}
+
 $(document).ready(function() {
 
     notifPopup();     
     pollNotifs();
-    
-    $('#notifbell').on('click', function() {
-        
-        // Read all notifications
-        
-        
-    })
+    badger();
 })

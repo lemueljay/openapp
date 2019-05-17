@@ -104,7 +104,11 @@ function badger() {
         var len = $('#notifLen').text()
 
         if(len != data['len']) {
-            window.location = window.location.pathname;
+            if(window.location.pathname === '/openapp/approverequest') {
+                window.location.replace('/openapp/requests')
+            } else {
+                window.location = window.location.pathname;
+            }
         } else {
             console.log('BADGER POLLING...')
         }
