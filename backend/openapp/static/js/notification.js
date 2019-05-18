@@ -101,8 +101,6 @@ function badger() {
             } else {
                 window.location = window.location.pathname;
             }
-        } else {
-            console.log('BADGER POLLING...')
         }
         
     });
