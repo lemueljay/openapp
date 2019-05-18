@@ -6,9 +6,11 @@ function requestModalUpdate(id) {
 
     $.get('/openapp/getRequest', data, function(data) {
         console.log(data)
+        console.log(data['info_contact_number'])
         $('[name=request_id]').val(id)
         $('[name=sched_id]').val(data['sched_id'])
         $('[name=info_name]').val(data['info_name'])
+        $('[name=info_contact_number]').val(data['info_contact_number'])
         $('[name=info_id]').val(data['info_id'])
         $('[name=info_college]').val(data['info_college'])
         $('[name=info_yrcourse]').val(data['info_yrcourse'])

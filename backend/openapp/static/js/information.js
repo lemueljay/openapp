@@ -2,16 +2,18 @@ function validateInformationForm() {
 
     var schedule = $('[name=schedule]').val()
     var name = $('[name=name]').val()
+    var info_contact_number = $('[name=info_contact_number]').val()
     var id = $('[name=id]').val()
     var college = $('[name=college]').val()
     var yrcourse = $('[name=yrcourse]').val()
     var studentyear = $('[name=studentyear]').val()
     var inlineRadioOptions = $('[name=inlineRadioOptions]').val()    
-    var location = $('[name=location]').val()
+    var location = $('[name=location]').val()    
 
     var req = {
         'schedule': schedule,
         'name': name,
+        'info_contact_number': info_contact_number,
         'id': id,
         'college': college,
         'yrcourse': yrcourse,
@@ -27,6 +29,13 @@ function validateInformationForm() {
         $('[name=name]').removeClass('valid').addClass('invalid')
     } else {
         $('[name=name]').removeClass('invalid').addClass('valid')
+    }
+
+    if (info_contact_number === '') {
+        hasError = true;
+        $('[name=info_contact_number]').removeClass('valid').addClass('invalid')
+    } else {
+        $('[name=info_contact_number]').removeClass('invalid').addClass('valid')
     }
 
     if (id === '') {

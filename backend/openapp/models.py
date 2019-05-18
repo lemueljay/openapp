@@ -45,6 +45,7 @@ class Schedule(models.Model):
     approved = models.CharField(max_length=1000, blank=True, default='NOT_APPROVED')
 
     info_name = models.CharField(max_length=1000,default=None,null=True)
+    info_contact_number = models.CharField(max_length=1000,default=None,null=True)
     info_id = models.CharField(max_length=1000,default=None,null=True)
     info_college = models.CharField(max_length=1000,default=None,null=True)
     info_yrcourse = models.CharField(max_length=1000,default=None,null=True)

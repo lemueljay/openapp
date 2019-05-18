@@ -85,6 +85,12 @@
                       </div>
                     </div>
                     <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Phone :</label>
+                            <div class="col-sm-10">
+                              <input name="info_contact_number" type="text" class="form-control" placeholder='Enter contact number' value=''>
+                            </div>
+                          </div>
+                    <div class="form-group row">
                         <label for="name" class="col-sm-2 col-form-label">ID No :</label>
                         <div class="col-sm-10">
                           <input name="id" type="text" class="form-control" value=''  pattern="[0-9]+([-\,][0-9]+)?" maxlength="9" placeholder="XXXX-XXXX">
@@ -195,6 +201,7 @@
     <script>
         $('[name=name]').val('')
         $('[name=id]').val('')
+        $('[name=info_contact_number]').val('')
         $('[name=college]').val('College of Computer Studies (SCS)')
         $('[name=yrcourse]').val('DIPLOMA IN ELECTRONICS ENGINEERING TECH (Computer Electronics)')
         $('[name=studentyear]').val('1st Year')

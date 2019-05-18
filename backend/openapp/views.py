@@ -306,6 +306,7 @@ def book(request):
     try:
         context['schedule'] = request.GET['schedule']
         context['name'] = request.GET['name']
+        context['info_contact_number'] = request.GET['info_contact_number']
         context['idno'] = request.GET['id']
         context['college'] = request.GET['college']
         context['yrcourse'] = request.GET['yrcourse']
@@ -329,6 +330,7 @@ def book(request):
         schedule = Schedule.objects.get(id=context['schedule'])
         schedule.assignee = request.user.username
         schedule.info_name = context['name']
+        schedule.info_contact_number = context['info_contact_number']
         schedule.info_id = context['idno']
         schedule.info_college = context['college']
         schedule.info_yrcourse = context['yrcourse']
@@ -1170,6 +1172,7 @@ def getRequest(request):
         sched = Schedule.objects.get(id=notif.notifId)
         context['sched_id'] = sched.id
         context['info_name'] = sched.info_name
+        context['info_contact_number'] = sched.info_contact_number
         context['info_id'] = sched.info_id
         context['info_college'] = sched.info_college
         context['info_yrcourse'] = sched.info_yrcourse
