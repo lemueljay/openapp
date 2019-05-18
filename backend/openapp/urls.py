@@ -24,6 +24,7 @@ urlpatterns = [
 
     path('chat', views.chat, name='chat'),
     path('gccChat', views.gccChat, name='gccChat'),
+    path('getchatlist', views.getchatlist, name='getchatlist'),
 
     path('appoint/<slug:college>', views.appoint, name='appoint'),
     path('getAppointmentSchedules/<slug:college>', views.getAppointmentSchedules, name='getAppointmentSchedules'),

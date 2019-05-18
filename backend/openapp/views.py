@@ -492,25 +492,34 @@ def gccChat(request):
         if request.user.is_staff:
             context = {}
 
-            combined_queryset = Message.objects.filter(receiver=request.user)
-            messages = combined_queryset.values('sender').distinct()
-
             chat_list = []
 
+            messages = Message.objects.filter(receiver=request.user).order_by('-date_created')            
             for message in messages:
-                user = User.objects.get(id=message['sender'])
-                try:
-                    attrib = UserAttrib.objects.get(user=user)
-                    user.imgpath = attrib.imgpath
-                except:
-                    user.imgpath = '/media/001.png'
-                print(user)
-                chat_list.append(user)
+                user = User.objects.get(id=message.sender.id)
+                if user.username not in chat_list:
+                    chat_list.append(user.username)
+
+            # combined_queryset = Message.objects.filter(receiver=request.user)
+            # m = combined_queryset.values('sender').distinct()
+            # x = []
+            # for message in m:
+            #     user = User.objects.get(id=message['sender'])
+            #     try:
+            #         attrib = UserAttrib.objects.get(user=user)
+            #         user.imgpath = attrib.imgpath
+            #     except:
+            #         user.imgpath = '/media/001.png'
+            #     x.append(user)
 
             context['chat_list'] = chat_list
 
             return render(request, 'gcc.html', context)
 
+
+def getchatlist(request):
+    context = {}
+    return JsonResponse(context)
 
 def getMessages(request):
     context = {}
