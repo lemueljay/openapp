@@ -1333,6 +1333,7 @@ def gccdashboard(request):
                 x['time'] = sched.time
                 x['info_location'] = sched.info_location
                 x['info_name'] = sched.info_name
+                x['info_contact_number'] = sched.info_contact_number
                 x['sched_available'] = True if (sched.status == 'AVAILABLE' and sched.assignee == '') else False
                 context['schedules'].append(x)
 
