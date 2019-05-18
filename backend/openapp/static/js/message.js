@@ -27,6 +27,76 @@ function incomingMessageContstructor(message, timestamp) {
 
 var receiver = '';
 
+function todo(rec) {
+    $('#messagebaretto').show();
+
+        $('.msghistory').empty();
+
+        $('.chat_list').removeClass('active_chat');
+        
+        var thisid = '#id' + rec
+        $(thisid).addClass('active_chat');
+
+        receiver = rec
+        var data = {
+            'receiver': receiver
+        }
+
+        console.log(data)
+
+        $.get('http://localhost:8000/openapp/getmessages', data, function(data) {
+            for(var i = 0; i < data.messages.length; i++) {
+                if(receiver === data.messages[i].sender) {
+                    console.log("sender: " + data.messages[i].sender +" message: " + data.messages[i].message)
+                    $('.msghistory').append(incomingMessageContstructor(data.messages[i].message, ''))
+                } else {
+                    console.log("sender: " + data.messages[i].sender +" message: " + data.messages[i].message)
+                    $('.msghistory').append(outgoingMessageContstructor(data.messages[i].message, ''))
+                }
+            }
+            $('.msghistory').scrollTop($('.msghistory')[0].scrollHeight);
+        })
+}
+
+var global_data = ''
+
+function getchatlist() {
+
+    $.get('/openapp/getchatlist', function(data) {
+
+        if(global_data === '') {
+            global_data = JSON.stringify(data)
+            console.log('init global_data')            
+        } else if(global_data != JSON.stringify(data)) {
+            global_data = JSON.stringify(data)
+            console.log('changed')
+            
+            $('.inbox_chat').empty()
+
+            data['chat_list'].forEach(element => {
+                
+                var element =  '<div id="id' + element + '" onclick=todo("' + element + '") class="chat_list">' +
+                                    '<input value="' + element + '" hidden>' +
+                                    '<div class="chat_people">' +
+                                        '<div class="chat_ib">' +
+                                            '<h5>' + element + '' + '</h5>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>'
+
+                $('.inbox_chat').append(element)
+                
+            });
+
+            var thisid = '#id' + receiver
+            $(thisid).addClass('active_chat');
+        } 
+        
+    })
+
+    setTimeout(getchatlist, 2000);
+}
+
 $(document).ready(function(global) {
 
     var chatSocket = new WebSocket('ws://' + window.location.host + '/ws/openapp/chat/lobby/');
@@ -79,9 +149,7 @@ $(document).ready(function(global) {
         console.log(data)
 
         $.get('http://localhost:8000/openapp/getmessages', data, function(data) {
-
             for(var i = 0; i < data.messages.length; i++) {
-
                 if(receiver === data.messages[i].sender) {
                     console.log("sender: " + data.messages[i].sender +" message: " + data.messages[i].message)
                     $('.msghistory').append(incomingMessageContstructor(data.messages[i].message, ''))
@@ -91,11 +159,7 @@ $(document).ready(function(global) {
                 }
             }
             $('.msghistory').scrollTop($('.msghistory')[0].scrollHeight);
-
         })
-
-
-
     })
 
 
@@ -139,4 +203,6 @@ $(document).ready(function(global) {
             console.log('DO NOT ATTEMPT')
         }
     });
+
+    getchatlist()
 })

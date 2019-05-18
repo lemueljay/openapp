@@ -492,8 +492,8 @@ def gccChat(request):
         if request.user.is_staff:
             context = {}
 
+            # Get the chat list
             chat_list = []
-
             messages = Message.objects.filter(receiver=request.user).order_by('-date_created')            
             for message in messages:
                 user = User.objects.get(id=message.sender.id)
@@ -519,6 +519,17 @@ def gccChat(request):
 
 def getchatlist(request):
     context = {}
+
+     # Get the chat list
+    chat_list = []
+    messages = Message.objects.filter(receiver=request.user).order_by('-date_created')            
+    for message in messages:
+        user = User.objects.get(id=message.sender.id)
+        if user.username not in chat_list:
+            chat_list.append(user.username)
+
+    context['chat_list'] = chat_list
+    
     return JsonResponse(context)
 
 def getMessages(request):
