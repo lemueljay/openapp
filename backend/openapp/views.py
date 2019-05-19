@@ -1192,7 +1192,9 @@ def getRequest(request):
 
     if notif.notifType == 'APPOINTMENT':
         sched = Schedule.objects.get(id=notif.notifId)
-        context['sched_id'] = sched.id
+        context['sched_id'] = sched.id        
+        context['sched_date'] = sched.date.strftime('%b %d, %Y')
+        context['sched_time'] = sched.time
         context['info_name'] = sched.info_name
         context['info_contact_number'] = sched.info_contact_number
         context['info_id'] = sched.info_id
