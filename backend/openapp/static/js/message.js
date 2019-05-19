@@ -11,9 +11,12 @@ function outgoingMessageContstructor(message, timestamp) {
     return elem;
 }
 
-function incomingMessageContstructor(message, timestamp) {
+function incomingMessageContstructor(message, timestamp, imgpath) {
     var elem =
         '<div class="incoming_msg">' +
+            '<div class="incoming_msg_img">' + 
+                '<img src="' + imgpath + '" alt="sunil">' +
+            '</div>' +
             '<div class="received_msg">' +
                 '<div class="received_withd_msg">' +
                     '<p>' + message + '</p>' +
@@ -48,7 +51,7 @@ function todo(rec) {
             for(var i = 0; i < data.messages.length; i++) {
                 if(receiver === data.messages[i].sender) {
                     console.log("sender: " + data.messages[i].sender +" message: " + data.messages[i].message)
-                    $('.msghistory').append(incomingMessageContstructor(data.messages[i].message, ''))
+                    $('.msghistory').append(incomingMessageContstructor(data.messages[i].message, '', data.messages[i].imgpath))
                 } else {
                     console.log("sender: " + data.messages[i].sender +" message: " + data.messages[i].message)
                     $('.msghistory').append(outgoingMessageContstructor(data.messages[i].message, ''))
@@ -119,7 +122,7 @@ $(document).ready(function(global) {
             $('.msghistory').append(outgoingMessageContstructor(datum.message, datum.timestamp));
         } else if(sender === datum.receiver && receiver === datum.sender) {
             console.log('INCOMING: ' + datum.message)
-            $('.msghistory').append(incomingMessageContstructor(datum.message, datum.timestamp));
+            $('.msghistory').append(incomingMessageContstructor(datum.message, datum.timestamp, datum.imgpath));
         }
 
         // $('.msghistory').animate({scrollTop: $(document).height()}, 1000);
@@ -151,8 +154,8 @@ $(document).ready(function(global) {
         $.get('http://localhost:8000/openapp/getmessages', data, function(data) {
             for(var i = 0; i < data.messages.length; i++) {
                 if(receiver === data.messages[i].sender) {
-                    console.log("sender: " + data.messages[i].sender +" message: " + data.messages[i].message)
-                    $('.msghistory').append(incomingMessageContstructor(data.messages[i].message, ''))
+                    console.log("sender: " + data.messages[i].sender +" message: " + data.messages[i].message + " imgpath: " + data.imgpath)
+                    $('.msghistory').append(incomingMessageContstructor(data.messages[i].message, '', data.imgpath))
                 } else {
                     console.log("sender: " + data.messages[i].sender +" message: " + data.messages[i].message)
                     $('.msghistory').append(outgoingMessageContstructor(data.messages[i].message, ''))

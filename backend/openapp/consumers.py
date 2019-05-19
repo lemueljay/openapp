@@ -42,6 +42,7 @@ class ChatConsumer(WebsocketConsumer):
 
         print('USER: ' + str(self.scope['user']))
         senderUser = User.objects.get(username__icontains=sender)
+        imgpath = UserAttrib.objects.get(user=senderUser).imgpath
         receiverUser = User.objects.get(username__icontains=receiver)
 
         data = Message(sender=senderUser, receiver=receiverUser, message=str(message))
@@ -55,7 +56,8 @@ class ChatConsumer(WebsocketConsumer):
                 'message': message,
                 'sender': sender,
                 'receiver': receiver,
-                'timestamp': str(data.date_created.ctime())
+                'timestamp': str(data.date_created.ctime()),
+                'imgpath': imgpath
             }
         )
 
@@ -67,5 +69,6 @@ class ChatConsumer(WebsocketConsumer):
             'message': event['message'],
             'sender': event['sender'],
             'receiver': event['receiver'],
-            'timestamp': event['timestamp']
+            'timestamp': event['timestamp'],
+            'imgpath': event['imgpath']
         }))

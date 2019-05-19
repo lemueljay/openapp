@@ -293,8 +293,14 @@ a.article:hover {
 .incoming_msg_img {
     display: inline-block;
     width: 6%;
-    transform: translate(0px, -40px) scale(0.3);
+    transform: translate(0px, 0px) scale(0.4);    
+}
 
+.incoming_msg_img > img {
+    object-fit: cover;
+    height: 50px;
+    width: 50px;
+    border-radius: 100px;
 }
 
 .received_msg {

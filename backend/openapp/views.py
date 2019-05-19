@@ -539,6 +539,8 @@ def getMessages(request):
     user = User.objects.get(username=receiver)
     combined_queryset = Message.objects.filter(
         sender=request.user, receiver=user) | Message.objects.filter(sender=user, receiver=request.user)
+    context['imgpath'] = UserAttrib.objects.get(user=user).imgpath
+    print('IMGPATH: ' + context['imgpath'])
     print(combined_queryset)
     messages = combined_queryset.order_by('date_created')
 

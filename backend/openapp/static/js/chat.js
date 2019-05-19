@@ -11,9 +11,13 @@ function outgoingMessageContstructor(message, timestamp) {
     return elem;
 }
 
-function incomingMessageContstructor(message, timestamp) {
+function incomingMessageContstructor(message, timestamp, imgpath) {
+    console.log('IMGPATH: ' + imgpath)
     var elem =
         '<div class="incoming_msg">' +
+            '<div class="incoming_msg_img">' + 
+                '<img src="' + imgpath + '" alt="sunil">' +
+            '</div>' +
             '<div class="received_msg">' +
                 '<div class="received_withd_msg">' +
                     '<p>' + message + '</p>' +
@@ -51,7 +55,7 @@ $(document).ready(function() {
             $('.msghistory').append(outgoingMessageContstructor(datum.message, datum.timestamp));
         } else if(sender === datum.receiver && receiver === datum.sender) {
             console.log('INCOMING: ' + datum.message)
-            $('.msghistory').append(incomingMessageContstructor(datum.message, datum.timestamp));
+            $('.msghistory').append(incomingMessageContstructor(datum.message, datum.timestamp, datum.imgpath));
         }
 
         // $('.msghistory').animate({scrollTop: $(document).height()}, 1000);

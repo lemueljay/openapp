@@ -288,8 +288,8 @@ a.article:hover {
     display: inline-block;
     width: 6%;
     transform: translate(0px, -40px) scale(0.3);
-
 }
+
 
 .received_msg {
     margin-top: 10px;
