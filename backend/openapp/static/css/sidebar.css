@@ -78,8 +78,9 @@ a:focus {
 }
 
 #sidebar .sidebar-header {
-    padding: 15px;
-    background: #cc1200;
+    padding: 11px;
+    /* background: #cc1200; */
+    background: white;
 }
 
 #sidebar ul p {
