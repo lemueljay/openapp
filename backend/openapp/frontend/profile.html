@@ -18,6 +18,7 @@
     <script src="{% static 'bootstrap-4.3.1-dist/js/bootstrap.js' %}"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
     <script src="{% static 'js/notification.js' %}"></script>
+    <script src="{% static 'js/assessment.js' %}"></script>
 
     <div class="wrapper">
         <!-- Sidebar -->
@@ -87,14 +88,219 @@
                             <div>{{ guidancelocation }}</div>
                         </div>
                         <div>
-                            <button type="button" class="btn btn-primary"><a href="/openapp/appoint/{{ user.username|upper }}">Appoint</a></button>
+                            <!-- <button type="button" class="btn btn-primary"><a href="/openapp/appoint/{{ user.username|upper }}">Appoint</a></button> -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".assessment-modal"><a>Appoint</a></button>
                             <button type="button" class="btn btn-primary"><a href="/openapp/chat/{{ user.username|upper }}">Chat</a></button>
                         </div>
-
                     </div>
                 </div>
             </div>
     </div>
+    </div>
+
+    <div class="modal fade assessment-modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- <div class="modal-header"></div> -->
+                <div class="moda-body" style="min-height: 500px;">
+                    <div id="assessmentHeader" class="text-center" style="-webkit-transform: translateY(150px)">
+                        <h5>Self-Assessment Required</h5>
+                        <button id="getStartedBtn" class="btn btn-primary">Get Started</button>
+                    </div>
+                    <div id="assessmentBody" class="" style="margin-top: 20px;">
+                        <h4 class="text-center">Help us assess you.</h4>
+                        <h6 class="text-center">Please fill up this brief questionnaire.</h6>  
+                        <hr>      
+                        <div id="assessmentCarousel" class="carousel slide" data-ride="false" style="min-height: 300px; padding-top: 50px;">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active form-group offset-sm-3 col-sm-6">
+                                    <p>What is your gender?</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Male</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Female</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Non-binary</label>
+                                    </div>
+                                </div>
+                                <div class="carousel-item form-group offset-sm-3 col-sm-6">
+                                    <p>How old are you?</p>
+                                    <select class="form-control">
+                                        <option>Select age</option>
+                                        <option>18 ~ 99</option>
+                                    </select>
+                                </div>
+                                <div class="carousel-item form-group offset-sm-3 col-sm-6">
+                                    <p>What is your relationship status?</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Single</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>In a relationship</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Married</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Separated</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Divorced</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Widowed</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>It's complicated</label>
+                                    </div>
+                                </div>
+                                <div class="carousel-item form-group offset-sm-3 col-sm-6">
+                                    <p>How would you rate the social support that you have, such as family, and/or friends?</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Good</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Fair</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Poor</label>
+                                    </div>
+                                </div>
+                                <div class="carousel-item form-group offset-sm-3 col-sm-6">
+                                    <p>Have you been in counseling or therapy before?</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Yes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>No</label>
+                                    </div>                                   
+                                </div>
+                                <div class="carousel-item form-group offset-sm-3 col-sm-6">
+                                    <p>How would you rate your current physical health?</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Good</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Fair</label>
+                                    </div>    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Poor</label>
+                                    </div>                                   
+                                </div>
+                                <div class="carousel-item form-group offset-sm-3 col-sm-6">
+                                    <p>How would you rate your current sleeping habits?</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Good</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Fair</label>
+                                    </div>    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Poor</label>
+                                    </div>                                   
+                                </div>
+                                <div class="carousel-item form-group offset-sm-3 col-sm-6">
+                                    <p>How would you rate your current eating habits?</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Good</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Fair</label>
+                                    </div>    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Poor</label>
+                                    </div>                                   
+                                </div>
+                                <div class="carousel-item form-group offset-sm-3 col-sm-6">
+                                    <p>In the past month, have you been experiencing overwhelming sadness, grief or depression?</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Yes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>No</label>
+                                    </div>    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Sometimes</label>
+                                    </div>                                   
+                                </div>
+                                <div class="carousel-item form-group offset-sm-3 col-sm-6">
+                                    <p>In the past month, do you find yourself worrying almost all the time?</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Yes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>No</label>
+                                    </div>    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Sometimes</label>
+                                    </div>                                   
+                                </div>
+                                <div class="carousel-item form-group offset-sm-3 col-sm-6">
+                                    <p>In the past month, have you often experience fast heartbeats, gastric pain, headaches/nausea, excessive sweating, feeling weak, and/or frequent toilet breaks?</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Yes</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>No</label>
+                                    </div>    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio">
+                                        <label>Yes, but not often</label>
+                                    </div>                                   
+                                </div>
+                                <div class="carousel-item form-group offset-sm-3 col-sm-6 text-center">
+                                    <p class="text-center">One more step!</p>
+                                    <button class="btn btn-primary text-center"><a href="/openapp/appoint/{{ user.username|upper }}">Finish Assessment</a></button>
+                                </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#assessmentCarousel" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"><i class="fas fa-chevron-left" style="color: black; font-size: 30px;"></i></span>
+                                <span class="sr-only">Previous</span>
+                                
+                            </a>
+                            <a class="carousel-control-next" href="#assessmentCarousel" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"><i class="fas fa-chevron-right" style="color: black; font-size: 30px;"></i></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>           
+                    </div>                   
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
