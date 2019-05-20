@@ -116,169 +116,173 @@
                                 <div class="carousel-item active form-group offset-sm-3 col-sm-6">
                                     <p>What is your gender?</p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Male" name="genderInput" class="form-check-input" type="radio">
                                         <label>Male</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Female"  name="genderInput" class="form-check-input" type="radio">
                                         <label>Female</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Non-binary" name="genderInput" class="form-check-input" type="radio">
                                         <label>Non-binary</label>
                                     </div>
                                 </div>
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>How old are you?</p>
-                                    <select class="form-control">
-                                        <option>Select age</option>
-                                        <option>18 ~ 99</option>
+                                    <select name="ageInput" class="form-control">
+                                        <option value="">Select age</option>
+                                        <script>
+                                            for(var i = 1; i < 100; i++) {
+                                                $('[name=ageInput]').append('<option value="' + i + '">' + i + '</option>')
+                                            }
+                                        </script>
                                     </select>
                                 </div>
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>What is your relationship status?</p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Single" name="statusInput" class="form-check-input" type="radio">
                                         <label>Single</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="In a relationship" name="statusInput" class="form-check-input" type="radio">
                                         <label>In a relationship</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Married" name="statusInput" class="form-check-input" type="radio">
                                         <label>Married</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Separated" name="statusInput" class="form-check-input" type="radio">
                                         <label>Separated</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Divorced" name="statusInput" class="form-check-input" type="radio">
                                         <label>Divorced</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Widowed" name="statusInput" class="form-check-input" type="radio">
                                         <label>Widowed</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="It's complicated" name="statusInput" class="form-check-input" type="radio">
                                         <label>It's complicated</label>
                                     </div>
                                 </div>
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>How would you rate the social support that you have, such as family, and/or friends?</p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Good" name="supportInput" class="form-check-input" type="radio">
                                         <label>Good</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Fair" name="supportInput" class="form-check-input" type="radio">
                                         <label>Fair</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Poor" name="supportInput" class="form-check-input" type="radio">
                                         <label>Poor</label>
                                     </div>
                                 </div>
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>Have you been in counseling or therapy before?</p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Yes" name="counselingInput" class="form-check-input" type="radio">
                                         <label>Yes</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="No" name="counselingInput" class="form-check-input" type="radio">
                                         <label>No</label>
                                     </div>                                   
                                 </div>
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>How would you rate your current physical health?</p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Good" name="healthRatingInput" class="form-check-input" type="radio">
                                         <label>Good</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Fair" name="healthRatingInput" class="form-check-input" type="radio">
                                         <label>Fair</label>
                                     </div>    
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Poor" name="healthRatingInput" class="form-check-input" type="radio">
                                         <label>Poor</label>
                                     </div>                                   
                                 </div>
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>How would you rate your current sleeping habits?</p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Good" name="sleepingHabitsInput" class="form-check-input" type="radio">
                                         <label>Good</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Fair" name="sleepingHabitsInput" class="form-check-input" type="radio">
                                         <label>Fair</label>
                                     </div>    
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Poor" name="sleepingHabitsInput" class="form-check-input" type="radio">
                                         <label>Poor</label>
                                     </div>                                   
                                 </div>
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>How would you rate your current eating habits?</p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Good" name="eatingRatingInput" class="form-check-input" type="radio">
                                         <label>Good</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Fair" name="eatingRatingInput" class="form-check-input" type="radio">
                                         <label>Fair</label>
                                     </div>    
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Poor" name="eatingRatingInput" class="form-check-input" type="radio">
                                         <label>Poor</label>
                                     </div>                                   
                                 </div>
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>In the past month, have you been experiencing overwhelming sadness, grief or depression?</p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Yes" name="depressionInput" class="form-check-input" type="radio">
                                         <label>Yes</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="No" name="depressionInput" class="form-check-input" type="radio">
                                         <label>No</label>
                                     </div>    
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Sometimes" name="depressionInput" class="form-check-input" type="radio">
                                         <label>Sometimes</label>
                                     </div>                                   
                                 </div>
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>In the past month, do you find yourself worrying almost all the time?</p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Yes" name="worryingInput" class="form-check-input" type="radio">
                                         <label>Yes</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="No" name="worryingInput" class="form-check-input" type="radio">
                                         <label>No</label>
                                     </div>    
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Sometimes" name="worryingInput" class="form-check-input" type="radio">
                                         <label>Sometimes</label>
                                     </div>                                   
                                 </div>
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>In the past month, have you often experience fast heartbeats, gastric pain, headaches/nausea, excessive sweating, feeling weak, and/or frequent toilet breaks?</p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Yes" name="heartbeatsInput" class="form-check-input" type="radio">
                                         <label>Yes</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="No" name="heartbeatsInput" class="form-check-input" type="radio">
                                         <label>No</label>
                                     </div>    
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio">
+                                        <input value="Yes, but not often" name="heartbeatsInput" class="form-check-input" type="radio">
                                         <label>Yes, but not often</label>
                                     </div>                                   
                                 </div>
