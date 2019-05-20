@@ -584,56 +584,94 @@ def collegechat(request, college):
 
 
 def appoint(request, college):
-    context = {}
 
-    request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
+    if request.method == 'POST':
+        # Popoulate Assessment
+        question1 = request.POST['genderInput']
+        question2 = request.POST['ageInput']
+        question3 = request.POST['statusInput']
+        question4 = request.POST['supportInput']
+        question5 = request.POST['counselingInput']
+        question6 = request.POST['healthRatingInput']
+        question7 = request.POST['sleepingHabitsInput']
+        question8 = request.POST['eatingRatingInput']
+        question9 = request.POST['depressionInput']
+        question10 = request.POST['worryingInput']
+        question11 = request.POST['heartbeatsInput']
 
-    date_today = datetime.date.today()
-    year_today = date_today.year
-    month_today = date_today.month
+        assessment = Assessment.objects.filter(user=request.user)
 
-    num_days = calendar.monthrange(year_today, month_today)[1]
-    days = [datetime.date(year_today, month_today, day)
-            for day in range(1, num_days+1)]
+        if assessment is not None and len(assessment) == 1:
+            assessment = assessment[0]
+            assessment.question1 = question1
+            assessment.question2 = question2
+            assessment.question3 = question3
+            assessment.question4 = question4
+            assessment.question5 = question5
+            assessment.question6 = question6
+            assessment.question7 = question7
+            assessment.question8 = question8
+            assessment.question9 = question9
+            assessment.question10 = question10
+            assessment.question11 = question11
+            assessment.save()
+        else:
+            assessment = Assessment(user=request.user, question1=question1, question2=question2, question3=question3,
+                                    question4=question4, question5=question5, question6=question6, question7=question7,
+                                    question8=question8, question9=question9, question10=question10, question11=question11)
+            assessment.save()
+        
 
-    context['today'] = date_today
-    context['days'] = days
-    context['college'] = college
+        context = {}
 
-    w = str(days[0].weekday())
-    v = str(days[-1].weekday())
+        request.user.imgpath = UserAttrib.objects.get(user=request.user).imgpath
 
-    if w in '0':
-        context['ran'] = range(1)
-    elif w in '1':
-        context['ran'] = range(2)
-    elif w in '2':
-        context['ran'] = range(3)
-    elif w in '3':
-        context['ran'] = range(4)
-    elif w in '4':
-        context['ran'] = range(5)
-    elif w in '5':
-        context['ran'] = range(6)
-    elif w in '6':
-        context['ran'] = range(0)
+        date_today = datetime.date.today()
+        year_today = date_today.year
+        month_today = date_today.month
 
-    if v in '0':
-        context['end'] = range(5)
-    elif v in '1':
-        context['end'] = range(4)
-    elif v in '2':
-        context['end'] = range(3)
-    elif v in '3':
-        context['end'] = range(2)
-    elif v in '4':
-        context['end'] = range(1)
-    elif v in '5':
-        context['end'] = range(0)
-    elif v in '6':
-        context['end'] = range(6)
+        num_days = calendar.monthrange(year_today, month_today)[1]
+        days = [datetime.date(year_today, month_today, day)
+                for day in range(1, num_days+1)]
 
-    return render(request, 'appoint.html', context)
+        context['today'] = date_today
+        context['days'] = days
+        context['college'] = college
+
+        w = str(days[0].weekday())
+        v = str(days[-1].weekday())
+
+        if w in '0':
+            context['ran'] = range(1)
+        elif w in '1':
+            context['ran'] = range(2)
+        elif w in '2':
+            context['ran'] = range(3)
+        elif w in '3':
+            context['ran'] = range(4)
+        elif w in '4':
+            context['ran'] = range(5)
+        elif w in '5':
+            context['ran'] = range(6)
+        elif w in '6':
+            context['ran'] = range(0)
+
+        if v in '0':
+            context['end'] = range(5)
+        elif v in '1':
+            context['end'] = range(4)
+        elif v in '2':
+            context['end'] = range(3)
+        elif v in '3':
+            context['end'] = range(2)
+        elif v in '4':
+            context['end'] = range(1)
+        elif v in '5':
+            context['end'] = range(0)
+        elif v in '6':
+            context['end'] = range(6)
+
+        return render(request, 'appoint.html', context)
 
 
 def appointments(request):

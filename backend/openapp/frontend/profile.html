@@ -112,11 +112,12 @@
                         <h6 class="text-center">Please fill up this brief questionnaire.</h6>  
                         <hr>      
                         <div id="assessmentCarousel" class="carousel slide" data-ride="false" style="min-height: 300px; padding-top: 50px;">
-                            <div class="carousel-inner">
+                            <form class="carousel-inner" action="/openapp/appoint/{{ user.username|upper }}" method="POST">
+                                {% csrf_token %}
                                 <div class="carousel-item active form-group offset-sm-3 col-sm-6">
                                     <p>What is your gender?</p>
                                     <div class="form-check">
-                                        <input value="Male" name="genderInput" class="form-check-input" type="radio">
+                                        <input value="Male" name="genderInput" class="form-check-input" type="radio" checked>
                                         <label>Male</label>
                                     </div>
                                     <div class="form-check">
@@ -142,7 +143,7 @@
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>What is your relationship status?</p>
                                     <div class="form-check">
-                                        <input value="Single" name="statusInput" class="form-check-input" type="radio">
+                                        <input value="Single" name="statusInput" class="form-check-input" type="radio" checked>
                                         <label>Single</label>
                                     </div>
                                     <div class="form-check">
@@ -173,7 +174,7 @@
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>How would you rate the social support that you have, such as family, and/or friends?</p>
                                     <div class="form-check">
-                                        <input value="Good" name="supportInput" class="form-check-input" type="radio">
+                                        <input value="Good" name="supportInput" class="form-check-input" type="radio" checked>
                                         <label>Good</label>
                                     </div>
                                     <div class="form-check">
@@ -188,7 +189,7 @@
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>Have you been in counseling or therapy before?</p>
                                     <div class="form-check">
-                                        <input value="Yes" name="counselingInput" class="form-check-input" type="radio">
+                                        <input value="Yes" name="counselingInput" class="form-check-input" type="radio" checked>
                                         <label>Yes</label>
                                     </div>
                                     <div class="form-check">
@@ -199,7 +200,7 @@
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>How would you rate your current physical health?</p>
                                     <div class="form-check">
-                                        <input value="Good" name="healthRatingInput" class="form-check-input" type="radio">
+                                        <input value="Good" name="healthRatingInput" class="form-check-input" type="radio" checked>
                                         <label>Good</label>
                                     </div>
                                     <div class="form-check">
@@ -214,7 +215,7 @@
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>How would you rate your current sleeping habits?</p>
                                     <div class="form-check">
-                                        <input value="Good" name="sleepingHabitsInput" class="form-check-input" type="radio">
+                                        <input value="Good" name="sleepingHabitsInput" class="form-check-input" type="radio" checked>
                                         <label>Good</label>
                                     </div>
                                     <div class="form-check">
@@ -229,7 +230,7 @@
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>How would you rate your current eating habits?</p>
                                     <div class="form-check">
-                                        <input value="Good" name="eatingRatingInput" class="form-check-input" type="radio">
+                                        <input value="Good" name="eatingRatingInput" class="form-check-input" type="radio" checked>
                                         <label>Good</label>
                                     </div>
                                     <div class="form-check">
@@ -244,7 +245,7 @@
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>In the past month, have you been experiencing overwhelming sadness, grief or depression?</p>
                                     <div class="form-check">
-                                        <input value="Yes" name="depressionInput" class="form-check-input" type="radio">
+                                        <input value="Yes" name="depressionInput" class="form-check-input" type="radio" checked>
                                         <label>Yes</label>
                                     </div>
                                     <div class="form-check">
@@ -259,7 +260,7 @@
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>In the past month, do you find yourself worrying almost all the time?</p>
                                     <div class="form-check">
-                                        <input value="Yes" name="worryingInput" class="form-check-input" type="radio">
+                                        <input value="Yes" name="worryingInput" class="form-check-input" type="radio" checked>
                                         <label>Yes</label>
                                     </div>
                                     <div class="form-check">
@@ -274,7 +275,7 @@
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6">
                                     <p>In the past month, have you often experience fast heartbeats, gastric pain, headaches/nausea, excessive sweating, feeling weak, and/or frequent toilet breaks?</p>
                                     <div class="form-check">
-                                        <input value="Yes" name="heartbeatsInput" class="form-check-input" type="radio">
+                                        <input value="Yes" name="heartbeatsInput" class="form-check-input" type="radio" checked>
                                         <label>Yes</label>
                                     </div>
                                     <div class="form-check">
@@ -288,7 +289,7 @@
                                 </div>
                                 <div class="carousel-item form-group offset-sm-3 col-sm-6 text-center">
                                     <p class="text-center">One more step!</p>
-                                    <button class="btn btn-primary text-center"><a href="/openapp/appoint/{{ user.username|upper }}">Finish Assessment</a></button>
+                                    <button class="btn btn-primary text-center"><a>Finish Assessment</a></button>
                                 </div>
                             </div>
                             <a class="carousel-control-prev" href="#assessmentCarousel" role="button" data-slide="prev">
@@ -300,7 +301,7 @@
                                 <span class="carousel-control-next-icon" aria-hidden="true"><i class="fas fa-chevron-right" style="color: black; font-size: 30px;"></i></span>
                                 <span class="sr-only">Next</span>
                             </a>
-                        </div>           
+                        </form>           
                     </div>                   
                 </div>
             </div>

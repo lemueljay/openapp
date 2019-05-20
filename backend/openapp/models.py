@@ -75,3 +75,21 @@ class Notification(models.Model):
 
     # Message to be displayed
     message = models.CharField(max_length=1000,default=None,null=True)
+
+
+class Assessment(models.Model):
+
+    date_created = models.DateTimeField(default=datetime.datetime.now)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    question1 = models.CharField(max_length=1000,default='',null=True)
+    question2 = models.CharField(max_length=1000,default='',null=True)
+    question3 = models.CharField(max_length=1000,default='',null=True)
+    question4 = models.CharField(max_length=1000,default='',null=True)
+    question5 = models.CharField(max_length=1000,default='',null=True)
+    question6 = models.CharField(max_length=1000,default='',null=True)
+    question7 = models.CharField(max_length=1000,default='',null=True)
+    question8 = models.CharField(max_length=1000,default='',null=True)
+    question9 = models.CharField(max_length=1000,default='',null=True)
+    question10 = models.CharField(max_length=1000,default='',null=True)
+    question11 = models.CharField(max_length=1000,default='',null=True)
