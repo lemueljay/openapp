@@ -1230,6 +1230,22 @@ def getRequest(request):
 
     if notif.notifType == 'APPOINTMENT':
         sched = Schedule.objects.get(id=notif.notifId)
+
+        uss = User.objects.get(username=sched.assignee)
+        ass = Assessment.objects.get(user=uss)
+        
+        context['answer1'] = ass.question1
+        context['answer2'] = ass.question2
+        context['answer3'] = ass.question3
+        context['answer4'] = ass.question4
+        context['answer5'] = ass.question5
+        context['answer6'] = ass.question6
+        context['answer7'] = ass.question7
+        context['answer8'] = ass.question8
+        context['answer9'] = ass.question9
+        context['answer10'] = ass.question10
+        context['answer11'] = ass.question11
+
         context['sched_id'] = sched.id        
         context['sched_date'] = sched.date.strftime('%b %d, %Y')
         context['sched_time'] = sched.time

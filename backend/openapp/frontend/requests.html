@@ -141,7 +141,8 @@
                     <div class="col-sm-5 requestscontainer">
                         {% for notif in notifs %}
                         {% if is_staff %}
-                        <div onclick=requestModalUpdate({{ notif.id }}) class="request" data-toggle="modal" data-target="#requestModal">
+                        <!-- <div onclick=requestModalUpdate({{ notif.id }}) class="request" data-toggle="modal" data-target="#requestModal"> -->
+                        <div class="request" onclick=requestModalUpdate({{ notif.id }}) data-toggle="modal" data-target="#exampleModalLong">
                             {{ notif.message }}
                         </div>
                         {% else %}
@@ -277,6 +278,45 @@
                 })
             </script>
             {% endif %}
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Assessment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>What is your gender?</h5>
+                        <p id="answer1"></p>
+                        <h5>How old are you?</h5>
+                        <p id="answer2"</p>
+                        <h5>What is your relationship status?</h5>
+                        <p id="answer3"></p>
+                        <h5>How would you rate the social support that you have, such as family, and/or friends?</h5>
+                        <p id="answer4"></p>
+                        <h5>Have you been in counseling or therapy before?</h5>
+                        <p id="answer5"></p>
+                        <h5>How would you rate your current physical health?</h5>
+                        <p id="answer6"></p>
+                        <h5>How would you rate your current sleeping habits?</h5>
+                        <p id="answer7"></p>
+                        <h5>How would you rate your current eating habits?</h5>
+                        <p id="answer8"></p>
+                        <h5>In the past month, have you been experiencing overwhelming sadness, grief or depression?</h5>
+                        <p id="answer9"></p>
+                        <h5>In the past month, do you find yourself worrying almost all the time?</h5>
+                        <p id="answer10"></p>
+                        <h5>In the past month, have you often experience fast heartbeats, gastric pain, headaches/nausea, excessive sweating, feeling weak, and/or frequent toilet breaks?</h5>
+                        <p id="answer11"></p>
+                    </div>
+                    <div class="modal-footer">                
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">Proceed</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
     </div>
     </div>
 
