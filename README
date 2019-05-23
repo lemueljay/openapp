@@ -1,0 +1,11 @@
+Close all browsers
+Delete 'db.sqlite'
+
+INITIALIZE APP
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+
+CREATE GUIDANCE ACCOUNTS
+Point your browser to -  /openapp/admin
+If returned 'OK RESPONSE', you are good to go.

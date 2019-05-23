@@ -1099,38 +1099,104 @@ def addCode(code):
 
 
 def admin(request):
-    if request.method == 'GET':
-        if request.user.is_staff:
-            context = {}
-            return render(request, 'admin.html', context)
-        return HttpResponse('404 ERROR NOT FOUND')
-    elif request.method == 'POST':
-        try:
-            username = request.POST.get('username', '')
-            password = request.POST.get('password', '')
-            firstname = request.POST.get('firstname', '')
-            lastname = request.POST.get('lastname', '')
-            course = request.POST.get('course', '')
-            birthday = request.POST.get('birthday', '')
-            location = request.POST.get('location', '')
-            user = User.objects.create_user(username=username)
-            user.set_password(password)
-            user.is_staff = True
-            user.first_name = firstname
-            user.last_name = lastname
-            user.save()
 
-            attrib = UserAttrib(user=user, imgpath='/media/vector.jpg')
-            attrib.course = course
-            attrib.birthday = birthday
-            attrib.location = location
-            attrib.save()
+    scs = User(username='scs')
+    scs.first_name = scs.username
+    scs.set_password('scs')
+    scs.is_staff = True
+    scs.save()
 
-            # Generate default schedules
+    attrib = UserAttrib(user=scs, imgpath='/media/vector.jpg')
+    attrib.save()
 
-            return HttpResponse('User created successfully!')
-        except:
-            return HttpResponse('ERROR CREATING USER')
+    coet = User(username='coet')
+    coet.first_name = coet.username
+    coet.set_password('coet')
+    coet.is_staff = True
+    coet.save()
+
+    attrib = UserAttrib(user=coet, imgpath='/media/vector.jpg')
+    attrib.save()
+
+    cbaa = User(username='cbaa', password='cbaa')
+    cbaa.first_name = cbaa.username
+    cbaa.set_password('cbaa')
+    cbaa.is_staff = True
+    cbaa.save()
+
+    attrib = UserAttrib(user=cbaa, imgpath='/media/vector.jpg')
+    attrib.save()
+
+    con = User(username='con', password='con')
+    con.first_name = con.username
+    con.set_password('con')
+    con.is_staff = True
+    con.save()
+
+    attrib = UserAttrib(user=con, imgpath='/media/vector.jpg')
+    attrib.save()
+
+    ced = User(username='ced', password='ced')
+    ced.first_name = ced.username
+    ced.set_password('ced')
+    ced.is_staff = True
+    ced.save()
+
+    attrib = UserAttrib(user=ced, imgpath='/media/vector.jpg')
+    attrib.save()
+
+    cass = User(username='cass', password='cass')
+    cass.first_name = cass.username
+    cass.set_password('cass')
+    cass.is_staff = True
+    cass.save()
+
+    attrib = UserAttrib(user=cass, imgpath='/media/vector.jpg')
+    attrib.save()
+
+    csm = User(username='csm', password='csm')
+    csm.first_name = csm.username
+    csm.set_password('csm')
+    csm.is_staff = True
+    csm.save()
+
+    attrib = UserAttrib(user=csm, imgpath='/media/vector.jpg')
+    attrib.save()
+
+
+    return HttpResponse('OK RESPONSE')
+    # if request.method == 'GET':
+    #     if request.user.is_staff:
+    #         context = {}
+    #         return render(request, 'admin.html', context)
+    #     return HttpResponse('404 ERROR NOT FOUND')
+    # elif request.method == 'POST':
+    #     try:
+    #         username = request.POST.get('username', '')
+    #         password = request.POST.get('password', '')
+    #         firstname = request.POST.get('firstname', '')
+    #         lastname = request.POST.get('lastname', '')
+    #         course = request.POST.get('course', '')
+    #         birthday = request.POST.get('birthday', '')
+    #         location = request.POST.get('location', '')
+    #         user = User.objects.create_user(username=username)
+    #         user.set_password(password)
+    #         user.is_staff = True
+    #         user.first_name = firstname
+    #         user.last_name = lastname
+    #         user.save()
+
+    #         attrib = UserAttrib(user=user, imgpath='/media/vector.jpg')
+    #         attrib.course = course
+    #         attrib.birthday = birthday
+    #         attrib.location = location
+    #         attrib.save()
+
+    #         # Generate default schedules
+
+    #         return HttpResponse('User created successfully!')
+    #     except:
+    #         return HttpResponse('ERROR CREATING USER')
 
 
 def upload_file(request):
