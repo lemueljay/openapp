@@ -208,4 +208,11 @@ $(document).ready(function(global) {
     });
 
     getchatlist()
+
+    let searchParams = new URLSearchParams(window.location.search)
+    if(searchParams.has('assignee')) {
+        let param = searchParams.get('assignee')
+        $('.chat_list > input[value=' + param + ']').click()
+        console.log('CLICKED')
+    }
 })

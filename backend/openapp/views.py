@@ -95,6 +95,7 @@ def index(request):
 
                 for sched in sortedSched:
                     x = {}
+                    x['assignee'] = sched.assignee
                     x['sched_id'] = sched.id
                     x['time'] = sched.time
                     x['info_location'] = sched.info_location

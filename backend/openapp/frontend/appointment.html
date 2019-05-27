@@ -103,6 +103,7 @@
                             <div class="col-sm-8">
                                 <div class="appointmenttitle"><i class="fas fa-circle appointmentavailable"></i>Appointment with <b>{{ sched.info_name }}</b></div>
                                 <div class="appointmentlocation">{{ sched.info_location }} | {{sched.info_contact_number }}</div>
+                                <div><a href="/openapp/gccChat?assignee={{ sched.assignee }}" style="color: blue; font-size: 12px; cursor: pointer;">View Conversation</a></div>
                             </div>
                         </div>
                         {% endfor %}
